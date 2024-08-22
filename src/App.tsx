@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useRef, useState, useLayoutEffect } from 'react'
 import { DataTable } from '@carbon/react';
 const {
   Table,
@@ -17,6 +17,7 @@ import {
   useReactTable,
   ColumnResizeMode
 } from '@tanstack/react-table'
+import { makeData } from './makeData';
 
 type Resource = {
   id: string
@@ -26,65 +27,6 @@ type Resource = {
   other: string
   example: string
 }
-
-const defaultData: Resource[] = [
-  {
-    id: 'load-balancer-1',
-    name: 'Load Balancer 1',
-    rule: 'Round robin',
-    status: 'Starting',
-    other: 'Test',
-    example: '22',
-  },
-  {
-    id: 'load-balancer-2',
-    name: 'Load Balancer 2',
-    rule: 'DNS delegation',
-    status: 'Active',
-    other: 'Test',
-    example: '22',
-  },
-  {
-    id: 'load-balancer-3',
-    name: 'Load Balancer 3',
-    rule: 'Round robin',
-    status: 'Disabled',
-    other: 'Test',
-    example: '22',
-  },
-  {
-    id: 'load-balancer-4',
-    name: 'Load Balancer 4',
-    rule: 'Round robin',
-    status: 'Disabled',
-    other: 'Test',
-    example: '22',
-  },
-  {
-    id: 'load-balancer-5',
-    name: 'Load Balancer 5',
-    rule: 'Round robin',
-    status: 'Disabled',
-    other: 'Test',
-    example: '22',
-  },
-  {
-    id: 'load-balancer-6',
-    name: 'Load Balancer 6',
-    rule: 'Round robin',
-    status: 'Disabled',
-    other: 'Test',
-    example: '22',
-  },
-  {
-    id: 'load-balancer-7',
-    name: 'Load Balancer 7',
-    rule: 'Round robin',
-    status: 'Disabled',
-    other: 'Test',
-    example: '22',
-  },
-];
 
 const columnHelper = createColumnHelper<Resource>()
 
@@ -110,16 +52,26 @@ const columns = [
 ]
 
 export const App = () => {
-  const [data] = React.useState(() => [...defaultData])
+  const [data] = useState(makeData(7))
 
-  const [columnResizeMode] = React.useState<ColumnResizeMode>('onChange')
+  const [columnResizeMode] = useState<ColumnResizeMode>('onChange')
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    columnResizeMode
+    columnResizeMode,
   })
+
+  const tableWrap = useRef<HTMLDivElement>();
+
+  useLayoutEffect(() => {
+    const tableWrapElement = tableWrap.current;
+    if (tableWrapElement) {
+      const tableElement = tableWrapElement.querySelector('table');
+      tableElement.style.width = `${table.getCenterTotalSize()}px`;
+    }
+  }, [table]);
 
   return (
     <TableContainer
@@ -133,9 +85,6 @@ export const App = () => {
         size="lg"
         useZebraStyles={false}
         aria-label="sample table"
-        style={{
-          width: table.getCenterTotalSize(),
-        }}
       >
         <TableHead>
           {table.getHeaderGroups().map(headerGroup => (
