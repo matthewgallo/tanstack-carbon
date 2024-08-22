@@ -51,7 +51,7 @@ const columns = [
   }),
 ]
 
-export const App = () => {
+export const ResizableCols = () => {
   const [data] = useState(makeData(7))
 
   const [columnResizeMode] = useState<ColumnResizeMode>('onChange')
