@@ -1,5 +1,5 @@
 import React, { useRef, useState, useLayoutEffect } from 'react'
-import { DataTable } from '@carbon/react';
+import { DataTable, Pagination } from '@carbon/react';
 const {
   Table,
   TableBody,
@@ -15,7 +15,13 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
-  ColumnResizeMode
+  ColumnResizeMode,
+  FilterFn,
+  RowData,
+  PartialKeys,
+  TableOptionsResolved,
+  PaginationState,
+  getPaginationRowModel
 } from '@tanstack/react-table'
 import { makeData } from './makeData';
 
@@ -26,6 +32,17 @@ type Resource = {
   status: string
   other: string
   example: string
+}
+
+declare module "@tanstack/table-core" {
+  interface TableOptions<TData extends RowData>
+    extends PartialKeys<TableOptionsResolved<TData>, "state" | "onStateChange" | "renderFallbackValue"> {
+    filterFns?: FilterFns;
+  }
+
+  interface FilterFns {
+    fuzzy: FilterFn<unknown>
+  }
 }
 
 const columnHelper = createColumnHelper<Resource>()
@@ -51,8 +68,12 @@ const columns = [
   }),
 ]
 
-export const ResizableCols = () => {
-  const [data] = useState(makeData(7))
+export const PaginationExample = () => {
+  const [data] = useState(makeData(200))
+  const [pagination, setPagination] = React.useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
 
   const [columnResizeMode] = useState<ColumnResizeMode>('onChange')
 
@@ -60,7 +81,12 @@ export const ResizableCols = () => {
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    columnResizeMode,
+    getPaginationRowModel: getPaginationRowModel(),
+    onPaginationChange: setPagination,
+    // no need to pass pageCount or rowCount with client-side pagination as it is calculated automatically
+    state: {
+      pagination,
+    },
   })
 
   const tableWrap = useRef<HTMLDivElement>();
@@ -75,7 +101,7 @@ export const ResizableCols = () => {
 
   return (
     <TableContainer
-      title="Basic tanstack / carbon react table"
+      title="Pagination"
       className="basic-table tanstack-example"
       style={{
         width: table.getCenterTotalSize(),
@@ -150,6 +176,22 @@ export const ResizableCols = () => {
           ))}
         </TableBody>
       </Table>
+      <Pagination
+        page={table.getState().pagination.pageIndex + 1}
+        totalItems={data.length}
+        pagesUnknown={false}
+        pageInputDisabled={undefined}
+        pageSizeInputDisabled={undefined}
+        backwardText={'Previous page'}
+        forwardText={'Next page'}
+        pageSize={table.getState().pagination.pageSize}
+        pageSizes={[10, 20, 30, 40, 50]}
+        itemsPerPageText={'Items per page:'}
+        onChange={({ pageSize, page }) => {
+          table.setPageSize(Number(pageSize))
+          table.setPageIndex(page - 1)
+        }}
+      />
     </TableContainer>
   )
 }

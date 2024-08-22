@@ -19,24 +19,27 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-  createColumnHelper
+  createColumnHelper,
+  RowData,
+  PartialKeys,
+  TableOptionsResolved
 } from '@tanstack/react-table'
 
 // A TanStack fork of Kent C. Dodds' match-sorter library that provides ranking information
 import {
-  RankingInfo,
   rankItem,
 } from '@tanstack/match-sorter-utils'
 
 import { makeData, Resource } from './makeData'
 
-declare module '@tanstack/react-table' {
-  //add fuzzy filter to the filterFns
-  interface FilterFns {
-    fuzzy: FilterFn<unknown>
+declare module "@tanstack/table-core" {
+  interface TableOptions<TData extends RowData>
+    extends PartialKeys<TableOptionsResolved<TData>, "state" | "onStateChange" | "renderFallbackValue"> {
+    filterFns?: FilterFns;
   }
-  interface FilterMeta {
-    itemRank: RankingInfo
+
+  interface FilterFns {
+    fuzzy: FilterFn<unknown>;
   }
 }
 
@@ -112,9 +115,9 @@ export const TableWithSearch = () => {
   }, [table]);
 
   return (
-    <div ref={tableWrap}>
+    <div ref={tableWrap} className='tanstack-example'>
       <TableContainer
-        title="Basic tanstack / carbon react table"
+        title="Global filter"
         className="basic-table"
         style={{
           width: table.getCenterTotalSize(),
