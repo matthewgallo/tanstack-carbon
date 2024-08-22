@@ -75,7 +75,7 @@ export const ResizableCols = () => {
 
   return (
     <TableContainer
-      title="Basic tanstack / carbon react table"
+      title="Resizable columns"
       className="basic-table tanstack-example"
       style={{
         width: table.getCenterTotalSize(),
