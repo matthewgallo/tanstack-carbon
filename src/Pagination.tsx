@@ -15,7 +15,6 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
-  ColumnResizeMode,
   FilterFn,
   RowData,
   PartialKeys,
@@ -75,8 +74,6 @@ export const PaginationExample = () => {
     pageSize: 10,
   })
 
-  const [columnResizeMode] = useState<ColumnResizeMode>('onChange')
-
   const table = useReactTable({
     data,
     columns,
@@ -128,32 +125,6 @@ export const PaginationExample = () => {
                       header.column.columnDef.header,
                       header.getContext()
                     )}
-                    <div
-                        {...{
-                          onDoubleClick: () => header.column.resetSize(),
-                          onMouseDown: header.getResizeHandler(),
-                          onTouchStart: header.getResizeHandler(),
-                          className: `resizer ${
-                            table.options.columnResizeDirection
-                          } ${
-                            header.column.getIsResizing() ? 'isResizing' : ''
-                          }`,
-                          style: {
-                            transform:
-                              columnResizeMode === 'onEnd' &&
-                              header.column.getIsResizing()
-                                ? `translateX(${
-                                    (table.options.columnResizeDirection ===
-                                    'rtl'
-                                      ? -1
-                                      : 1) *
-                                    (table.getState().columnSizingInfo
-                                      .deltaOffset ?? 0)
-                                  }px)`
-                                : '',
-                          },
-                        }}
-                      />
                 </TableHeader>
               ))}
             </TableRow>
