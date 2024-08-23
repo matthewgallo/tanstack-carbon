@@ -168,7 +168,8 @@ export const WithBatchActions = () => {
     filterFns: {
       fuzzy: fuzzyFilter, //define as a filter function that can be used in column definitions
     },
-    enableRowSelection: true, //enable row selection for all rows
+    // enableRowSelection: true, //enable row selection for all rows
+    enableRowSelection: row => row.original.status === 'disabled', // conditionally disable rows
     // enableRowSelection: row => row.original.age > 18, // or enable row selection 
     onRowSelectionChange: setRowSelection,
   })
