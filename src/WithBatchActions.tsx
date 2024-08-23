@@ -90,11 +90,25 @@ export const WithBatchActions = () => {
       id: 'select',
       width: 48,
       header: ({ table }) => (
+        // TableSelectAll throws DOM nesting error, using Checkbox instead to avoid this
         <Checkbox
           {...{
-            checked: table.getIsAllRowsSelected(),
-            indeterminate: table.getIsSomeRowsSelected(),
-            onChange: table.getToggleAllRowsSelectedHandler(),
+            checked: table.getIsAllPageRowsSelected(),
+            indeterminate: table.getIsSomePageRowsSelected(),
+            onChange: () => {
+              const isIndeterminate = table.getIsSomeRowsSelected();
+              if (!isIndeterminate) {
+                table.toggleAllPageRowsSelected(true);
+              }
+              if (table.getIsAllPageRowsSelected()) {
+                table.toggleAllRowsSelected(false);
+                return;
+              }
+              if (isIndeterminate) {
+                table.toggleAllPageRowsSelected(true);
+                return;
+              }
+            },
             id: 'batch-checkbox',
             labelText: 'header checkbox',
             hideLabel: true
@@ -102,19 +116,17 @@ export const WithBatchActions = () => {
         />
       ),
       cell: ({ row }) => (
-        <div className="px-1">
-          <Checkbox
-            {...{
-              checked: row.getIsSelected(),
-              disabled: !row.getCanSelect(),
-              indeterminate: row.getIsSomeSelected(),
-              onChange: row.getToggleSelectedHandler(),
-              id: `batch-checkbox__${row.id}`,
-              labelText: 'row checkbox',
-              hideLabel: true
-            }}
-          />
-        </div>
+        <Checkbox
+          {...{
+            checked: row.getIsSelected(),
+            disabled: !row.getCanSelect(),
+            indeterminate: row.getIsSomeSelected(),
+            onChange: row.getToggleSelectedHandler(),
+            id: `batch-checkbox__${row.id}`,
+            labelText: 'row checkbox',
+            hideLabel: true
+          }}
+        />
       ),
     },
     columnHelper.accessor(row => row.name, {
@@ -186,8 +198,10 @@ export const WithBatchActions = () => {
           shouldShowBatchActions={shouldShowBatchActions}
           totalSelected={Object.keys(rowSelection).length ?? 0}
           onCancel={() => table.resetRowSelection()}
-          onSelectAll={() => table.getToggleAllRowsSelectedHandler()}
-          totalCount={Object.keys(rowSelection).length ?? 0}
+          onSelectAll={() => {
+            table.toggleAllRowsSelected(true);
+          }}
+          totalCount={data?.length}
         >
           <TableBatchAction tabIndex={shouldShowBatchActions ? 0 : -1} renderIcon={TrashCan} onClick={() => table.resetRowSelection()}>
             Delete
