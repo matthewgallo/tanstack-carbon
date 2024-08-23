@@ -1,12 +1,15 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Column, Grid } from '@carbon/react'
+
 import { ResizableCols } from './ResizableCols'
-import './index.scss'
 import { TableWithSearch } from './TableWithSearch'
 import { PaginationExample } from './Pagination'
-import { Column, Grid } from '@carbon/react'
 import { WithSelectableRows } from './WithSelectableRows'
 import { WithBatchActions } from './WithBatchActions'
+import { WithExpansion } from './WithExpansion'
+
+import './index.scss'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -25,6 +28,9 @@ createRoot(document.getElementById('root')!).render(
       </Column>
       <Column sm={4} md={8} lg={16}>
         <WithBatchActions />
+      </Column>
+      <Column sm={4} md={8} lg={16}>
+        <WithExpansion />
       </Column>
     </Grid>
   </StrictMode>,
