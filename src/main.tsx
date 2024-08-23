@@ -5,6 +5,8 @@ import './index.scss'
 import { TableWithSearch } from './TableWithSearch'
 import { PaginationExample } from './Pagination'
 import { Column, Grid } from '@carbon/react'
+import { WithSelectableRows } from './WithSelectableRows'
+import { WithBatchActions } from './WithBatchActions'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -17,6 +19,12 @@ createRoot(document.getElementById('root')!).render(
       </Column>
       <Column sm={4} md={8} lg={16}>
         <PaginationExample />
+      </Column>
+      <Column sm={4} md={8} lg={16}>
+        <WithSelectableRows />
+      </Column>
+      <Column sm={4} md={8} lg={16}>
+        <WithBatchActions />
       </Column>
     </Grid>
   </StrictMode>,
