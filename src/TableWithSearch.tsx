@@ -99,9 +99,9 @@ export const TableWithSearch = () => {
     getFilteredRowModel: getFilteredRowModel(), //client side filtering
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: false,
+    // debugTable: true,
+    // debugHeaders: true,
+    // debugColumns: false,
   });
 
   const tableWrap = useRef<HTMLDivElement>();

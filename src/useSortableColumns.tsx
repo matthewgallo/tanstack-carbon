@@ -83,7 +83,7 @@ export const WithSortableColumns = () => {
   const table = useReactTable({
     columns,
     data,
-    debugTable: true,
+    // debugTable: true,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(), //client-side sorting
     onSortingChange: setSorting, //optionally control sorting state in your own scope for easy access
@@ -103,7 +103,7 @@ export const WithSortableColumns = () => {
   })
 
   //access sorting state from the table instance
-  console.log(table.getState().sorting)
+  // console.log(table.getState().sorting)
 
   return (
     <TableContainer title="Column sorting" className='tanstack-example'>

@@ -111,7 +111,7 @@ export const WithNestedRows = () => {
     getExpandedRowModel: getExpandedRowModel(),
     // filterFromLeafRows: true,
     // maxLeafRowFilterDepth: 0,
-    debugTable: true,
+    // debugTable: true,
   })
 
   return (

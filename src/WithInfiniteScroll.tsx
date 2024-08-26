@@ -115,7 +115,7 @@ export const WithInfiniteScroll = () => {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualSorting: true,
-    debugTable: true,
+    // debugTable: true,
   })
 
   //scroll to top of table when sorting changes

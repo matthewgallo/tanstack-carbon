@@ -149,8 +149,6 @@ export const WithBatchActions = () => {
     }),
   ]
 
-  console.log(rowSelection);
-
   const table = useReactTable({
     data,
     columns,

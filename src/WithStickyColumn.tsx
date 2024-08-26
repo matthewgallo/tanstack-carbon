@@ -75,7 +75,6 @@ export const WithStickyColumn = () => {
       header: 'Actions',
       id: 'actions',
       cell: ({ row }) => {
-        console.log(row);
         return <div className='flex'>
           <IconButton size='sm' label="Delete" onClick={() => onDelete(row)} kind="ghost">
             <TrashCan />
@@ -94,9 +93,9 @@ export const WithStickyColumn = () => {
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: true,
+    // debugTable: true,
+    // debugHeaders: true,
+    // debugColumns: true,
     initialState: {
       columnPinning: {
         left: ['name'],
