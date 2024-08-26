@@ -136,7 +136,7 @@ export const WithRowClick = () => {
         open={panelOpen}
         size="md"
         onRequestClose={() => setPanelOpen(false)}
-        title={panelData?.name}
+        title={panelData?.name ?? 'Default title'}
         labelText='Resource'
       >
         testing

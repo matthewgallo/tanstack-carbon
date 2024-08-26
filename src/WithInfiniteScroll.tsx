@@ -229,10 +229,9 @@ export const WithInfiniteScroll = () => {
               }}
             >
               {rowVirtualizer.getVirtualItems().map((virtualRow, index) => {
-                console.log(virtualRow);
                 const row = rows[virtualRow.index] as Row<Resource>
                 return (
-                  <>
+                  <React.Fragment key={index}>
                     <TableRow
                       data-index={virtualRow.index} //needed for dynamic row height measurement
                       // ref={node => rowVirtualizer.measureElement(node)} //measure dynamic row height
@@ -275,8 +274,9 @@ export const WithInfiniteScroll = () => {
                           height: 48,
                         }}
                       >
-                        {columns.map(() => (
+                        {columns.map((_, index) => (
                           <TableCell
+                            key={index}
                             style={{
                               display: 'flex',
                               width: 148,
@@ -289,7 +289,7 @@ export const WithInfiniteScroll = () => {
                         ))}
                       </TableRow>
                     )}
-                  </>
+                  </React.Fragment>
                 )
               })}
             </TableBody>

@@ -8,7 +8,8 @@ import {
   createColumnHelper
 } from '@tanstack/react-table'
 import { makeData, Resource } from './makeData'
-import { DataTable, TableContainer } from '@carbon/react';
+import { DataTable, IconButton, TableContainer } from '@carbon/react';
+import { TrashCan, Edit } from '@carbon/react/icons';
 const {
   Table,
   TableBody,
@@ -43,6 +44,12 @@ const getCommonPinningStyles = (column: Column<Resource>): CSSProperties => {
 
 
 export const WithStickyColumn = () => {
+  const onDelete = (row: Resource) => {
+    console.log(row);
+  }
+  const onEdit = (row: Resource) => {
+    console.log(row);
+  }
   const columnHelper = createColumnHelper<Resource>()
   const defaultCols = [
     columnHelper.accessor(row => row.name, {
@@ -64,6 +71,21 @@ export const WithStickyColumn = () => {
       header: 'Example',
       id: 'example'
     }),
+    {
+      header: 'Actions',
+      id: 'actions',
+      cell: ({ row }) => {
+        console.log(row);
+        return <div className='flex'>
+          <IconButton size='sm' label="Delete" onClick={() => onDelete(row)} kind="ghost">
+            <TrashCan />
+          </IconButton>
+          <IconButton size='sm' label="Delete" onClick={() => onEdit(row)} kind="ghost">
+            <Edit />
+          </IconButton>
+        </div>
+      }
+    },
   ]
   const [data] = React.useState(() => makeData(5))
   const [columns] = React.useState(() => [...defaultCols])
@@ -78,7 +100,7 @@ export const WithStickyColumn = () => {
     initialState: {
       columnPinning: {
         left: ['name'],
-        right: ['example'],
+        right: ['actions'],
       },
     }
   })
@@ -88,7 +110,7 @@ export const WithStickyColumn = () => {
         title="Sticky columns"
         className='tanstack-example'
         style={{
-          width: 400,
+          width: 500,
         }}
       >
         <Table>

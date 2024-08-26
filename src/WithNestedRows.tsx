@@ -89,10 +89,6 @@ export const WithNestedRows = () => {
         accessorKey: 'other',
         header: () => <span>Other</span>,
       },
-      {
-        accessorKey: 'other',
-        header: 'Other',
-      }
     ],
     []
   )
@@ -119,7 +115,7 @@ export const WithNestedRows = () => {
   })
 
   return (
-    <TableContainer title="Nested rows">
+    <TableContainer title="Nested rows" className='tanstack-example'>
       <Table>
         <TableHead>
           {table.getHeaderGroups().map(headerGroup => (
