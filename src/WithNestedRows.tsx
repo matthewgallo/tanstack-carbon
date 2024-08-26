@@ -1,6 +1,5 @@
 import React from 'react'
 
-import cx from 'classnames'
 import {
   ExpandedState,
   useReactTable,
@@ -55,9 +54,7 @@ export const WithNestedRows = () => {
               paddingLeft: `${(row.depth * 2) + (!row.getCanExpand() ? 2 : 0)}rem`,
             }}
           >
-            <div className={cx('flex', {
-              ['flat-row']: row.getCanExpand()
-            })}>
+            <div className='flex'>
               {row.getCanExpand() ? (
                 <Button
                   {...{
