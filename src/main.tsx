@@ -15,6 +15,7 @@ import { WithInfiniteScroll } from './WithInfiniteScroll'
 import './index.scss'
 import { WithRowClick } from './WithRowClick'
 import { WithSortableColumns } from './useSortableColumns'
+import { WithStickyColumn } from './WithStickyColumn'
 const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
@@ -47,6 +48,9 @@ createRoot(document.getElementById('root')!).render(
         </Column>
         <Column sm={4} md={8} lg={16}>
           <WithSortableColumns />
+        </Column>
+        <Column sm={4} md={8} lg={16}>
+          <WithStickyColumn />
         </Column>
       </Grid>
     </StrictMode>

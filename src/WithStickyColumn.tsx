@@ -1,0 +1,191 @@
+import React, { CSSProperties } from 'react'
+
+import {
+  Column,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+  createColumnHelper
+} from '@tanstack/react-table'
+import { makeData, Resource } from './makeData'
+import { DataTable, TableContainer } from '@carbon/react';
+const {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} = DataTable;
+
+//These are the important styles to make sticky column pinning work!
+//Apply styles like this using your CSS strategy of choice with this kind of logic to head cells, data cells, footer cells, etc.
+//View the index.css file for more needed styles such as border-collapse: separate
+const getCommonPinningStyles = (column: Column<Resource>): CSSProperties => {
+  const isPinned = column.getIsPinned()
+  const isLastLeftPinnedColumn =
+    isPinned === 'left' && column.getIsLastColumn('left')
+  const isFirstRightPinnedColumn =
+    isPinned === 'right' && column.getIsFirstColumn('right')
+
+  return {
+    borderRight: isLastLeftPinnedColumn ? '1px solid var(--cds-border-subtle)' : 0,
+    borderLeft: isFirstRightPinnedColumn ? '1px solid var(--cds-border-subtle)' : 0,
+    left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
+    right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
+    opacity: isPinned ? 0.95 : 1,
+    position: isPinned ? 'sticky' : 'relative',
+    width: column.getSize(),
+    zIndex: isPinned ? 1 : 0,
+    backgroundColor: 'var(--cds-layer)',
+  }
+}
+
+
+export const WithStickyColumn = () => {
+  const columnHelper = createColumnHelper<Resource>()
+  const defaultCols = [
+    columnHelper.accessor(row => row.name, {
+      id: 'name',
+      cell: info => <i>{info.getValue()}</i>,
+      header: () => <span>Name</span>,
+    }),
+    columnHelper.accessor('rule', {
+      header: () => 'Rule',
+      cell: info => info.renderValue(),
+    }),
+    columnHelper.accessor('status', {
+      header: () => <span>Status</span>,
+    }),
+    columnHelper.accessor('other', {
+      header: 'Other',
+    }),
+    columnHelper.accessor('example', {
+      header: 'Example',
+      id: 'example'
+    }),
+  ]
+  const [data] = React.useState(() => makeData(5))
+  const [columns] = React.useState(() => [...defaultCols])
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    debugTable: true,
+    debugHeaders: true,
+    debugColumns: true,
+    initialState: {
+      columnPinning: {
+        left: ['name'],
+        right: ['example'],
+      },
+    }
+  })
+
+  return (
+      <TableContainer
+        title="Sticky columns"
+        style={{
+          width: 400,
+        }}
+      >
+        <Table>
+          <TableHead>
+            {table.getHeaderGroups().map(headerGroup => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map(header => {
+                  const { column } = header
+
+                  return (
+                    <TableHeader
+                      key={header.id}
+                      colSpan={header.colSpan}
+                      //IMPORTANT: This is where the magic happens!
+                      style={{ ...getCommonPinningStyles(column) }}
+                    >
+                      <div className="whitespace-nowrap">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}{' '}
+                        {/* Demo getIndex behavior */}
+                        {column.getIndex(column.getIsPinned() || 'center')}
+                      </div>
+                      {/* {!header.isPlaceholder && header.column.getCanPin() && (
+                        <div className="flex gap-1 justify-center">
+                          {header.column.getIsPinned() !== 'left' ? (
+                            <button
+                              className="border rounded px-2"
+                              onClick={() => {
+                                header.column.pin('left')
+                              }}
+                            >
+                              {'<='}
+                            </button>
+                          ) : null}
+                          {header.column.getIsPinned() ? (
+                            <button
+                              className="border rounded px-2"
+                              onClick={() => {
+                                header.column.pin(false)
+                              }}
+                            >
+                              X
+                            </button>
+                          ) : null}
+                          {header.column.getIsPinned() !== 'right' ? (
+                            <button
+                              className="border rounded px-2"
+                              onClick={() => {
+                                header.column.pin('right')
+                              }}
+                            >
+                              {'=>'}
+                            </button>
+                          ) : null}
+                        </div>
+                      )} */}
+                      <div
+                        {...{
+                          onDoubleClick: () => header.column.resetSize(),
+                          onMouseDown: header.getResizeHandler(),
+                          onTouchStart: header.getResizeHandler(),
+                          className: `resizer ${
+                            header.column.getIsResizing() ? 'isResizing' : ''
+                          }`,
+                        }}
+                      />
+                    </TableHeader>
+                  )
+                })}
+              </TableRow>
+            ))}
+          </TableHead>
+          <TableBody>
+            {table.getRowModel().rows.map(row => (
+              <TableRow key={row.id}>
+                {row.getVisibleCells().map(cell => {
+                  const { column } = cell
+                  return (
+                    <TableCell
+                      key={cell.id}
+                      //IMPORTANT: This is where the magic happens!
+                      style={{ ...getCommonPinningStyles(column) }}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  )
+                })}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+  )
+}
