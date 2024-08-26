@@ -13,6 +13,7 @@ import { WithExpansion } from './WithExpansion'
 import { WithInfiniteScroll } from './WithInfiniteScroll'
 
 import './index.scss'
+import { WithRowClick } from './WithRowClick'
 const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
@@ -39,6 +40,9 @@ createRoot(document.getElementById('root')!).render(
         </Column>
         <Column sm={4} md={8} lg={16}>
           <WithInfiniteScroll />
+        </Column>
+        <Column sm={4} md={8} lg={16}>
+          <WithRowClick />
         </Column>
       </Grid>
     </StrictMode>

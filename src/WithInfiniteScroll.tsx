@@ -152,7 +152,7 @@ export const WithInfiniteScroll = () => {
   }
 
   return (
-      <div className="app">
+      <div className="virtual-example">
         <h4>Virtualized infinite scroll</h4>
         {process.env.NODE_ENV === 'development' ? (
           <p className='virtual-description'>
