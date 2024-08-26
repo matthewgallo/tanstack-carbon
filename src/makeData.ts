@@ -49,3 +49,28 @@ export function makeData(...lens: number[]) {
 
   return makeDataLevel()
 }
+
+//simulates a backend api
+const data = makeData(1000)
+export const fetchData = async (
+  start: number,
+  size: number,
+) => {
+
+  //simulate a backend api
+  await new Promise(resolve => setTimeout(resolve, 2000))
+
+  return {
+    data: data.slice(start, start + size),
+    meta: {
+      totalRowCount: data.length,
+    },
+  }
+}
+
+export type ResourceApiResponse = {
+  data: Resource[]
+  meta: {
+    totalRowCount: number
+  }
+}
