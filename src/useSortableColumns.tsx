@@ -106,7 +106,7 @@ export const WithSortableColumns = () => {
   console.log(table.getState().sorting)
 
   return (
-    <TableContainer title="Column sorting">
+    <TableContainer title="Column sorting" className='tanstack-example'>
       <Table className='sortable-example'>
         <TableHead>
           {table.getHeaderGroups().map(headerGroup => (

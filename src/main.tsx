@@ -11,11 +11,12 @@ import { WithSelectableRows } from './WithSelectableRows'
 import { WithBatchActions } from './WithBatchActions'
 import { WithExpansion } from './WithExpansion'
 import { WithInfiniteScroll } from './WithInfiniteScroll'
-
-import './index.scss'
 import { WithRowClick } from './WithRowClick'
 import { WithSortableColumns } from './useSortableColumns'
 import { WithStickyColumn } from './WithStickyColumn'
+import { WithNestedRows } from './WithNestedRows'
+
+import './index.scss'
 const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
@@ -51,6 +52,9 @@ createRoot(document.getElementById('root')!).render(
         </Column>
         <Column sm={4} md={8} lg={16}>
           <WithStickyColumn />
+        </Column>
+        <Column sm={4} md={8} lg={16}>
+          <WithNestedRows />
         </Column>
       </Grid>
     </StrictMode>

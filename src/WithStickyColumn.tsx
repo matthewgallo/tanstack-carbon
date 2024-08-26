@@ -86,6 +86,7 @@ export const WithStickyColumn = () => {
   return (
       <TableContainer
         title="Sticky columns"
+        className='tanstack-example'
         style={{
           width: 400,
         }}

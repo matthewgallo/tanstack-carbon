@@ -1,5 +1,10 @@
 @use '@carbon/styles/scss/theme' as *;
 
+.flex {
+  display: flex;
+  align-items: center;
+}
+
 .basic-table th,
 .cds--data-table th:last-of-type {
   position: relative;
@@ -87,4 +92,20 @@
 
 .sortable-example {
   padding-bottom: 2rem;
+}
+
+
+// Nested row
+.row-expander {
+  width: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+.row-expander .row-expanded-icon {
+  transform: rotate(90deg);
+  transition: transform 200ms;
 }
