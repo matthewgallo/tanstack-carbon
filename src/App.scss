@@ -64,3 +64,23 @@
 .row-click {
   cursor: pointer;
 }
+
+
+// Sorting
+.descending-sorting-icon {
+  transform: rotate(180deg);
+  transition: transform 200ms;
+}
+
+.sortable-button-header {
+  color: $text-primary;
+  width: 100%;
+  padding-inline-end: 1rem;
+  padding-inline-start: 1rem;
+  max-inline-size: none;
+}
+
+.sortable-example.cds--data-table th {
+  padding-inline-end: 0;
+  padding-inline-start: 0;
+}
