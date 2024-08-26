@@ -110,54 +110,8 @@ export const WithStickyColumn = () => {
                           : flexRender(
                               header.column.columnDef.header,
                               header.getContext()
-                            )}{' '}
-                        {/* Demo getIndex behavior */}
-                        {column.getIndex(column.getIsPinned() || 'center')}
+                            )}
                       </div>
-                      {/* {!header.isPlaceholder && header.column.getCanPin() && (
-                        <div className="flex gap-1 justify-center">
-                          {header.column.getIsPinned() !== 'left' ? (
-                            <button
-                              className="border rounded px-2"
-                              onClick={() => {
-                                header.column.pin('left')
-                              }}
-                            >
-                              {'<='}
-                            </button>
-                          ) : null}
-                          {header.column.getIsPinned() ? (
-                            <button
-                              className="border rounded px-2"
-                              onClick={() => {
-                                header.column.pin(false)
-                              }}
-                            >
-                              X
-                            </button>
-                          ) : null}
-                          {header.column.getIsPinned() !== 'right' ? (
-                            <button
-                              className="border rounded px-2"
-                              onClick={() => {
-                                header.column.pin('right')
-                              }}
-                            >
-                              {'=>'}
-                            </button>
-                          ) : null}
-                        </div>
-                      )} */}
-                      <div
-                        {...{
-                          onDoubleClick: () => header.column.resetSize(),
-                          onMouseDown: header.getResizeHandler(),
-                          onTouchStart: header.getResizeHandler(),
-                          className: `resizer ${
-                            header.column.getIsResizing() ? 'isResizing' : ''
-                          }`,
-                        }}
-                      />
                     </TableHeader>
                   )
                 })}
