@@ -9,7 +9,7 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table'
-import { Button, DataTable } from '@carbon/react'
+import { Button, DataTable, TableContainer } from '@carbon/react'
 import { ArrowUp } from '@carbon/react/icons'
 import cx from 'classnames'
 
@@ -106,8 +106,7 @@ export const WithSortableColumns = () => {
   console.log(table.getState().sorting)
 
   return (
-    <div className="p-2">
-      <div className="h-2" />
+    <TableContainer title="Column sorting">
       <Table className='sortable-example'>
         <TableHead>
           {table.getHeaderGroups().map(headerGroup => (
@@ -175,6 +174,6 @@ export const WithSortableColumns = () => {
             })}
         </TableBody>
       </Table>
-    </div>
+    </TableContainer>
   )
 }
