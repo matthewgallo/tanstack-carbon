@@ -17,6 +17,7 @@ import { WithStickyColumn } from './WithStickyColumn'
 import { WithNestedRows } from './WithNestedRows'
 
 import './index.scss'
+import { WithCustomizeColumns } from './WithCustomizeColumns'
 const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
@@ -55,6 +56,9 @@ createRoot(document.getElementById('root')!).render(
         </Column>
         <Column sm={4} md={8} lg={16}>
           <WithNestedRows />
+        </Column>
+        <Column sm={4} md={8} lg={16}>
+          <WithCustomizeColumns />
         </Column>
       </Grid>
     </StrictMode>
