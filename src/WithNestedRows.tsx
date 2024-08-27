@@ -4,8 +4,6 @@ import {
   ExpandedState,
   useReactTable,
   getCoreRowModel,
-  getPaginationRowModel,
-  getFilteredRowModel,
   getExpandedRowModel,
   ColumnDef,
   flexRender,
@@ -93,7 +91,7 @@ export const WithNestedRows = () => {
     []
   )
 
-  const [data] = React.useState(() => makeData(100, 5, 3))
+  const [data] = React.useState(() => makeData(10, 5, 3))
 
   const [expanded, setExpanded] = React.useState<ExpandedState>({})
 
@@ -106,8 +104,6 @@ export const WithNestedRows = () => {
     onExpandedChange: setExpanded,
     getSubRows: row => row.subRows,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
     // filterFromLeafRows: true,
     // maxLeafRowFilterDepth: 0,
