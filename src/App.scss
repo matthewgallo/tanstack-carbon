@@ -205,3 +205,16 @@ $horizontal-drag-height: 6rem;
 .visibility-checkbox {
   max-width: 32px;
 }
+
+// Editable cells
+
+[role="gridcell"]:focus, [role="gridcell"] *:focus,
+[role="grid"] [tabindex="0"]:focus {
+  @include utilities.focus-outline('outline'); 
+}
+
+.editable-cell-input .cds--text-input {
+  height: 48px;
+  width: calc(100% + 1rem);
+  transform: translateX(-1rem);
+}
