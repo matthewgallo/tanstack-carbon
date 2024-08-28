@@ -45,7 +45,7 @@ const EditableCell = ({tableContainerRef, table, cell, editingId, setEditingId, 
 
   const handleEditModeKeyDown = (event: KeyboardEvent) => {
     if (event.code === 'Enter' || event.code === 'Escape') {
-      table.options.meta?.updateData(cell.row.index, cell.column.id, editValue)
+      table.options.meta?.updateData(cell.row.index, cell.column.id, editValue ?? cell.getValue())
       setEditingId(null);
       // This is sketchy, refactor later
       setTimeout(() => {
@@ -59,7 +59,10 @@ const EditableCell = ({tableContainerRef, table, cell, editingId, setEditingId, 
   const { style } = rest;
 
   return editingId === `cell__${id}`
-    ? <td>
+    ? <td style={{
+      width: style?.width,
+      padding: 0,
+    }}>
         <TextInput
           className="editable-cell-input"
           id={`cell__${id}`}
@@ -67,13 +70,13 @@ const EditableCell = ({tableContainerRef, table, cell, editingId, setEditingId, 
           hideLabel
           value={editValue ?? cell.getValue()}
           {...rest}
-          style={{
-            width: style?.width + 16
-          }}
           autoFocus
+          style={{
+            height: 48 - 1 // account for border to prevent extra 1px height added to cell
+          }}
           onBlur={() => {
             // Save cell data
-            table.options.meta?.updateData(cell.row.index, cell.column.id, editValue)
+            table.options.meta?.updateData(cell.row.index, cell.column.id, editValue ?? cell.getValue())
             setEditingId(null);
           }}
           onChange={e => setEditValue(e.target.value)}
