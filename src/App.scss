@@ -3,6 +3,7 @@
 @use '@carbon/styles/scss/utilities';
 @use '@carbon/styles/scss/colors';
 @use '@carbon/styles/scss/type';
+@use '@carbon/type/scss/font-family';
 
 .flex {
   display: flex;
@@ -215,4 +216,34 @@ $horizontal-drag-height: 6rem;
 
 .editable-cell-input .cds--text-input {
   height: 48px;
+}
+
+// Flyout
+
+.flyout--container {
+  padding: 1rem;
+}
+
+.flyout--container .flyout--container__filters {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 1rem;
+}
+
+.flyout--label {
+  @include type.type-style('body-compact-01');
+  @include font-family.font-weight('semibold');
+
+  padding-bottom: 1rem;
+}
+
+.filter-flyout-example .cds--popover-content {
+  max-inline-size: 642px;
+}
+
+.filter-checkbox-group-label {
+  @include type.type-style('label-01');
+  color: $text-secondary;
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
 }

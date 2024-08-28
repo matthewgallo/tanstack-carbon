@@ -19,6 +19,7 @@ import { WithNestedRows } from './WithNestedRows'
 import './index.scss'
 import { WithCustomizeColumns } from './WithCustomizeColumns'
 import { WithEditableCells } from './WithEditableCells'
+import { WithFilterFlyout } from './WithFilterFlyout'
 const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
@@ -63,6 +64,9 @@ createRoot(document.getElementById('root')!).render(
         </Column>
         <Column sm={4} md={8} lg={16}>
           <WithEditableCells />
+        </Column>
+        <Column sm={4} md={8} lg={16}>
+          <WithFilterFlyout />
         </Column>
       </Grid>
     </StrictMode>
