@@ -247,3 +247,13 @@ $horizontal-drag-height: 6rem;
   text-transform: capitalize;
   margin-bottom: 0.5rem;
 }
+
+.filter-flyout-button-set.cds--btn-set .cds--btn {
+  max-width: none;
+  width: 50%;
+}
+
+.tag-overflow-flyout-example {
+  height: 48px;
+  padding-left: 0.5rem;
+}

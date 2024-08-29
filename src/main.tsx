@@ -15,11 +15,11 @@ import { WithRowClick } from './WithRowClick'
 import { WithSortableColumns } from './useSortableColumns'
 import { WithStickyColumn } from './WithStickyColumn'
 import { WithNestedRows } from './WithNestedRows'
-
-import './index.scss'
 import { WithCustomizeColumns } from './WithCustomizeColumns'
 import { WithEditableCells } from './WithEditableCells'
 import { WithFilterFlyout } from './WithFilterFlyout'
+
+import './index.scss'
 const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(

@@ -162,9 +162,10 @@ export const WithCustomizeColumns = () => {
               setColumnOrder(tempNewOrder);
             }
             setShowTearsheet(false);
-            const nonSelectedItems = table.getAllLeafColumns().filter(obj => newVisibilityList.every(s => s.id !== obj.id));
+            const cols = newVisibilityList ?? table.getAllLeafColumns();
+            const nonSelectedItems = table.getAllLeafColumns().filter(obj => cols.every(s => s.id !== obj.id));
             // Toggle visibility state for cols
-            newVisibilityList.forEach(col => {
+            cols.forEach(col => {
               col.toggleVisibility(true);
             });
             nonSelectedItems.forEach(col => {
@@ -174,12 +175,20 @@ export const WithCustomizeColumns = () => {
         }]}
       >
         <Sortable
+          active={showTearsheet}
           modifiers={[restrictToParentElement, restrictToVerticalAxis]}
           strategy={verticalListSortingStrategy}
           type="vertical"
           wrapperStyle={null}
-          onDragEnd={newOrder => setTempNewOrder(newOrder)}
-          onVisibilityChange={cols => setNewVisibilityList(cols)}
+          onDragEnd={newOrder => {
+            setTimeout(() => {
+              setTempNewOrder(newOrder);
+            }, 5);
+          }}
+          onVisibilityChange={cols => {
+            console.log(cols);
+            setNewVisibilityList(cols)
+          }}
           dragItems={tempNewOrder}
           originalColumns={table.getAllLeafColumns()}
           visibleColumns={table.getVisibleFlatColumns()}

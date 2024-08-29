@@ -43,6 +43,7 @@ export const Sortable = ({
   originalColumns,
   visibleColumns,
   onVisibilityChange,
+  active,
   ...args
 }) => {
   const [tempVisible, setTempVisible] = useState(visibleColumns);
@@ -66,6 +67,10 @@ export const Sortable = ({
 
   const keyboardSensor = useSensor(KeyboardSensor, {
     coordinateGetter: (event, args) => {
+      // Only add keyboard events when sortable component is active (ie tearsheet is open)
+      if (!active) {
+        return;
+      }
       const { currentCoordinates } = args;
 
       let target = event.target as HTMLElement;
@@ -184,6 +189,7 @@ export const Sortable = ({
                 hideLabel
                 className='visibility-checkbox'
                 onChange={(event, { checked, id }) => {
+                  console.log(checked);
                   if (!checked) {
                     const cloneVisible = [...tempVisible];
                     const newCols = cloneVisible.filter(c => c.id !== id);
