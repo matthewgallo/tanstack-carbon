@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { Dispatch, SetStateAction, useState, useRef } from 'react'
 import cx from 'classnames'
 import { DataTable, IconButton, Layer, Popover, PopoverContent, TextInput, Dropdown, ButtonSet, Button, Checkbox, NumberInput } from '@carbon/react';
 import { Filter } from '@carbon/react/icons';
@@ -155,7 +155,7 @@ export const WithFilterFlyout = () => {
       const tempColumnFilters = [...columnFilters];
       tempFilters.splice(foundLocalIndex, 1);
       tempColumnFilters.splice(foundIndex, 1);
-      // setLocalFilters(tempFilters);
+      setLocalFilters(tempFilters);
       setColumnFilters(tempColumnFilters);
       const tableFullColumn = table.getColumn(c.id);
       tableFullColumn.setFilterValue(undefined);
@@ -165,131 +165,136 @@ export const WithFilterFlyout = () => {
   });
   console.log(tagFilters);
 
+  const containerRef = useRef();
   return (
-    <TableContainer
-      title="Filter flyout"
-      className="basic-table tanstack-example filter-flyout-example"
-      style={{
-        width: table.getCenterTotalSize(),
-      }}
-    >
-      <TableToolbar>
-        <TableToolbarContent>
-          <TableToolbarSearch
-            defaultValue={globalFilter ?? ''}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setGlobalFilter(event.target.value)}
-            placeholder="Search all columns..."
-            persistent
-          />
-          <Layer>
-            <Popover
-              open={popoverOpen}
-              isTabTip
-              // onRequestClose={() => setPopoverOpen(false)}
-              align='bottom-end'
-              autoAlign
-            >
-              <IconButton
-                onClick={() => setPopoverOpen(prev => !prev)}
-                label="Filter"
-                kind='ghost'
+    <div ref={containerRef}>
+      <TableContainer
+        title="Filter flyout"
+        className="basic-table tanstack-example filter-flyout-example"
+        style={{
+          width: table.getCenterTotalSize(),
+        }}
+      >
+        <TableToolbar>
+          <TableToolbarContent>
+            <TableToolbarSearch
+              defaultValue={globalFilter ?? ''}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => setGlobalFilter(event.target.value)}
+              placeholder="Search all columns..."
+              persistent
+            />
+            <Layer>
+              <Popover
+                open={popoverOpen}
+                isTabTip
+                // onRequestClose={() => setPopoverOpen(false)}
+                align='bottom-end'
+                autoAlign
               >
-                <Filter />
-              </IconButton>
-              <PopoverContent>
-                <div className='flyout--container'>
-                  <p className='flyout--label'>Filter</p>
-                  <div className="flyout--container__filters">
-                    {table.getHeaderGroups().map((headerGroup, index) => (
-                      <React.Fragment key={index}>
-                        {headerGroup.headers.map((header, index) => {
-                          if (header.column.getCanFilter()) {
-                            return <div className="filter-flyout-item" key={index}>
-                              <FilterColumn
-                                header={header}
-                                column={header.column}
-                                setLocalFilters={setLocalFilters}
-                                localFilters={localFilters}
-                              />
-                            </div>
-                          }
-                        })}
-                      </React.Fragment>
-                    ))}
+                <IconButton
+                  onClick={() => setPopoverOpen(prev => !prev)}
+                  label="Filter"
+                  kind='ghost'
+                >
+                  <Filter />
+                </IconButton>
+                <PopoverContent>
+                  <div className='flyout--container'>
+                    <p className='flyout--label'>Filter</p>
+                    <div className="flyout--container__filters">
+                      {table.getHeaderGroups().map((headerGroup, index) => (
+                        <React.Fragment key={index}>
+                          {headerGroup.headers.map((header, index) => {
+                            if (header.column.getCanFilter()) {
+                              return <div className="filter-flyout-item" key={index}>
+                                {popoverOpen && (
+                                  <FilterColumn
+                                    header={header}
+                                    column={header.column}
+                                    setLocalFilters={setLocalFilters}
+                                    localFilters={localFilters}
+                                  />
+                                )}
+                              </div>
+                            }
+                          })}
+                        </React.Fragment>
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <ButtonSet className='filter-flyout-button-set'>
-                  <Button kind="secondary" onClick={() => {
-                    table.resetColumnFilters();
-                    setPopoverOpen(false);
-                  }}>
-                    Clear
-                  </Button>
-                  <Button
-                    kind="primary"
-                    onClick={() => {
-                      setColumnFilters(localFilters);
+                  <ButtonSet className='filter-flyout-button-set'>
+                    <Button kind="secondary" onClick={() => {
+                      table.resetColumnFilters();
                       setPopoverOpen(false);
+                    }}>
+                      Clear
+                    </Button>
+                    <Button
+                      kind="primary"
+                      onClick={() => {
+                        setColumnFilters(localFilters);
+                        setPopoverOpen(false);
+                      }}
+                    >
+                      Filter
+                    </Button>
+                  </ButtonSet>
+                </PopoverContent>
+              </Popover>
+            </Layer>
+          </TableToolbarContent>
+        </TableToolbar>
+        <TagOverflow 
+          className={cx({['tag-overflow-flyout-example']: tagFilters.length})}
+          // @ts-expect-error `filter` should be boolean in tag overflow component
+          items={tagFilters}
+          containingElementRef={containerRef}
+        />
+        <Table
+          size="lg"
+          useZebraStyles={false}
+          aria-label="sample table"
+        >
+          <TableHead>
+            {table.getHeaderGroups().map(headerGroup => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map(header => (
+                  <TableHeader
+                    key={header.id}
+                    style={{
+                      width: header.getSize(),
                     }}
                   >
-                    Filter
-                  </Button>
-                </ButtonSet>
-              </PopoverContent>
-            </Popover>
-          </Layer>
-        </TableToolbarContent>
-      </TableToolbar>
-      <TagOverflow 
-        className={cx({['tag-overflow-flyout-example']: tagFilters.length})}
-        // @ts-expect-error `filter` should be boolean in tag overflow component
-        items={tagFilters}
-        containerWidth={table.getCenterTotalSize()}
-      />
-      <Table
-        size="lg"
-        useZebraStyles={false}
-        aria-label="sample table"
-      >
-        <TableHead>
-          {table.getHeaderGroups().map(headerGroup => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
-                <TableHeader
-                  key={header.id}
-                  style={{
-                    width: header.getSize(),
-                  }}
-                >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                </TableHeader>
-              ))}
-            </TableRow>
-          ))}
-        </TableHead>
-        <TableBody>
-          {table.getRowModel().rows.map(row => (
-            <TableRow key={row.id}>
-              {row.getVisibleCells().map(cell => (
-                <TableCell
-                  key={cell.id}
-                  style={{
-                    width: cell.column.getSize(),
-                  }}
-                >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                  </TableHeader>
+                ))}
+              </TableRow>
+            ))}
+          </TableHead>
+          <TableBody>
+            {table.getRowModel().rows.map(row => (
+              <TableRow key={row.id}>
+                {row.getVisibleCells().map(cell => (
+                  <TableCell
+                    key={cell.id}
+                    style={{
+                      width: cell.column.getSize(),
+                    }}
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   )
 }
 
