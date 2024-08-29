@@ -63,7 +63,7 @@ Item.propTypes = {
   attributes: PropTypes.shape({
     ['aria-describedby']: PropTypes.string,
     ['aria-disabled']: PropTypes.bool,
-    ['aria-pressed']: PropTypes.oneOfType([PropTypes.bool, undefined]),
+    ['aria-pressed']: PropTypes.oneOfType([PropTypes.bool]),
     ['aria-roledescription']: PropTypes.string,
     ['role']: PropTypes.string,
     ['tabIndex']: PropTypes.number,

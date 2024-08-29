@@ -154,13 +154,13 @@ export const WithInfiniteScroll = () => {
   return (
       <div className="virtual-example">
         <h4>Virtualized infinite scroll</h4>
-        {process.env.NODE_ENV === 'development' ? (
+        {/* {process.env.NODE_ENV === 'development' ? (
           <p className='virtual-description'>
             <strong>Notice:</strong> You are currently running React in
             development mode. Virtualized rendering performance will be slightly
             degraded until this application is built for production.
           </p>
-        ) : null}
+        ) : null} */}
         ({flatData.length} of {totalDBRowCount} rows fetched)
         <div
           className="container"

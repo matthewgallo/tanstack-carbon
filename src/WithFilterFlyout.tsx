@@ -1,6 +1,18 @@
 import React, { Dispatch, SetStateAction, useState, useRef } from 'react'
 import cx from 'classnames'
-import { DataTable, IconButton, Layer, Popover, PopoverContent, TextInput, Dropdown, ButtonSet, Button, Checkbox, NumberInput } from '@carbon/react';
+import {
+  DataTable,
+  IconButton,
+  Layer,
+  Popover,
+  PopoverContent,
+  TextInput,
+  Dropdown,
+  ButtonSet,
+  Button,
+  Checkbox,
+  NumberInput
+} from '@carbon/react';
 import { Filter } from '@carbon/react/icons';
 const {
   Table,
@@ -138,7 +150,6 @@ export const WithFilterFlyout = () => {
     globalFilterFn: 'fuzzy', //apply fuzzy filter to the global filter (most common use case for fuzzy filter)
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
-  console.log(columnFilters);
 
   interface ExtendedColFilter extends ColumnFilter {
     label: string;
@@ -148,7 +159,6 @@ export const WithFilterFlyout = () => {
   const tagFilters = columnFilters.map((c: ExtendedColFilter) => {
     c.label = `${c.id}: ${c.value}`;
     c.onClose = () => {
-      console.log(columnFilters);
       const foundLocalIndex = localFilters.findIndex(f => f.id === c.id && f.value === c.value);
       const foundIndex = columnFilters.findIndex(f => f.id === c.id && f.value === c.value);
       const tempFilters = [...localFilters];
@@ -163,7 +173,6 @@ export const WithFilterFlyout = () => {
     c.filter = true;
     return c
   });
-  console.log(tagFilters);
 
   const containerRef = useRef();
   return (
@@ -187,7 +196,7 @@ export const WithFilterFlyout = () => {
               <Popover
                 open={popoverOpen}
                 isTabTip
-                // onRequestClose={() => setPopoverOpen(false)}
+                onRequestClose={() => setPopoverOpen(false)}
                 align='bottom-end'
                 autoAlign
               >
@@ -244,12 +253,20 @@ export const WithFilterFlyout = () => {
             </Layer>
           </TableToolbarContent>
         </TableToolbar>
-        <TagOverflow 
-          className={cx({['tag-overflow-flyout-example']: tagFilters.length})}
-          // @ts-expect-error `filter` should be boolean in tag overflow component
-          items={tagFilters}
-          containingElementRef={containerRef}
-        />
+        {tagFilters.length ? (
+          <div className='filter--summary'>
+            <TagOverflow 
+              className={cx({['tag-overflow-flyout-example']: tagFilters.length})}
+              // @ts-expect-error `filter` should be boolean in tag overflow component
+              items={tagFilters}
+              containingElementRef={containerRef}
+            />
+            <Button kind='ghost' onClick={() => {
+              setLocalFilters([]);
+              table.resetColumnFilters()
+            }}>Clear filters</Button>
+          </div>
+        ): null}
         <Table
           size="lg"
           useZebraStyles={false}
@@ -307,7 +324,6 @@ const FilterColumn = (
     localFilters: ColumnFiltersState,
   }) => {
   const columnFilterValue = column.getFilterValue()
-  console.log(column.id, columnFilterValue);
   const { filterVariant } = column.columnDef.meta ?? {}
 
   const sortedUniqueValues = React.useMemo(
