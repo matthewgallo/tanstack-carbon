@@ -6,11 +6,11 @@
     "build": "nx run-many -t build"
   },
   "private": true,
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "@nx/js": "19.6.4",
     "nx": "19.6.4"
   },
+  "devDependencies": {},
   "workspaces": [
     "packages/*"
   ]
