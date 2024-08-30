@@ -1648,7 +1648,7 @@
     tslib "^2.3.0"
     yargs-parser "21.1.1"
 
-"@nx/js@19.6.4":
+"@nx/js@19.6.4", "@nx/js@^19.6.4":
   version "19.6.4"
   resolved "https://registry.yarnpkg.com/@nx/js/-/js-19.6.4.tgz#321b9227f5fd1c4f729c47d9af81d92952f1faa4"
   integrity sha512-Z09whMis90on3/5V0RIG1On5bRlNI4q2SGZQmj530+BqRTNdKNqxuYdpGf3oNbw5cgLVGiHcWtHzZROaAzpc4g==
@@ -3440,7 +3440,7 @@ npm-run-path@^4.0.1:
   dependencies:
     path-key "^3.0.0"
 
-nx@19.6.4:
+nx@19.6.4, nx@^19.6.4:
   version "19.6.4"
   resolved "https://registry.yarnpkg.com/nx/-/nx-19.6.4.tgz#ac6238eddb2e9f85dcc6125fc20630c015cf0134"
   integrity sha512-yudYlBd3cMchRd8c0ZNan1SfT19AYK2zYOp77XVqVVwgqb6rJVxz6StFGFluUQ7Q7uSpkeT/8PsjwPVLt85EoQ==
