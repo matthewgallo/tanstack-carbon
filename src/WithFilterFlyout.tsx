@@ -156,27 +156,41 @@ export const WithFilterFlyout = () => {
     onClose: () => void;
     filter: boolean;
   }
-  const tagFilters = columnFilters.map((c: ExtendedColFilter) => {
-    c.label = `${c.id}: ${c.value}`;
-    c.onClose = () => {
-      const foundLocalIndex = localFilters.findIndex(f => f.id === c.id && f.value === c.value);
-      const foundColumnIndex = columnFilters.findIndex(f => f.id === c.id && f.value === c.value);
-      const tempFilters = [...localFilters];
-      const tempColumnFilters = [...columnFilters];
-      if (foundColumnIndex > -1) {
-        tempColumnFilters.splice(foundColumnIndex, 1);
-        setColumnFilters(tempColumnFilters);
+
+  const buildTagFilters = () => {
+    const tagFilters = columnFilters.map((c: ExtendedColFilter) => {
+      const buildTag = (col, checkboxParentColumnData?: ColumnFilter) => {
+        const tagData = {} as ExtendedColFilter;
+        tagData.label = typeof col === 'string' ? `${checkboxParentColumnData.id}: ${col}` : `${col.id}: ${col.value}`;
+        tagData.onClose = () => {
+          const foundLocalIndex = localFilters.findIndex(f => f.id === col.id && f.value === col.value);
+          const foundColumnIndex = columnFilters.findIndex(f => f.id === col.id && f.value === col.value);
+          const tempFilters = [...localFilters];
+          const tempColumnFilters = [...columnFilters];
+          if (foundColumnIndex > -1) {
+            tempColumnFilters.splice(foundColumnIndex, 1);
+            setColumnFilters(tempColumnFilters);
+          }
+          if (foundLocalIndex > -1) {
+            tempFilters.splice(foundLocalIndex, 1);
+            setLocalFilters(tempFilters);
+          }
+          const tableFullColumn = table.getColumn(col.id);
+          tableFullColumn.setFilterValue(undefined);
+        };
+        tagData.filter = true;
+        tagData.id = typeof col === 'string' ? col : col.id;
+        return tagData
       }
-      if (foundLocalIndex > -1) {
-        tempFilters.splice(foundLocalIndex, 1);
-        setLocalFilters(tempFilters);
+      if (Array.isArray(c.value)) {
+        return c.value.map(val => buildTag(val, c));
       }
-      const tableFullColumn = table.getColumn(c.id);
-      tableFullColumn.setFilterValue(undefined);
-    };
-    c.filter = true;
-    return c
-  });
+      return buildTag(c);
+    });
+    return tagFilters.flat();
+  };
+
+  console.log('built tag filters; ', buildTagFilters());
 
   const returnFocusToFlyoutTrigger = () => {
     if (popoverRef?.current) {
@@ -271,12 +285,12 @@ export const WithFilterFlyout = () => {
             </Layer>
           </TableToolbarContent>
         </TableToolbar>
-        {tagFilters.length ? (
+        {buildTagFilters().length ? (
           <div className='filter--summary'>
             <TagOverflow 
-              className={cx({['tag-overflow-flyout-example']: tagFilters.length})}
+              className={cx({['tag-overflow-flyout-example']: buildTagFilters().length})}
               // @ts-expect-error `filter` should be boolean in tag overflow component
-              items={tagFilters}
+              items={buildTagFilters()}
               containingElementRef={containerRef}
             />
             <Button kind='ghost' onClick={() => {
@@ -354,6 +368,12 @@ const FilterColumn = (
   )
   console.log('local filters: ', localFilters);
 
+  const getCheckboxState = (value) => {
+    const foundFilter = localFilters.find(c => c.id === column.id);
+    const isChecked = foundFilter ? (localFilters.find(c => c.id === column.id)?.value as string[]).includes(value) : false;
+    return !!isChecked;
+  }
+
   return filterVariant === 'select' ? (
     <Layer>
       <Dropdown
@@ -381,11 +401,12 @@ const FilterColumn = (
   ) : filterVariant === 'checkbox' ? (
     <Layer>
       <p className='filter-checkbox-group-label'>{column.id}</p>
-      {sortedUniqueValues.map(value => (
+      {sortedUniqueValues.map((value: string) => (
         <Checkbox
           key={value}
           id={value}
           labelText={value}
+          checked={getCheckboxState(value)}
           onChange={(event, { checked, id }) => {
             const temp = [...localFilters];
             const foundLocalFilter = temp.filter(f => f.id === column.id);
