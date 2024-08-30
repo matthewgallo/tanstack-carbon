@@ -265,7 +265,8 @@ export const WithFilterFlyout = () => {
                     <Button kind="secondary" onClick={() => {
                       table.resetColumnFilters();
                       setPopoverOpen(false);
-                      returnFocusToFlyoutTrigger()
+                      returnFocusToFlyoutTrigger();
+                      setLocalFilters([]);
                     }}>
                       Clear
                     </Button>
