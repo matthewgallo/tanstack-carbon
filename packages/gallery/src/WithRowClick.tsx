@@ -1,4 +1,4 @@
-import React, { useRef, useState, useLayoutEffect } from 'react'
+import { useRef, useState, useLayoutEffect } from 'react'
 import { DataTable } from '@carbon/react';
 import { SidePanel } from '@carbon/ibm-products';
 const {

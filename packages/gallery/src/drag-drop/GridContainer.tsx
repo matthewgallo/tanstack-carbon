@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -24,7 +23,7 @@ export const GridContainer = ({
       style={{
         '--col-count': columns,
         '--grid-gap': gridGap,
-      }}
+      } as React.CSSProperties}
     >
       {children}
     </ul>

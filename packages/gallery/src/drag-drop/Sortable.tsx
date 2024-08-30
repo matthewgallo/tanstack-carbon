@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { px } from '@carbon/layout';
 import { Checkbox } from '@carbon/react';
@@ -188,7 +188,7 @@ export const Sortable = ({
                 labelText="Toggle visibility"
                 hideLabel
                 className='visibility-checkbox'
-                onChange={(event, { checked, id }) => {
+                onChange={(_, { checked, id }) => {
                   console.log(checked);
                   if (!checked) {
                     const cloneVisible = [...tempVisible];

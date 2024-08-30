@@ -408,7 +408,7 @@ const FilterColumn = (
           id={value}
           labelText={value}
           checked={getCheckboxState(value)}
-          onChange={(event, { checked, id }) => {
+          onChange={(_, { checked, id }) => {
             const temp = [...localFilters];
             const foundLocalFilter = temp.filter(f => f.id === column.id);
             const foundFilterIndex = foundLocalFilter.length ? temp.findIndex(f => f.id === foundLocalFilter[0].id) : -1;
@@ -447,7 +447,7 @@ const FilterColumn = (
         value={localFilters.find(c => c.id === column.id)?.value as number}
         hideSteppers
         label={column.id}
-        onChange={(event, { value }) => {
+        onChange={(_, { value }) => {
           const temp = [...localFilters];
           const foundLocalFilter = temp.filter(f => f.id === column.id);
           const foundFilterIndex = foundLocalFilter.length ? temp.findIndex(f => f.id === foundLocalFilter[0].id) : -1;

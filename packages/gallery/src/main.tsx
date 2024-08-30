@@ -8,8 +8,7 @@ import {
   HeaderContainer,
   HeaderName,
 } from '@carbon/react'
-import { QueryClient,
-  QueryClientProvider, } from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider, } from '@tanstack/react-query'
 
 import { ResizableCols } from './ResizableCols'
 import { TableWithSearch } from './TableWithSearch'
@@ -32,7 +31,7 @@ const queryClient = new QueryClient()
 const renderUIShellHeader = () => (
   <HeaderContainer
     render={() => (
-      <Header aria-label="IBM Cloud Pak">
+      <Header aria-label="Tanstack Carbon DataTable">
         <HeaderName href="/" prefix="Carbon">
           DataTable / <CodeSnippet hideCopyButton type='inline'>@tanstack/table</CodeSnippet>explorations
         </HeaderName>

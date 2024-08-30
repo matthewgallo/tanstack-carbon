@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useSortable } from '@dnd-kit/sortable';
@@ -39,6 +38,7 @@ export const SortableItem = ({
       isDragging={isDragging}
       attributes={attributes}
       type={type}
+      // @ts-expect-error revisit
       setNodeRef={setNodeRef}
       transform={CSS.Translate.toString(transform)}
       transition={transition}
