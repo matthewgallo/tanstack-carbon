@@ -163,7 +163,7 @@ export const WithInfiniteScroll = () => {
         ) : null} */}
         ({flatData.length} of {totalDBRowCount} rows fetched)
         <div
-          className="container"
+          className="infinite-scroll-container"
           onScroll={e => fetchMoreOnBottomReached(e.target as HTMLDivElement)}
           ref={tableContainerRef}
           style={{

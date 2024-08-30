@@ -160,13 +160,17 @@ export const WithFilterFlyout = () => {
     c.label = `${c.id}: ${c.value}`;
     c.onClose = () => {
       const foundLocalIndex = localFilters.findIndex(f => f.id === c.id && f.value === c.value);
-      const foundIndex = columnFilters.findIndex(f => f.id === c.id && f.value === c.value);
+      const foundColumnIndex = columnFilters.findIndex(f => f.id === c.id && f.value === c.value);
       const tempFilters = [...localFilters];
       const tempColumnFilters = [...columnFilters];
-      tempFilters.splice(foundLocalIndex, 1);
-      tempColumnFilters.splice(foundIndex, 1);
-      setLocalFilters(tempFilters);
-      setColumnFilters(tempColumnFilters);
+      if (foundColumnIndex > -1) {
+        tempColumnFilters.splice(foundColumnIndex, 1);
+        setColumnFilters(tempColumnFilters);
+      }
+      if (foundLocalIndex > -1) {
+        tempFilters.splice(foundLocalIndex, 1);
+        setLocalFilters(tempFilters);
+      }
       const tableFullColumn = table.getColumn(c.id);
       tableFullColumn.setFilterValue(undefined);
     };
@@ -174,7 +178,16 @@ export const WithFilterFlyout = () => {
     return c
   });
 
+  const returnFocusToFlyoutTrigger = () => {
+    if (popoverRef?.current) {
+      const triggerButton = popoverRef?.current.querySelector('button');
+      triggerButton?.focus();
+    }
+  }
+
   const containerRef = useRef();
+  const popoverRef = useRef<HTMLSpanElement>();
+
   return (
     <div ref={containerRef}>
       <TableContainer
@@ -196,9 +209,12 @@ export const WithFilterFlyout = () => {
               <Popover
                 open={popoverOpen}
                 isTabTip
-                onRequestClose={() => setPopoverOpen(false)}
+                onRequestClose={() => {
+                  setPopoverOpen(false)
+                }}
                 align='bottom-end'
                 autoAlign
+                ref={popoverRef}
               >
                 <IconButton
                   onClick={() => setPopoverOpen(prev => !prev)}
@@ -235,6 +251,7 @@ export const WithFilterFlyout = () => {
                     <Button kind="secondary" onClick={() => {
                       table.resetColumnFilters();
                       setPopoverOpen(false);
+                      returnFocusToFlyoutTrigger()
                     }}>
                       Clear
                     </Button>
@@ -243,6 +260,7 @@ export const WithFilterFlyout = () => {
                       onClick={() => {
                         setColumnFilters(localFilters);
                         setPopoverOpen(false);
+                        returnFocusToFlyoutTrigger()
                       }}
                     >
                       Filter
@@ -323,7 +341,6 @@ const FilterColumn = (
     setLocalFilters: Dispatch<SetStateAction<ColumnFiltersState>>,
     localFilters: ColumnFiltersState,
   }) => {
-  const columnFilterValue = column.getFilterValue()
   const { filterVariant } = column.columnDef.meta ?? {}
 
   const sortedUniqueValues = React.useMemo(
@@ -335,6 +352,7 @@ const FilterColumn = (
             .slice(0, 5000),
     [filterVariant, column]
   )
+  console.log('local filters: ', localFilters);
 
   return filterVariant === 'select' ? (
     <Layer>
@@ -343,12 +361,21 @@ const FilterColumn = (
         titleText={`Filter ${column.id}`}
         label="Choose a status"
         items={sortedUniqueValues}
-        selectedItem={columnFilterValue}
-        // onChange={({ selectedItem }) => column.setFilterValue(selectedItem)} // instant filter option
+        initialSelectedItem={localFilters.find(c => c.id === column.id)?.value as string}
+        renderSelectedItem={() => <div className='flyout-dropdown-selected-item'>{localFilters.find(c => c.id === column.id)?.value as string}</div>}
+        itemToElement={(item: { value: any }) => <div className='flyout-dropdown-selected-item'>{item.value}</div>}
         onChange={({ selectedItem }) => {
           const temp = [...localFilters]
+          const foundIndex = temp.findIndex(c => c.id === column.id);
+          if (foundIndex > -1) {
+            temp.splice(foundIndex, 1);
+            temp.push({ id: column.id, value: selectedItem });
+            console.log('temp', temp);
+            setLocalFilters(temp);
+            return;
+          }
           setLocalFilters([...temp, { id: column.id, value: selectedItem }])
-        }} // batch filter option
+        }}
       />
     </Layer>
   ) : filterVariant === 'checkbox' ? (
@@ -362,19 +389,29 @@ const FilterColumn = (
           onChange={(event, { checked, id }) => {
             const temp = [...localFilters];
             const foundLocalFilter = temp.filter(f => f.id === column.id);
+            const foundFilterIndex = foundLocalFilter.length ? temp.findIndex(f => f.id === foundLocalFilter[0].id) : -1;
             // This means there is only one checkbox selected
             if (checked) {
-              if (foundLocalFilter.length) {
+              if (foundFilterIndex > -1) {
                 const foundFilterValues = foundLocalFilter[0].value as [];
-                setLocalFilters([...temp, { id: column.id, value: [...foundFilterValues, id] }]);
+                temp.splice(foundFilterIndex, 1);
+                temp.push({ id: column.id, value: [...foundFilterValues, id] });
+                setLocalFilters(temp);
                 return;
               }
               setLocalFilters([...temp, { id: column.id, value: [ id ] }]);
               return;
             }
             if (!checked) {
-              const tempFilters = [...localFilters].filter(f => f.id !== column.id);
-              setLocalFilters(tempFilters);
+              if (foundFilterIndex > -1) {
+                const foundFilterValues = foundLocalFilter[0].value as [];
+                const newFoundFilterValues = foundFilterValues.filter(item => item !== id);
+                temp.splice(foundFilterIndex, 1);
+                if (newFoundFilterValues && newFoundFilterValues.length) {
+                  temp.push({ id: column.id, value: newFoundFilterValues });
+                }
+                setLocalFilters(temp);
+              }
             }
           }}
         />
@@ -384,14 +421,15 @@ const FilterColumn = (
     <Layer>
       <NumberInput
         id={column.id}
-        value={(columnFilterValue ?? 0) as number}
+        // value={(columnFilterValue ?? 0) as number}
+        value={localFilters.find(c => c.id === column.id)?.value as number}
         hideSteppers
         label={column.id}
         onChange={(event, { value }) => {
           const temp = [...localFilters];
           const foundLocalFilter = temp.filter(f => f.id === column.id);
-          const foundFilterIndex = temp.findIndex(f => f.id === foundLocalFilter[0].id);
-          if (foundLocalFilter.length) {
+          const foundFilterIndex = foundLocalFilter.length ? temp.findIndex(f => f.id === foundLocalFilter[0].id) : -1;
+          if (foundFilterIndex > -1) {
             temp.splice(foundFilterIndex, 1);
             temp.push({ id: column.id, value });
             setLocalFilters(temp)
@@ -406,10 +444,25 @@ const FilterColumn = (
   ) : (
     <Layer>
       <TextInput
-        onChange={event => column.setFilterValue(event.target.value)}
+        onChange={event => {
+          // column.setFilterValue(event.target.value) // instant filter option
+          const temp = [...localFilters];
+          const foundLocalFilter = temp.filter(f => f.id === column.id);
+          const foundFilterIndex = foundLocalFilter.length ? temp.findIndex(f => f.id === foundLocalFilter[0].id) : -1;
+          console.log(foundFilterIndex, event.target.value);
+          if (foundFilterIndex > -1) {
+            temp.splice(foundFilterIndex, 1);
+            temp.push({ id: column.id, value: event.target.value });
+            setLocalFilters(temp);
+            return;
+          } else {
+            setLocalFilters([...temp, { id: column.id, value: event.target.value }]);
+            return;
+          }
+        }}
         placeholder={`Filter ${column.id}`}
         type="text"
-        value={(columnFilterValue ?? '') as string}
+        value={localFilters.find(c => c.id === column.id)?.value as string ?? ''}
         labelText={flexRender(
           header.column.columnDef.header,
           header.getContext()

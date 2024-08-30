@@ -5,6 +5,10 @@
 @use '@carbon/styles/scss/type';
 @use '@carbon/type/scss/font-family';
 
+.page-grid {
+  margin-top: 4rem;
+}
+
 .flex {
   display: flex;
   align-items: center;
@@ -261,4 +265,13 @@ $horizontal-drag-height: 6rem;
 .filter--summary {
   display: flex;
   align-items: center;
+}
+
+.flyout-dropdown-selected-item {
+  text-transform: capitalize;
+}
+
+// infinite scroll
+.infinite-scroll-container {
+  margin-top: 1rem;
 }
