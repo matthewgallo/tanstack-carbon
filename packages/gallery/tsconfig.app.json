@@ -23,5 +23,5 @@
 
     "types": [ "./src/customTypings.d.ts" ]
   },
-  "include": ["src"]
+  "include": ["./src"]
 }
