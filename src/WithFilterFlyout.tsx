@@ -32,7 +32,6 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
-  TableOptions,
   RowData,
   PartialKeys,
   TableOptionsResolved,
@@ -74,7 +73,7 @@ declare module "@tanstack/table-core" {
 
   //allows us to define custom properties for our columns
   interface ColumnMeta<TData extends RowData, TValue> {
-    filterVariant?: 'text' | 'range' | 'select' | 'checkbox' | 'number'
+    filterVariant?: 'text' | 'select' | 'checkbox' | 'number'
   }
 }
 
@@ -317,6 +316,7 @@ export const WithFilterFlyout = () => {
               // @ts-expect-error `filter` should be boolean in tag overflow component
               items={buildTagFilters()}
               containingElementRef={containerRef}
+              measurementOffset={140}
             />
             <Button kind='ghost' onClick={() => {
               setLocalFilters([]);
@@ -383,13 +383,10 @@ const FilterColumn = (
   const { filterVariant } = column.columnDef.meta ?? {}
 
   const sortedUniqueValues = React.useMemo(
-    () =>
-      filterVariant === 'range'
-        ? []
-        : Array.from(column.getFacetedUniqueValues().keys())
-            .sort()
-            .slice(0, 5000),
-    [filterVariant, column]
+    () => Array.from(column.getFacetedUniqueValues().keys())
+      .sort()
+      .slice(0, 5000),
+    [column]
   )
 
   const getCheckboxState = (value) => {
