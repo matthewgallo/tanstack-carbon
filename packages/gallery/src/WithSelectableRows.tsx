@@ -1,4 +1,4 @@
-import React, { useRef, useState, useLayoutEffect } from 'react'
+import { useRef, useState, useLayoutEffect } from 'react'
 import { Checkbox, DataTable, Pagination } from '@carbon/react';
 const {
   Table,
@@ -33,9 +33,9 @@ type Resource = {
 export const WithSelectableRows = () => {
   const columnHelper = createColumnHelper<Resource>()
   
-  const [rowSelection, setRowSelection] = React.useState({})
+  const [rowSelection, setRowSelection] = useState({})
   const [data] = useState(makeData(200))
-  const [pagination, setPagination] = React.useState<PaginationState>({
+  const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   })
