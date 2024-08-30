@@ -163,8 +163,34 @@ export const WithFilterFlyout = () => {
         const tagData = {} as ExtendedColFilter;
         tagData.label = typeof col === 'string' ? `${checkboxParentColumnData.id}: ${col}` : `${col.id}: ${col.value}`;
         tagData.onClose = () => {
-          const foundLocalIndex = localFilters.findIndex(f => f.id === col.id && f.value === col.value);
-          const foundColumnIndex = columnFilters.findIndex(f => f.id === col.id && f.value === col.value);
+          if (typeof col === 'string') {
+            const groupValues = checkboxParentColumnData.value as string[];
+            const newGroupValues = groupValues.filter(val => val !== col);
+            const foundLocalIndex = localFilters.findIndex(f => f.id === checkboxParentColumnData.id);
+            const foundColumnIndex = columnFilters.findIndex(f => f.id === checkboxParentColumnData.id);
+            const tempLocal = [...localFilters];
+            const tempColumnFilters = [...columnFilters];
+            if (foundLocalIndex > -1) {
+              tempLocal.splice(foundLocalIndex, 1);
+              if (!newGroupValues.length) {
+                setLocalFilters(tempLocal);
+              } else {
+                setLocalFilters([...tempLocal, { id: checkboxParentColumnData.id, value: newGroupValues }]);
+              }
+            }
+            if (foundColumnIndex > -1) {
+              tempColumnFilters.splice(foundColumnIndex, 1);
+              if (!newGroupValues.length) {
+                setColumnFilters(tempColumnFilters);
+              } else {
+                setColumnFilters([...tempColumnFilters, { id: checkboxParentColumnData.id, value: newGroupValues }]);
+              }
+            }
+            return;
+          }
+          const parentData = typeof col === 'string' ? checkboxParentColumnData : col;
+          const foundLocalIndex = localFilters.findIndex(f => f.id === parentData.id && f.value === parentData.value);
+          const foundColumnIndex = columnFilters.findIndex(f => f.id === parentData.id && f.value === parentData.value);
           const tempFilters = [...localFilters];
           const tempColumnFilters = [...columnFilters];
           if (foundColumnIndex > -1) {
@@ -175,7 +201,7 @@ export const WithFilterFlyout = () => {
             tempFilters.splice(foundLocalIndex, 1);
             setLocalFilters(tempFilters);
           }
-          const tableFullColumn = table.getColumn(col.id);
+          const tableFullColumn = table.getColumn(parentData.id);
           tableFullColumn.setFilterValue(undefined);
         };
         tagData.filter = true;
@@ -189,8 +215,6 @@ export const WithFilterFlyout = () => {
     });
     return tagFilters.flat();
   };
-
-  console.log('built tag filters; ', buildTagFilters());
 
   const returnFocusToFlyoutTrigger = () => {
     if (popoverRef?.current) {
@@ -367,7 +391,6 @@ const FilterColumn = (
             .slice(0, 5000),
     [filterVariant, column]
   )
-  console.log('local filters: ', localFilters);
 
   const getCheckboxState = (value) => {
     const foundFilter = localFilters.find(c => c.id === column.id);
@@ -391,7 +414,6 @@ const FilterColumn = (
           if (foundIndex > -1) {
             temp.splice(foundIndex, 1);
             temp.push({ id: column.id, value: selectedItem });
-            console.log('temp', temp);
             setLocalFilters(temp);
             return;
           }
@@ -471,7 +493,6 @@ const FilterColumn = (
           const temp = [...localFilters];
           const foundLocalFilter = temp.filter(f => f.id === column.id);
           const foundFilterIndex = foundLocalFilter.length ? temp.findIndex(f => f.id === foundLocalFilter[0].id) : -1;
-          console.log(foundFilterIndex, event.target.value);
           if (foundFilterIndex > -1) {
             temp.splice(foundFilterIndex, 1);
             temp.push({ id: column.id, value: event.target.value });
