@@ -32,9 +32,6 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
-  RowData,
-  PartialKeys,
-  TableOptionsResolved,
   FilterFn,
   getFilteredRowModel,
   ColumnFiltersState,
@@ -59,22 +56,6 @@ type Resource = {
   status: string
   other: string
   example: string
-}
-
-declare module "@tanstack/table-core" {
-  interface TableOptions<TData extends RowData>
-    extends PartialKeys<TableOptionsResolved<TData>, "state" | "onStateChange" | "renderFallbackValue"> {
-    filterFns?: FilterFns;
-  }
-
-  interface FilterFns {
-    fuzzy: FilterFn<unknown>;
-  }
-
-  //allows us to define custom properties for our columns
-  interface ColumnMeta<TData extends RowData, TValue> {
-    filterVariant?: 'text' | 'select' | 'checkbox' | 'number'
-  }
 }
 
 // Define a custom fuzzy filter function that will apply ranking info to rows (using match-sorter utils)

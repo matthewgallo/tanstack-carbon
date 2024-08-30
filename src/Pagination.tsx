@@ -15,10 +15,6 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
-  FilterFn,
-  RowData,
-  PartialKeys,
-  TableOptionsResolved,
   PaginationState,
   getPaginationRowModel
 } from '@tanstack/react-table'
@@ -31,17 +27,6 @@ type Resource = {
   status: string
   other: string
   example: string
-}
-
-declare module "@tanstack/table-core" {
-  interface TableOptions<TData extends RowData>
-    extends PartialKeys<TableOptionsResolved<TData>, "state" | "onStateChange" | "renderFallbackValue"> {
-    filterFns?: FilterFns;
-  }
-
-  interface FilterFns {
-    fuzzy: FilterFn<unknown>
-  }
 }
 
 const columnHelper = createColumnHelper<Resource>()

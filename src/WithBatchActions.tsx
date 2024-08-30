@@ -24,9 +24,6 @@ import {
   getCoreRowModel,
   useReactTable,
   FilterFn,
-  RowData,
-  PartialKeys,
-  TableOptionsResolved,
   PaginationState,
   getPaginationRowModel,
   getFilteredRowModel,
@@ -46,17 +43,6 @@ type Resource = {
   status: string
   other: string
   example: string
-}
-
-declare module "@tanstack/table-core" {
-  interface TableOptions<TData extends RowData>
-    extends PartialKeys<TableOptionsResolved<TData>, "state" | "onStateChange" | "renderFallbackValue"> {
-    filterFns?: FilterFns;
-  }
-
-  interface FilterFns {
-    fuzzy: FilterFn<unknown>
-  }
 }
 
 // Define a custom fuzzy filter function that will apply ranking info to rows (using match-sorter utils)

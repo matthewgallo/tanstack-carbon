@@ -20,9 +20,6 @@ import {
   getSortedRowModel,
   useReactTable,
   createColumnHelper,
-  RowData,
-  PartialKeys,
-  TableOptionsResolved
 } from '@tanstack/react-table'
 
 // A TanStack fork of Kent C. Dodds' match-sorter library that provides ranking information
@@ -31,17 +28,6 @@ import {
 } from '@tanstack/match-sorter-utils'
 
 import { makeData, Resource } from './makeData'
-
-declare module "@tanstack/table-core" {
-  interface TableOptions<TData extends RowData>
-    extends PartialKeys<TableOptionsResolved<TData>, "state" | "onStateChange" | "renderFallbackValue"> {
-    filterFns?: FilterFns;
-  }
-
-  interface FilterFns {
-    fuzzy: FilterFn<unknown>;
-  }
-}
 
 // Define a custom fuzzy filter function that will apply ranking info to rows (using match-sorter utils)
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {

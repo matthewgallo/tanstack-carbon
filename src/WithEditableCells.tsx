@@ -15,8 +15,6 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
-  // TableState
-  RowData,
 } from '@tanstack/react-table'
 import { makeData } from './makeData';
 
@@ -27,13 +25,6 @@ type Resource = {
   status: string
   other: string
   example: string
-}
-
-declare module '@tanstack/react-table' {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface TableMeta<TData extends RowData> {
-    updateData: (rowIndex: number, columnId: string, value: unknown) => void
-  }
 }
 
 const EditableCell = ({tableContainerRef, table, cell, editingId, setEditingId, id, children, ...rest}) => {

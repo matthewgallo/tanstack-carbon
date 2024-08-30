@@ -19,7 +19,9 @@
     "strict": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "types": [ "./src/customTypings.d.ts" ]
   },
   "include": ["src"]
 }
