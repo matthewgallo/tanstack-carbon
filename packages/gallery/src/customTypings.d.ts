@@ -16,3 +16,9 @@ declare module "@tanstack/table-core" {
     filterVariant?: 'text' | 'select' | 'checkbox' | 'number'
   }
 }
+
+declare module 'resizing' {
+  export {
+    ResizableCols
+  }
+}

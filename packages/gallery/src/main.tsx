@@ -10,7 +10,9 @@ import {
 } from '@carbon/react'
 import { QueryClient, QueryClientProvider, } from '@tanstack/react-query'
 
-import { ResizableCols } from './ResizableCols'
+// Imported from local monorepo packages directory
+import { ResizableCols } from 'resizing'
+
 import { TableWithSearch } from './TableWithSearch'
 import { PaginationExample } from './Pagination'
 import { WithSelectableRows } from './WithSelectableRows'
