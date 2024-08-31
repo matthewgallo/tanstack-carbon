@@ -1,6 +1,7 @@
 {
   "projects": {
-    "gallery": "packages/gallery"
+    "gallery": "packages/gallery",
+    "resizing": "packages/resizing"
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
