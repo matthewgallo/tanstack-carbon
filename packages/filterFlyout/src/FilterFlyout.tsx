@@ -106,7 +106,7 @@ const columns = [
   }),
 ]
 
-export const WithFilterFlyout = () => {
+export const FilterFlyout = () => {
   const [data] = useState(makeData(7))
   const [globalFilter, setGlobalFilter] = React.useState('')
   const [popoverOpen, setPopoverOpen] = useState(false);
