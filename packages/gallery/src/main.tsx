@@ -19,10 +19,10 @@ import { CustomizeColumns } from 'customize-columns'
 import { EditableCells } from 'editable-cells'
 import { RowExpansion } from 'row-expansion'
 import { FilterFlyout } from 'filter-flyout'
+import { InfiniteScroll } from 'infinite-scroll'
 
 import { WithSelectableRows } from './WithSelectableRows'
 import { WithBatchActions } from './WithBatchActions'
-import { WithInfiniteScroll } from './WithInfiniteScroll'
 import { WithRowClick } from './WithRowClick'
 import { WithStickyColumn } from './WithStickyColumn'
 import { WithNestedRows } from './WithNestedRows'
@@ -66,7 +66,7 @@ createRoot(document.getElementById('root')!).render(
           <RowExpansion />
         </Column>
         <Column sm={4} md={8} lg={16}>
-          <WithInfiniteScroll />
+          <InfiniteScroll />
         </Column>
         <Column sm={4} md={8} lg={16}>
           <WithRowClick />
