@@ -58,7 +58,7 @@ const columns = [
   }),
 ]
 
-export const WithCustomizeColumns = () => {
+export const CustomizeColumns = () => {
   const [showTearsheet, setShowTearsheet] = useState(false);
   const [columnVisibility, setColumnVisibility] = React.useState({})
   const [columnOrder, setColumnOrder] = React.useState<ColumnOrderState>([])
