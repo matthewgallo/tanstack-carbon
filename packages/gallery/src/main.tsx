@@ -21,10 +21,10 @@ import { RowExpansion } from 'row-expansion'
 import { FilterFlyout } from 'filter-flyout'
 import { InfiniteScroll } from 'infinite-scroll'
 import { NestedRows } from 'nested-rows'
+import { RowClick } from 'row-click'
 
 import { WithSelectableRows } from './WithSelectableRows'
 import { WithBatchActions } from './WithBatchActions'
-import { WithRowClick } from './WithRowClick'
 import { WithStickyColumn } from './WithStickyColumn'
 
 import './index.scss'
@@ -69,7 +69,7 @@ createRoot(document.getElementById('root')!).render(
           <InfiniteScroll />
         </Column>
         <Column sm={4} md={8} lg={16}>
-          <WithRowClick />
+          <RowClick />
         </Column>
         <Column sm={4} md={8} lg={16}>
           <SortableColumns />

@@ -51,7 +51,7 @@ const columns = [
   }),
 ]
 
-export const WithRowClick = () => {
+export const RowClick = () => {
   const [data] = useState(makeData(7))
   const [panelOpen, setPanelOpen] = useState(false);
   const [panelData, setPanelData] = useState<Resource>(null);
