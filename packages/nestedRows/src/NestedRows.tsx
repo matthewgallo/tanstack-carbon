@@ -21,7 +21,7 @@ const {
 
 import { makeData, Resource } from './makeData'
 
-export const WithNestedRows = () => {
+export const NestedRows = () => {
 
   const columns = React.useMemo<ColumnDef<Resource>[]>(
     () => [

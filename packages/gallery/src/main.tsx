@@ -20,12 +20,12 @@ import { EditableCells } from 'editable-cells'
 import { RowExpansion } from 'row-expansion'
 import { FilterFlyout } from 'filter-flyout'
 import { InfiniteScroll } from 'infinite-scroll'
+import { NestedRows } from 'nested-rows'
 
 import { WithSelectableRows } from './WithSelectableRows'
 import { WithBatchActions } from './WithBatchActions'
 import { WithRowClick } from './WithRowClick'
 import { WithStickyColumn } from './WithStickyColumn'
-import { WithNestedRows } from './WithNestedRows'
 
 import './index.scss'
 const queryClient = new QueryClient()
@@ -78,7 +78,7 @@ createRoot(document.getElementById('root')!).render(
           <WithStickyColumn />
         </Column>
         <Column sm={4} md={8} lg={16}>
-          <WithNestedRows />
+          <NestedRows />
         </Column>
         <Column sm={4} md={8} lg={16}>
           <CustomizeColumns />
