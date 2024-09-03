@@ -19,40 +19,54 @@
   position: relative;
 }
 
-.resizer {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 5px;
-  background: rgba(0, 0, 0, 0.5);
-  cursor: col-resize;
-  user-select: none;
-  touch-action: none;
-}
-
-.resizer.ltr {
-  right: 0;
-}
-
-.resizer.rtl {
-  left: 0;
-}
-
-.resizer.isResizing {
-  background: blue;
-  opacity: 1;
-}
-
-@media (hover: hover) {
-  .resizer {
-    opacity: 0;
-  }
-
-  *:hover > .resizer {
-    opacity: 1;
-  }
-}
-
 .tanstack-example {
   padding-bottom: 2rem;
+}
+
+// Flyout
+.flyout--container {
+  padding: 1rem;
+}
+
+.flyout--container .flyout--container__filters {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 1rem;
+}
+
+.flyout--label {
+  @include type.type-style('body-compact-01');
+  @include font-family.font-weight('semibold');
+
+  padding-bottom: 1rem;
+}
+
+.filter-flyout-example .cds--popover-content {
+  max-inline-size: 642px;
+}
+
+.filter-checkbox-group-label {
+  @include type.type-style('label-01');
+  color: $text-secondary;
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
+}
+
+.filter-flyout-button-set.cds--btn-set .cds--btn {
+  max-width: none;
+  width: 50%;
+}
+
+.tag-overflow-flyout-example {
+  height: 48px;
+  padding-left: 0.5rem;
+}
+
+.filter--summary {
+  display: flex;
+  align-items: center;
+}
+
+.flyout-dropdown-selected-item {
+  text-transform: capitalize;
 }

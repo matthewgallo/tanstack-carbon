@@ -19,40 +19,16 @@
   position: relative;
 }
 
-.resizer {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 5px;
-  background: rgba(0, 0, 0, 0.5);
-  cursor: col-resize;
-  user-select: none;
-  touch-action: none;
-}
-
-.resizer.ltr {
-  right: 0;
-}
-
-.resizer.rtl {
-  left: 0;
-}
-
-.resizer.isResizing {
-  background: blue;
-  opacity: 1;
-}
-
-@media (hover: hover) {
-  .resizer {
-    opacity: 0;
-  }
-
-  *:hover > .resizer {
-    opacity: 1;
-  }
-}
-
 .tanstack-example {
   padding-bottom: 2rem;
+}
+
+// Editable cells
+[role="gridcell"]:focus, [role="gridcell"] *:focus,
+[role="grid"] [tabindex="0"]:focus {
+  @include utilities.focus-outline('outline'); 
+}
+
+.editable-cell-input .cds--text-input {
+  height: 48px;
 }

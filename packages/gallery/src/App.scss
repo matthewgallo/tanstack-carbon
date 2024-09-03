@@ -212,7 +212,6 @@ $horizontal-drag-height: 6rem;
 }
 
 // Editable cells
-
 [role="gridcell"]:focus, [role="gridcell"] *:focus,
 [role="grid"] [tabindex="0"]:focus {
   @include utilities.focus-outline('outline'); 
@@ -223,7 +222,6 @@ $horizontal-drag-height: 6rem;
 }
 
 // Flyout
-
 .flyout--container {
   padding: 1rem;
 }
