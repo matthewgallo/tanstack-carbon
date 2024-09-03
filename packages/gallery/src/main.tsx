@@ -22,9 +22,9 @@ import { FilterFlyout } from 'filter-flyout'
 import { InfiniteScroll } from 'infinite-scroll'
 import { NestedRows } from 'nested-rows'
 import { RowClick } from 'row-click'
+import { BatchActions } from 'batch-actions'
 
 import { WithSelectableRows } from './WithSelectableRows'
-import { WithBatchActions } from './WithBatchActions'
 import { WithStickyColumn } from './WithStickyColumn'
 
 import './index.scss'
@@ -60,7 +60,7 @@ createRoot(document.getElementById('root')!).render(
           <WithSelectableRows />
         </Column>
         <Column sm={4} md={8} lg={16}>
-          <WithBatchActions />
+          <BatchActions />
         </Column>
         <Column sm={4} md={8} lg={16}>
           <RowExpansion />
