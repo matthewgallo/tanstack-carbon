@@ -8,10 +8,12 @@ import {
   HeaderContainer,
   HeaderName,
 } from '@carbon/react'
+import { QueryClient, QueryClientProvider, } from '@tanstack/react-query'
 
 import { InfiniteScroll } from './InfiniteScroll'
 
 import './index.scss'
+const queryClient = new QueryClient()
 
 const renderUIShellHeader = () => (
   <HeaderContainer
@@ -26,12 +28,14 @@ const renderUIShellHeader = () => (
 );
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    {renderUIShellHeader()}
-    <Grid className='page-grid'>
-      <Column sm={4} md={8} lg={16}>
-        <InfiniteScroll />
-      </Column>
-    </Grid>
-  </StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <StrictMode>
+      {renderUIShellHeader()}
+      <Grid className='page-grid'>
+        <Column sm={4} md={8} lg={16}>
+          <InfiniteScroll />
+        </Column>
+      </Grid>
+    </StrictMode>
+  </QueryClientProvider>
 )

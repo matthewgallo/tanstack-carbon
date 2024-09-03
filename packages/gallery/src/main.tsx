@@ -42,6 +42,7 @@ const renderUIShellHeader = () => (
 
 createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
+
     <StrictMode>
       {renderUIShellHeader()}
       <Grid className='page-grid'>
