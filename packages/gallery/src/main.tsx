@@ -13,8 +13,8 @@ import { QueryClient, QueryClientProvider, } from '@tanstack/react-query'
 // Imported from local monorepo packages directory
 import { ResizableCols } from 'resizing'
 import { PaginationExample } from 'pagination'
+import { GlobalFilter } from 'global-filter'
 
-import { TableWithSearch } from './TableWithSearch'
 import { WithSelectableRows } from './WithSelectableRows'
 import { WithBatchActions } from './WithBatchActions'
 import { WithExpansion } from './WithExpansion'
@@ -51,7 +51,7 @@ createRoot(document.getElementById('root')!).render(
           <ResizableCols />
         </Column>
         <Column sm={4} md={8} lg={16}>
-          <TableWithSearch />
+          <GlobalFilter />
         </Column>
         <Column sm={4} md={8} lg={16}>
           <PaginationExample />

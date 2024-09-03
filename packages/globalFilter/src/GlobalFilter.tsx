@@ -43,7 +43,7 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed
 }
 
-export const TableWithSearch = () => {
+export const GlobalFilter = () => {
   const [globalFilter, setGlobalFilter] = React.useState('')
 
   const columnHelper = createColumnHelper<Resource>()
