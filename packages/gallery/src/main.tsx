@@ -14,13 +14,13 @@ import { QueryClient, QueryClientProvider, } from '@tanstack/react-query'
 import { ResizableCols } from 'resizing'
 import { PaginationExample } from 'pagination'
 import { GlobalFilter } from 'global-filter'
+import { SortableColumns } from 'sortable'
 
 import { WithSelectableRows } from './WithSelectableRows'
 import { WithBatchActions } from './WithBatchActions'
 import { WithExpansion } from './WithExpansion'
 import { WithInfiniteScroll } from './WithInfiniteScroll'
 import { WithRowClick } from './WithRowClick'
-import { WithSortableColumns } from './useSortableColumns'
 import { WithStickyColumn } from './WithStickyColumn'
 import { WithNestedRows } from './WithNestedRows'
 import { WithCustomizeColumns } from './WithCustomizeColumns'
@@ -72,7 +72,7 @@ createRoot(document.getElementById('root')!).render(
           <WithRowClick />
         </Column>
         <Column sm={4} md={8} lg={16}>
-          <WithSortableColumns />
+          <SortableColumns />
         </Column>
         <Column sm={4} md={8} lg={16}>
           <WithStickyColumn />

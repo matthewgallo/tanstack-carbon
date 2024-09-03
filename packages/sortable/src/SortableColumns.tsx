@@ -33,7 +33,7 @@ const sortStatusFn: SortingFn<Resource> = (rowA, rowB) => {
   return statusOrder.indexOf(statusA) - statusOrder.indexOf(statusB)
 }
 
-export const WithSortableColumns = () => {
+export const SortableColumns = () => {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const columns = React.useMemo<ColumnDef<Resource>[]>(
