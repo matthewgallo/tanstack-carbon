@@ -17,10 +17,10 @@ import { GlobalFilter } from 'global-filter'
 import { SortableColumns } from 'sortable'
 import { CustomizeColumns } from 'customize-columns'
 import { EditableCells } from 'editable-cells'
+import { RowExpansion } from 'row-expansion'
 
 import { WithSelectableRows } from './WithSelectableRows'
 import { WithBatchActions } from './WithBatchActions'
-import { WithExpansion } from './WithExpansion'
 import { WithInfiniteScroll } from './WithInfiniteScroll'
 import { WithRowClick } from './WithRowClick'
 import { WithStickyColumn } from './WithStickyColumn'
@@ -63,7 +63,7 @@ createRoot(document.getElementById('root')!).render(
           <WithBatchActions />
         </Column>
         <Column sm={4} md={8} lg={16}>
-          <WithExpansion />
+          <RowExpansion />
         </Column>
         <Column sm={4} md={8} lg={16}>
           <WithInfiniteScroll />

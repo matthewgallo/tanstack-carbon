@@ -55,7 +55,7 @@ const columns = [
   }),
 ]
 
-export const WithExpansion = () => {
+export const RowExpansion = () => {
   const [data] = useState(makeData(7))
   const [expanded, setExpanded] = useState<ExpandedStateList>({})
   const [isAllExpanded, setIsAllExpanded] = useState<boolean>(false)
