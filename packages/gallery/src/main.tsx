@@ -23,9 +23,7 @@ import { InfiniteScroll } from 'infinite-scroll'
 import { NestedRows } from 'nested-rows'
 import { RowClick } from 'row-click'
 import { BatchActions } from 'batch-actions'
-
-import { WithSelectableRows } from './WithSelectableRows'
-import { WithStickyColumn } from './WithStickyColumn'
+import { StickyColumns } from 'sticky-columns'
 
 import './index.scss'
 const queryClient = new QueryClient()
@@ -57,9 +55,6 @@ createRoot(document.getElementById('root')!).render(
           <PaginationExample />
         </Column>
         <Column sm={4} md={8} lg={16}>
-          <WithSelectableRows />
-        </Column>
-        <Column sm={4} md={8} lg={16}>
           <BatchActions />
         </Column>
         <Column sm={4} md={8} lg={16}>
@@ -75,7 +70,7 @@ createRoot(document.getElementById('root')!).render(
           <SortableColumns />
         </Column>
         <Column sm={4} md={8} lg={16}>
-          <WithStickyColumn />
+          <StickyColumns />
         </Column>
         <Column sm={4} md={8} lg={16}>
           <NestedRows />

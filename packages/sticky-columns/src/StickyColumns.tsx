@@ -43,7 +43,7 @@ const getCommonPinningStyles = (column: Column<Resource>): CSSProperties => {
 }
 
 
-export const WithStickyColumn = () => {
+export const StickyColumns = () => {
   const onDelete = (row: Resource) => {
     console.log(row);
   }

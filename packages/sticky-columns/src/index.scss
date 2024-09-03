@@ -1,0 +1,8 @@
+@use '@carbon/react' with ($font-path: '@ibm/plex');
+@use '@carbon/ibm-products/css/index';
+@use './App.scss';
+
+body {
+  margin: 0;
+  padding: 0;
+}
