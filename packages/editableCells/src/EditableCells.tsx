@@ -79,7 +79,7 @@ const EditableCell = ({tableContainerRef, table, cell, editingId, setEditingId, 
     : <TableCell id={`cell__${id}`} onKeyDown={handleEditableCellKeyDown} {...rest}>{children}</TableCell>;
 }
 
-export const WithEditableCells = () => {
+export const EditableCells = () => {
   const columnHelper = createColumnHelper<Resource>()
   
   const columns = [

@@ -16,6 +16,7 @@ import { PaginationExample } from 'pagination'
 import { GlobalFilter } from 'global-filter'
 import { SortableColumns } from 'sortable'
 import { CustomizeColumns } from 'customize-columns'
+import { EditableCells } from 'editable-cells'
 
 import { WithSelectableRows } from './WithSelectableRows'
 import { WithBatchActions } from './WithBatchActions'
@@ -24,7 +25,6 @@ import { WithInfiniteScroll } from './WithInfiniteScroll'
 import { WithRowClick } from './WithRowClick'
 import { WithStickyColumn } from './WithStickyColumn'
 import { WithNestedRows } from './WithNestedRows'
-import { WithEditableCells } from './WithEditableCells'
 import { WithFilterFlyout } from './WithFilterFlyout'
 
 import './index.scss'
@@ -84,7 +84,7 @@ createRoot(document.getElementById('root')!).render(
           <CustomizeColumns />
         </Column>
         <Column sm={4} md={8} lg={16}>
-          <WithEditableCells />
+          <EditableCells />
         </Column>
         <Column sm={4} md={8} lg={16}>
           <WithFilterFlyout />
