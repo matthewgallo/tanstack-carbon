@@ -12,9 +12,9 @@ import { QueryClient, QueryClientProvider, } from '@tanstack/react-query'
 
 // Imported from local monorepo packages directory
 import { ResizableCols } from 'resizing'
+import { PaginationExample } from 'pagination'
 
 import { TableWithSearch } from './TableWithSearch'
-import { PaginationExample } from './Pagination'
 import { WithSelectableRows } from './WithSelectableRows'
 import { WithBatchActions } from './WithBatchActions'
 import { WithExpansion } from './WithExpansion'
