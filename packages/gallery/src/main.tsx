@@ -24,6 +24,7 @@ import { NestedRows } from 'nested-rows'
 import { RowClick } from 'row-click'
 import { BatchActions } from 'batch-actions'
 import { StickyColumns } from 'sticky-columns'
+import { FilterPanel } from 'filter-panel'
 
 import './index.scss'
 const queryClient = new QueryClient()
@@ -84,6 +85,9 @@ createRoot(document.getElementById('root')!).render(
         </Column>
         <Column sm={4} md={8} lg={16}>
           <FilterFlyout />
+        </Column>
+        <Column sm={4} md={8} lg={16}>
+          <FilterPanel />
         </Column>
       </Grid>
     </StrictMode>
