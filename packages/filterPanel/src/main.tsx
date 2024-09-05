@@ -11,7 +11,6 @@ import {
 
 import { FilterPanel } from './FilterPanel'
 
-import './carbon.scss'
 import './index.scss'
 
 const renderUIShellHeader = () => (
