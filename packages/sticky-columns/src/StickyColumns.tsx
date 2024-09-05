@@ -93,9 +93,6 @@ export const StickyColumns = () => {
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    // debugTable: true,
-    // debugHeaders: true,
-    // debugColumns: true,
     initialState: {
       columnPinning: {
         left: ['name'],
@@ -107,7 +104,7 @@ export const StickyColumns = () => {
   return (
       <TableContainer
         title="Sticky columns"
-        className='tanstack-example'
+        className='tanstack-example sticky-example'
         style={{
           width: 500,
         }}

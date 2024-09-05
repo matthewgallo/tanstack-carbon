@@ -152,7 +152,7 @@ export const InfiniteScroll = () => {
   }
 
   return (
-      <div className="virtual-example">
+      <div className="virtual-example tanstack-example">
         <h4>Virtualized infinite scroll</h4>
         {/* {process.env.NODE_ENV === 'development' ? (
           <p className='virtual-description'>
