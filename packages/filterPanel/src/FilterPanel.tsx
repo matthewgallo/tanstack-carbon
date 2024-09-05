@@ -5,8 +5,6 @@ import {
   DataTable,
   IconButton,
   Layer,
-  Popover,
-  PopoverContent,
   TextInput,
   Dropdown,
   ButtonSet,
@@ -235,6 +233,9 @@ export const FilterPanel = () => {
         {
           width: '100%',
           transform: 'translateX(0px)',
+        },
+        {
+          duration: .25,
         }
       )
     } else {
@@ -245,7 +246,6 @@ export const FilterPanel = () => {
           transform: [`translateX(-320px)`, `translateX(0px)`]
         },
         {
-          // offset: [0, 0.1, 1],
           duration: .25,
         }
       )
@@ -254,6 +254,9 @@ export const FilterPanel = () => {
         {
           width: 'calc(100% - 336px)',
           transform: 'translateX(336px)',
+        },
+        {
+          duration: .25,
         }
       )
     }
@@ -449,7 +452,7 @@ const FilterColumn = (
   }
 
   return filterVariant === 'select' ? (
-    <Layer>
+    <Layer level={2}>
       <Dropdown
         id="dropdown-filter"
         titleText={`Filter ${column.id}`}
@@ -472,7 +475,7 @@ const FilterColumn = (
       />
     </Layer>
   ) : filterVariant === 'checkbox' ? (
-    <Layer>
+    <Layer level={2}>
       <p className='filter-checkbox-group-label'>{column.id}</p>
       {sortedUniqueValues.map((value: string) => (
         <Checkbox
@@ -512,7 +515,7 @@ const FilterColumn = (
       ))}
     </Layer>
   ) : filterVariant === 'number' ? (
-    <Layer>
+    <Layer level={2}>
       <NumberInput
         id={column.id}
         // value={(columnFilterValue ?? 0) as number}
@@ -536,7 +539,7 @@ const FilterColumn = (
       />
     </Layer>
   ) : (
-    <Layer>
+    <Layer level={2}>
       <TextInput
         onChange={event => {
           // column.setFilterValue(event.target.value) // instant filter option
