@@ -12,6 +12,6 @@
     "nx": "^19.6.4"
   },
   "workspaces": [
-    "packages/*"
+    "react/*"
   ]
 }
