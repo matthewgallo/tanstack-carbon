@@ -23,9 +23,6 @@ type Resource = {
 const columnHelper = createColumnHelper<Resource>()
 
 const columns = [
-  columnHelper.accessor('name', {
-    cell: info => info.getValue(),
-  }),
   columnHelper.accessor(row => row.name, {
     id: 'lastName',
     cell: info => html`<i>${info.getValue()}</i>`,
