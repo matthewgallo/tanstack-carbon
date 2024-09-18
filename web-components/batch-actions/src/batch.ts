@@ -254,6 +254,13 @@ export class MyBatchTable extends LitElement {
       place-items: center;
       flex-direction: column;
     }
+    cds-table-batch-actions[active] {
+      z-index: 1;
+      clip-path: polygon(0 0, 300% 0, 300% 300%, 0 300%);
+      opacity: 1;
+      pointer-events: all;
+      transform: translate3d(0, 0, 0);
+    }
   `
 }
 
