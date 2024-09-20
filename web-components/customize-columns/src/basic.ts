@@ -205,25 +205,18 @@ export class MyBasicTable extends LitElement {
       display: flex;
       flex-direction: column;
       align-items: center;
-      border-top: 1px solid var(--cds-border-subtle);
     }
 
     .item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    padding: 10px 20px;
-    border: none;
-    gap: 10px;
-    background-color: #fff;
-    outline: none;
-    min-height: 48px;
-    width: 100%;
-    white-space: nowrap;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: hand;
-    border-bottom: 1px solid var(--cds-border-subtle);
+      display: flex;
+      align-items: center;
+      padding: 0 1rem;
+      border: none;
+      min-height: 3rem;
+      width: 100%;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: hand;
+      border-bottom: 1px solid var(--cds-border-subtle);
     }
     .dragging-item {
       border: 2px solid blue;
