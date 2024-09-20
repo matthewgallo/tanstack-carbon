@@ -13,8 +13,6 @@ import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/tearsheet/index.js';
 import Column from '@carbon/web-components/es/icons/column/16';
 import { CDSTableToolbarSearch } from '@carbon/web-components/es';
-// import { DragDropManager } from '@dnd-kit/dom';
-// import { Sortable } from '@dnd-kit/dom/sortable';
 
 import { makeData } from './makeData';
 
@@ -72,7 +70,6 @@ export class MyBasicTable extends LitElement {
     this._tearsheetOpen = !this._tearsheetOpen;
   }
 
-  
   render() {
     const table = this.tableController.table({
       columns,
@@ -158,7 +155,33 @@ export class MyBasicTable extends LitElement {
         @cds-tearsheet-closed=${() => this._tearsheetOpen = false}
       >
           <span slot='title'>Customize column order</span>
-        content
+          ${repeat(
+            table.getHeaderGroups(),
+            headerGroup => headerGroup.id,
+            headerGroup =>
+              html`<div class="drag-wrapper">
+              ${repeat(
+                headerGroup.headers,
+                header => header.id,
+                header =>
+                  html` <div class="item">
+                    ${header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </div>`
+              )}</div>`
+          )}
+          <cds-button
+            @click=${() => this._tearsheetOpen = false}
+            slot="actions"
+            kind=${'secondary'}>Cancel</cds-button>
+          <cds-button
+            @click=${() => this._tearsheetOpen = false}
+            slot="actions"
+            kind=${'primary'}>Save</cds-button>
       </cds-tearsheet>
     `
   }
@@ -174,6 +197,41 @@ export class MyBasicTable extends LitElement {
 
     .customize-col-icon {
       fill: var(--cds-icon-primary)
+    }
+
+    .drag-wrapper {
+      gap: 2px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-top: 1px solid var(--cds-border-subtle);
+    }
+
+    .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 10px 20px;
+    border: none;
+    gap: 10px;
+    background-color: #fff;
+    outline: none;
+    min-height: 48px;
+    width: 100%;
+    white-space: nowrap;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: hand;
+    border-bottom: 1px solid var(--cds-border-subtle);
+    }
+    .dragging-item {
+      border: 2px solid blue;
+      opacity: 1;
+    }
+
+    .ghost-item {
+      opacity: 0;
     }
   `
 }
