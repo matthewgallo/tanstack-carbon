@@ -34,8 +34,8 @@ const data: Resource[] = makeData(10, 5);
  *
  */
 
-@customElement('basic-tanstack-table')
-export class MyBasicTable extends LitElement {
+@customElement('nested-row-table')
+export class NestedRowTable extends LitElement {
   private tableController = new TableController<Resource>(this);
 
   _columns = [
@@ -214,7 +214,7 @@ export class MyBasicTable extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'basic-tanstack-table': MyBasicTable
+    'nested-row-table': NestedRowTable
   }
 
 }
