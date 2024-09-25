@@ -12,6 +12,8 @@
   "private": true,
   "dependencies": {},
   "devDependencies": {
+    "@commitlint/cli": "^18.0.0",
+    "@commitlint/config-conventional": "^18.0.0",
     "@nx/js": "^19.6.4",
     "eslint": "^9.0.0",
     "husky": "^9.0.0",
