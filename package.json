@@ -4,17 +4,93 @@
   "license": "MIT",
   "scripts": {
     "build": "nx run-many -t build",
-    "format": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/{build,es,lib,storybook,ts,umd,dist}/**'"
+    "clean": "nx reset && rimraf node_modules",
+    "format": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/{build,es,lib,storybook,ts,umd,dist}/**'",
+    "lint": "nx run-many -t lint --flag unstable_ts_config",
+    "lint:styles": "stylelint '**/*.scss' --report-needless-disables --report-invalid-scope-disables"
   },
   "private": true,
   "dependencies": {},
   "devDependencies": {
     "@nx/js": "^19.6.4",
+    "eslint": "^9.0.0",
+    "jiti": "^2.0.0",
+    "lint-staged": "^15.0.0",
     "nx": "^19.6.4",
     "prettier": "^2.8.8",
-    "prettier-config-carbon": "^0.11.0"
+    "prettier-config-carbon": "^0.11.0",
+    "rimraf": "^5.0.0",
+    "stylelint": "^15.0.0",
+    "stylelint-config-carbon": "^1.18.0"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "header-max-length": [
+        2,
+        "always",
+        72
+      ],
+      "body-max-line-length": [
+        2,
+        "always",
+        80
+      ],
+      "scope-case": [
+        0,
+        "always",
+        "lower-case"
+      ],
+      "type-enum": [
+        2,
+        "always",
+        [
+          "build",
+          "ci",
+          "chore",
+          "docs",
+          "feat",
+          "fix",
+          "perf",
+          "refactor",
+          "revert",
+          "test",
+          "style"
+        ]
+      ]
+    }
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "prettier --cache --write"
+    ],
+    "**/*.scss": [
+      "prettier --cache --write",
+      "stylelint --report-needless-disables --report-invalid-scope-disables --allow-empty-input"
+    ],
+    "!(*sass).md": [
+      "prettier --cache --write"
+    ]
+  },
+  "stylelint": {
+    "extends": [
+      "stylelint-config-carbon"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "src/components/**/*.scss"
+        ],
+        "rules": {
+          "max-nesting-depth": null
+        }
+      }
+    ]
   },
   "workspaces": [
-    "react/*"
+    "react/*",
+    "web-components/*"
   ]
 }

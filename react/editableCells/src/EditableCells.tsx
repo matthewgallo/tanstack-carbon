@@ -209,13 +209,11 @@ export const EditableCells = () => {
     return Array.prototype.indexOf.call(node.parentNode.children, node);
   };
 
-  console.log(commandLeft, captureCommandLeft.current);
   const handleKeyDownActiveCell = (event: KeyboardEvent) => {
     event.preventDefault();
     const key = event.code;
     const activeCellElement = getActiveCell();
-    // console.log(commandLeft);
-    if (!!commandLeft) {
+    if (commandLeft) {
       return;
     }
     // Don't enter switch if there is no active cell
