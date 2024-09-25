@@ -218,6 +218,7 @@ export const EditableCells = () => {
     }
     // Don't enter switch if there is no active cell
     if (!getActiveCell()) return;
+    console.log('test');
     switch (key) {
       case 'ArrowLeft': {
         // Prevent scrolling
