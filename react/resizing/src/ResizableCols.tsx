@@ -1,4 +1,4 @@
-import { useRef, useState, useLayoutEffect } from 'react'
+import { useRef, useState, useLayoutEffect } from 'react';
 import { DataTable } from '@carbon/react';
 const {
   Table,
@@ -7,7 +7,7 @@ const {
   TableContainer,
   TableHead,
   TableHeader,
-  TableRow
+  TableRow,
 } = DataTable;
 
 import {
@@ -15,33 +15,33 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
-  ColumnResizeMode
-} from '@tanstack/react-table'
+  ColumnResizeMode,
+} from '@tanstack/react-table';
 import { makeData } from './makeData';
 import { ExampleLink } from './ExampleLink';
-import { Launch } from '@carbon/react/icons'
-import * as packageJson from '../package.json'
+import { Launch } from '@carbon/react/icons';
+import * as packageJson from '../package.json';
 
 type Resource = {
-  id: string
-  name: string
-  rule: string
-  status: string
-  other: string
-  example: string
-}
+  id: string;
+  name: string;
+  rule: string;
+  status: string;
+  other: string;
+  example: string;
+};
 
-const columnHelper = createColumnHelper<Resource>()
+const columnHelper = createColumnHelper<Resource>();
 
 const columns = [
-  columnHelper.accessor(row => row.name, {
+  columnHelper.accessor((row) => row.name, {
     id: 'name',
-    cell: info => <i>{info.getValue()}</i>,
+    cell: (info) => <i>{info.getValue()}</i>,
     header: () => <span>Name</span>,
   }),
   columnHelper.accessor('rule', {
     header: () => 'Rule',
-    cell: info => info.renderValue(),
+    cell: (info) => info.renderValue(),
   }),
   columnHelper.accessor('status', {
     header: () => <span>Status</span>,
@@ -52,19 +52,19 @@ const columns = [
   columnHelper.accessor('example', {
     header: 'Example',
   }),
-]
+];
 
 export const ResizableCols = () => {
-  const [data] = useState(makeData(7))
+  const [data] = useState(makeData(7));
 
-  const [columnResizeMode] = useState<ColumnResizeMode>('onChange')
+  const [columnResizeMode] = useState<ColumnResizeMode>('onChange');
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     columnResizeMode,
-  })
+  });
 
   const tableWrap = useRef<HTMLDivElement>();
 
@@ -80,76 +80,80 @@ export const ResizableCols = () => {
     <TableContainer
       title="Resizable columns"
       className="basic-table tanstack-example"
-      description={<span className='flex'>
-        <ExampleLink url={`${import.meta.env.VITE_CODE_SANDBOX_URL_ROOT}/${packageJson.name}`} icon={Launch} label="Code sandbox" />
-        <ExampleLink url={`${import.meta.env.VITE_STACK_BLITZ_URL_ROOT}/${packageJson.name}`} icon={Launch} label="StackBlitz" />
-      </span>}
+      description={
+        <span className="flex">
+          <ExampleLink
+            url={`${import.meta.env.VITE_CODE_SANDBOX_URL_ROOT}/${
+              packageJson.name
+            }`}
+            icon={Launch}
+            label="Code sandbox"
+          />
+          <ExampleLink
+            url={`${import.meta.env.VITE_STACK_BLITZ_URL_ROOT}/${
+              packageJson.name
+            }`}
+            icon={Launch}
+            label="StackBlitz"
+          />
+        </span>
+      }
       style={{
         width: table.getCenterTotalSize(),
-      }}
-    >
-      <Table
-        size="lg"
-        useZebraStyles={false}
-        aria-label="sample table"
-      >
+      }}>
+      <Table size="lg" useZebraStyles={false} aria-label="sample table">
         <TableHead>
-          {table.getHeaderGroups().map(headerGroup => (
+          {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
+              {headerGroup.headers.map((header) => (
                 <TableHeader
                   key={header.id}
                   style={{
                     width: header.getSize(),
-                  }}
-                >
+                  }}>
                   {header.isPlaceholder
                     ? null
                     : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                    <div
-                        {...{
-                          onDoubleClick: () => header.column.resetSize(),
-                          onMouseDown: header.getResizeHandler(),
-                          onTouchStart: header.getResizeHandler(),
-                          className: `resizer ${
-                            table.options.columnResizeDirection
-                          } ${
-                            header.column.getIsResizing() ? 'isResizing' : ''
-                          }`,
-                          style: {
-                            transform:
-                              columnResizeMode === 'onEnd' &&
-                              header.column.getIsResizing()
-                                ? `translateX(${
-                                    (table.options.columnResizeDirection ===
-                                    'rtl'
-                                      ? -1
-                                      : 1) *
-                                    (table.getState().columnSizingInfo
-                                      .deltaOffset ?? 0)
-                                  }px)`
-                                : '',
-                          },
-                        }}
-                      />
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                  <div
+                    {...{
+                      onDoubleClick: () => header.column.resetSize(),
+                      onMouseDown: header.getResizeHandler(),
+                      onTouchStart: header.getResizeHandler(),
+                      className: `resizer ${
+                        table.options.columnResizeDirection
+                      } ${header.column.getIsResizing() ? 'isResizing' : ''}`,
+                      style: {
+                        transform:
+                          columnResizeMode === 'onEnd' &&
+                          header.column.getIsResizing()
+                            ? `translateX(${
+                                (table.options.columnResizeDirection === 'rtl'
+                                  ? -1
+                                  : 1) *
+                                (table.getState().columnSizingInfo
+                                  .deltaOffset ?? 0)
+                              }px)`
+                            : '',
+                      },
+                    }}
+                  />
                 </TableHeader>
               ))}
             </TableRow>
           ))}
         </TableHead>
         <TableBody>
-          {table.getRowModel().rows.map(row => (
+          {table.getRowModel().rows.map((row) => (
             <TableRow key={row.id}>
-              {row.getVisibleCells().map(cell => (
+              {row.getVisibleCells().map((cell) => (
                 <TableCell
                   key={cell.id}
                   style={{
                     width: cell.column.getSize(),
-                  }}
-                >
+                  }}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
@@ -158,5 +162,5 @@ export const ResizableCols = () => {
         </TableBody>
       </Table>
     </TableContainer>
-  )
-}
+  );
+};

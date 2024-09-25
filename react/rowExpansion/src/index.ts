@@ -1,3 +1,3 @@
-import { RowExpansion } from "./RowExpansion";
+import { RowExpansion } from './RowExpansion';
 
 export { RowExpansion };

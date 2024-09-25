@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { DataTable } from '@carbon/react';
 const {
   Table,
@@ -10,7 +10,7 @@ const {
   TableRow,
   TableExpandHeader,
   TableExpandRow,
-  TableExpandedRow
+  TableExpandedRow,
 } = DataTable;
 
 import {
@@ -19,33 +19,33 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
-  getExpandedRowModel
-} from '@tanstack/react-table'
+  getExpandedRowModel,
+} from '@tanstack/react-table';
 import { makeData } from './makeData';
 import { ExampleLink } from './ExampleLink';
-import { Launch } from '@carbon/react/icons'
-import * as packageJson from '../package.json'
+import { Launch } from '@carbon/react/icons';
+import * as packageJson from '../package.json';
 
 type Resource = {
-  id: string
-  name: string
-  rule: string
-  status: string
-  other: string
-  example: string
-}
+  id: string;
+  name: string;
+  rule: string;
+  status: string;
+  other: string;
+  example: string;
+};
 
-const columnHelper = createColumnHelper<Resource>()
+const columnHelper = createColumnHelper<Resource>();
 
 const columns = [
-  columnHelper.accessor(row => row.name, {
+  columnHelper.accessor((row) => row.name, {
     id: 'name',
-    cell: info => <i>{info.getValue()}</i>,
+    cell: (info) => <i>{info.getValue()}</i>,
     header: () => <span>Name</span>,
   }),
   columnHelper.accessor('rule', {
     header: () => 'Rule',
-    cell: info => info.renderValue(),
+    cell: (info) => info.renderValue(),
   }),
   columnHelper.accessor('status', {
     header: () => <span>Status</span>,
@@ -56,12 +56,12 @@ const columns = [
   columnHelper.accessor('example', {
     header: 'Example',
   }),
-]
+];
 
 export const RowExpansion = () => {
-  const [data] = useState(makeData(7))
-  const [expanded, setExpanded] = useState<ExpandedStateList>({})
-  const [isAllExpanded, setIsAllExpanded] = useState<boolean>(false)
+  const [data] = useState(makeData(7));
+  const [expanded, setExpanded] = useState<ExpandedStateList>({});
+  const [isAllExpanded, setIsAllExpanded] = useState<boolean>(false);
 
   const table = useReactTable({
     data,
@@ -72,27 +72,36 @@ export const RowExpansion = () => {
     state: {
       expanded,
     },
-  })
+  });
 
   return (
     <TableContainer
       title="Row expansion"
       className="basic-table tanstack-example"
-      description={<span className='flex'>
-        <ExampleLink url={`${import.meta.env.VITE_CODE_SANDBOX_URL_ROOT}/${packageJson.name}`} icon={Launch} label="Code sandbox" />
-        <ExampleLink url={`${import.meta.env.VITE_STACK_BLITZ_URL_ROOT}/${packageJson.name}`} icon={Launch} label="StackBlitz" />
-      </span>}
+      description={
+        <span className="flex">
+          <ExampleLink
+            url={`${import.meta.env.VITE_CODE_SANDBOX_URL_ROOT}/${
+              packageJson.name
+            }`}
+            icon={Launch}
+            label="Code sandbox"
+          />
+          <ExampleLink
+            url={`${import.meta.env.VITE_STACK_BLITZ_URL_ROOT}/${
+              packageJson.name
+            }`}
+            icon={Launch}
+            label="StackBlitz"
+          />
+        </span>
+      }
       style={{
         width: table.getCenterTotalSize(),
-      }}
-    >
-      <Table
-        size="lg"
-        useZebraStyles={false}
-        aria-label="sample table"
-      >
+      }}>
+      <Table size="lg" useZebraStyles={false} aria-label="sample table">
         <TableHead>
-          {table.getHeaderGroups().map(headerGroup => (
+          {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               <TableExpandHeader
                 // TS error occurs unless both aria-label and ariaLabel are provided
@@ -102,7 +111,7 @@ export const RowExpansion = () => {
                 onExpand={() => {
                   const newExpandState = {};
                   if (!isAllExpanded) {
-                    table.getRowModel().rows.map(row => {
+                    table.getRowModel().rows.map((row) => {
                       newExpandState[row.id] = true;
                     });
                     setIsAllExpanded(true);
@@ -114,51 +123,45 @@ export const RowExpansion = () => {
                 }}
                 isExpanded={false}
               />
-              {headerGroup.headers.map(header => (
-                <TableHeader
-                  key={header.id}
-                >
+              {headerGroup.headers.map((header) => (
+                <TableHeader key={header.id}>
                   {header.isPlaceholder
                     ? null
                     : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                 </TableHeader>
               ))}
             </TableRow>
           ))}
         </TableHead>
         <TableBody>
-          {table.getRowModel().rows.map(row => (
+          {table.getRowModel().rows.map((row) => (
             <React.Fragment key={row.id}>
               <TableExpandRow
                 key={row.id}
                 onExpand={() => {
                   const isRowExpanded = !!expanded[row.id];
                   if (isRowExpanded) {
-                    const newExpansionState = {...expanded, [row.id]: false};
+                    const newExpansionState = { ...expanded, [row.id]: false };
                     setExpanded(newExpansionState);
                     return;
                   }
-                  const newExpansionState = {...expanded, [row.id]: true};
+                  const newExpansionState = { ...expanded, [row.id]: true };
                   setExpanded(newExpansionState);
                 }}
                 isExpanded={!!expanded[row.id]}
-                aria-label="Row expander"
-              >
-                {row.getVisibleCells().map(cell => (
-                  <TableCell
-                    key={cell.id}
-                  >
+                aria-label="Row expander">
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
               </TableExpandRow>
               <TableExpandedRow
                 colSpan={columns.length + 1}
-                className="demo-expanded-td"
-              >
+                className="demo-expanded-td">
                 <h6>Expandable row content</h6>
                 <div>Description here</div>
               </TableExpandedRow>
@@ -167,5 +170,5 @@ export const RowExpansion = () => {
         </TableBody>
       </Table>
     </TableContainer>
-  )
-}
+  );
+};

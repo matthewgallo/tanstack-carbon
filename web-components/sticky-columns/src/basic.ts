@@ -1,40 +1,39 @@
-import { LitElement, css, html } from 'lit'
-import { customElement } from 'lit/decorators.js'
-import { repeat } from 'lit/directives/repeat.js'
+import { LitElement, css, html } from 'lit';
+import { customElement } from 'lit/decorators.js';
+import { repeat } from 'lit/directives/repeat.js';
 import {
   Column,
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   TableController,
-} from '@tanstack/lit-table'
+} from '@tanstack/lit-table';
 import '@carbon/web-components/es/components/data-table/index.js';
 import TrashCan from '@carbon/web-components/es/icons/trash-can/16';
 import Edit from '@carbon/web-components/es/icons/edit/16';
 import { makeData } from './makeData';
 import { styleMap } from 'lit/directives/style-map.js';
 
-
 type Resource = {
-  id: string
-  name: string
-  rule: string
-  status: string
-  other: string
-  example: string
-}
+  id: string;
+  name: string;
+  rule: string;
+  status: string;
+  other: string;
+  example: string;
+};
 
-const columnHelper = createColumnHelper<Resource>()
+const columnHelper = createColumnHelper<Resource>();
 
 const columns = [
-  columnHelper.accessor(row => row.name, {
+  columnHelper.accessor((row) => row.name, {
     id: 'name',
-    cell: info => html`<i>${info.getValue()}</i>`,
+    cell: (info) => html`<i>${info.getValue()}</i>`,
     header: () => html`<span>Name</span>`,
   }),
   columnHelper.accessor('rule', {
     header: () => 'Rule',
-    cell: info => info.renderValue(),
+    cell: (info) => info.renderValue(),
   }),
   columnHelper.accessor('status', {
     header: () => html`<span>Status</span>`,
@@ -49,31 +48,35 @@ const columns = [
     header: 'Actions',
     id: 'actions',
     cell: () => {
-      return html`<div className='flex'>
+      return html`<div className="flex">
         <cds-button tooltip-position="bottom" tooltip-text="Delete"
-              >${TrashCan({ slot: 'icon' })}</cds-button
-            >
-            <cds-button tooltip-position="bottom" tooltip-text="Edit"
-              >${Edit({ slot: 'icon' })}</cds-button
-            >
-      </div>`
-    }
-  }
-]
+          >${TrashCan({ slot: 'icon' })}</cds-button
+        >
+        <cds-button tooltip-position="bottom" tooltip-text="Edit"
+          >${Edit({ slot: 'icon' })}</cds-button
+        >
+      </div>`;
+    },
+  },
+];
 
 const data: Resource[] = makeData(10);
 
 const getCommonPinningStyles = (column: Column<Resource>) => {
-  const isPinned = column.getIsPinned()
+  const isPinned = column.getIsPinned();
   const isLastLeftPinnedColumn =
-    isPinned === 'left' && column.getIsLastColumn('left')
+    isPinned === 'left' && column.getIsLastColumn('left');
   const isFirstRightPinnedColumn =
-    isPinned === 'right' && column.getIsFirstColumn('right')
+    isPinned === 'right' && column.getIsFirstColumn('right');
 
   console.log(column.getSize());
   return {
-    borderRight: isLastLeftPinnedColumn ? '1px solid var(--cds-border-subtle)' : 0,
-    borderLeft: isFirstRightPinnedColumn ? '1px solid var(--cds-border-subtle)' : 0,
+    borderRight: isLastLeftPinnedColumn
+      ? '1px solid var(--cds-border-subtle)'
+      : 0,
+    borderLeft: isFirstRightPinnedColumn
+      ? '1px solid var(--cds-border-subtle)'
+      : 0,
     left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
     right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
     opacity: isPinned ? 0.95 : 1,
@@ -82,9 +85,9 @@ const getCommonPinningStyles = (column: Column<Resource>) => {
     zIndex: isPinned ? 1 : 0,
     backgroundColor: 'var(--cds-layer)',
     display: 'flex',
-    alignItems: 'center'
-  }
-}
+    alignItems: 'center',
+  };
+};
 
 /**
  * An example table using `@tanstack/lit-table` and `@carbon/web-components` DataTable.
@@ -105,46 +108,55 @@ export class MyBasicTable extends LitElement {
           left: ['name'],
           right: ['actions'],
         },
-      }
-    })
+      },
+    });
 
     return html`
-      <div class='sticky-container' style=${styleMap({
-        width: `${620}px`,
-      })}>
+      <div
+        class="sticky-container"
+        style=${styleMap({
+          width: `${620}px`,
+        })}>
         <cds-table>
           <cds-table-head>
             ${repeat(
               table.getHeaderGroups(),
-              headerGroup => headerGroup.id,
-              headerGroup =>
+              (headerGroup) => headerGroup.id,
+              (headerGroup) =>
                 html`<cds-table-header-row>
-                ${repeat(
-                  headerGroup.headers,
-                  header => header.id,
-                  header =>
-                    html` <cds-table-header-cell style=${styleMap({...getCommonPinningStyles(header.column)})}>
-                      ${header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </cds-table-header-cell>`
-                )}</cds-table-header-row>`
+                  ${repeat(
+                    headerGroup.headers,
+                    (header) => header.id,
+                    (header) =>
+                      html` <cds-table-header-cell
+                        style=${styleMap({
+                          ...getCommonPinningStyles(header.column),
+                        })}>
+                        ${header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </cds-table-header-cell>`
+                  )}</cds-table-header-row
+                >`
             )}
           </cds-table-head>
           <cds-table-body>
             ${repeat(
               table.getRowModel().rows,
-              row => row.id,
-              row => html`
+              (row) => row.id,
+              (row) => html`
                 <cds-table-row>
                   ${repeat(
                     row.getVisibleCells(),
-                    cell => cell.id,
-                    cell =>
-                      html` <cds-table-cell style=${styleMap({ ...getCommonPinningStyles(cell.column) })}>
+                    (cell) => cell.id,
+                    (cell) =>
+                      html` <cds-table-cell
+                        style=${styleMap({
+                          ...getCommonPinningStyles(cell.column),
+                        })}>
                         ${flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -157,7 +169,7 @@ export class MyBasicTable extends LitElement {
           </cds-table-body>
         </cds-table>
       </div>
-    `
+    `;
   }
 
   static styles = css`
@@ -176,11 +188,11 @@ export class MyBasicTable extends LitElement {
     .sticky-container {
       overflow: auto;
     }
-  `
+  `;
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'basic-tanstack-table': MyBasicTable
+    'basic-tanstack-table': MyBasicTable;
   }
 }

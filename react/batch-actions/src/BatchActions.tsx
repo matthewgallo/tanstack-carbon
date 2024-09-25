@@ -1,4 +1,4 @@
-import React, { useRef, useState, useLayoutEffect } from 'react'
+import React, { useRef, useState, useLayoutEffect } from 'react';
 import { Checkbox, DataTable, Pagination, Button } from '@carbon/react';
 import { TrashCan, Add, Save, Download } from '@carbon/react/icons';
 const {
@@ -27,52 +27,49 @@ import {
   PaginationState,
   getPaginationRowModel,
   getFilteredRowModel,
-} from '@tanstack/react-table'
+} from '@tanstack/react-table';
 
 // A TanStack fork of Kent C. Dodds' match-sorter library that provides ranking information
-import {
-  rankItem,
-} from '@tanstack/match-sorter-utils'
+import { rankItem } from '@tanstack/match-sorter-utils';
 
 import { makeData } from './makeData';
 import { ExampleLink } from './ExampleLink';
-import { Launch } from '@carbon/react/icons'
-import * as packageJson from '../package.json'
+import { Launch } from '@carbon/react/icons';
+import * as packageJson from '../package.json';
 
 type Resource = {
-  id: string
-  name: string
-  rule: string
-  status: string
-  other: string
-  example: string
-}
+  id: string;
+  name: string;
+  rule: string;
+  status: string;
+  other: string;
+  example: string;
+};
 
 // Define a custom fuzzy filter function that will apply ranking info to rows (using match-sorter utils)
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   // Rank the item
-  const itemRank = rankItem(row.getValue(columnId), value)
+  const itemRank = rankItem(row.getValue(columnId), value);
 
   // Store the itemRank info
   addMeta({
     itemRank,
-  })
+  });
 
   // Return if the item should be filtered in/out
-  return itemRank.passed
-}
-
+  return itemRank.passed;
+};
 
 export const BatchActions = () => {
-  const columnHelper = createColumnHelper<Resource>()
-  
-  const [globalFilter, setGlobalFilter] = React.useState('')
-  const [rowSelection, setRowSelection] = React.useState({})
-  const [data] = useState(makeData(200))
+  const columnHelper = createColumnHelper<Resource>();
+
+  const [globalFilter, setGlobalFilter] = React.useState('');
+  const [rowSelection, setRowSelection] = React.useState({});
+  const [data] = useState(makeData(200));
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
-  })
+  });
 
   const columns = [
     {
@@ -100,7 +97,7 @@ export const BatchActions = () => {
             },
             id: 'batch-checkbox',
             labelText: 'header checkbox',
-            hideLabel: true
+            hideLabel: true,
           }}
         />
       ),
@@ -113,19 +110,19 @@ export const BatchActions = () => {
             onChange: row.getToggleSelectedHandler(),
             id: `batch-checkbox__${row.id}`,
             labelText: 'row checkbox',
-            hideLabel: true
+            hideLabel: true,
           }}
         />
       ),
     },
-    columnHelper.accessor(row => row.name, {
+    columnHelper.accessor((row) => row.name, {
       id: 'name',
-      cell: info => <i>{info.getValue()}</i>,
+      cell: (info) => <i>{info.getValue()}</i>,
       header: () => <span>Name</span>,
     }),
     columnHelper.accessor('rule', {
       header: () => 'Rule',
-      cell: info => info.renderValue(),
+      cell: (info) => info.renderValue(),
     }),
     columnHelper.accessor('status', {
       header: () => <span>Status</span>,
@@ -136,7 +133,7 @@ export const BatchActions = () => {
     columnHelper.accessor('example', {
       header: 'Example',
     }),
-  ]
+  ];
 
   const table = useReactTable({
     data,
@@ -148,7 +145,7 @@ export const BatchActions = () => {
     state: {
       pagination,
       rowSelection,
-      globalFilter
+      globalFilter,
     },
     onGlobalFilterChange: setGlobalFilter,
     globalFilterFn: 'fuzzy', //apply fuzzy filter to the global filter (most common use case for fuzzy filter)
@@ -156,10 +153,10 @@ export const BatchActions = () => {
       fuzzy: fuzzyFilter, //define as a filter function that can be used in column definitions
     },
     // enableRowSelection: true, //enable row selection for all rows
-    enableRowSelection: row => row.original.status !== 'disabled', // conditionally disable rows
-    // enableRowSelection: row => row.original.age > 18, // or enable row selection 
+    enableRowSelection: (row) => row.original.status !== 'disabled', // conditionally disable rows
+    // enableRowSelection: row => row.original.age > 18, // or enable row selection
     onRowSelectionChange: setRowSelection,
-  })
+  });
 
   const tableWrap = useRef<HTMLDivElement>();
 
@@ -177,14 +174,27 @@ export const BatchActions = () => {
     <TableContainer
       title="Batch actions, global filter"
       className="basic-table tanstack-example"
-      description={<span className='flex'>
-        <ExampleLink url={`${import.meta.env.VITE_CODE_SANDBOX_URL_ROOT}/${packageJson.name}`} icon={Launch} label="Code sandbox" />
-        <ExampleLink url={`${import.meta.env.VITE_STACK_BLITZ_URL_ROOT}/${packageJson.name}`} icon={Launch} label="StackBlitz" />
-      </span>}
+      description={
+        <span className="flex">
+          <ExampleLink
+            url={`${import.meta.env.VITE_CODE_SANDBOX_URL_ROOT}/${
+              packageJson.name
+            }`}
+            icon={Launch}
+            label="Code sandbox"
+          />
+          <ExampleLink
+            url={`${import.meta.env.VITE_STACK_BLITZ_URL_ROOT}/${
+              packageJson.name
+            }`}
+            icon={Launch}
+            label="StackBlitz"
+          />
+        </span>
+      }
       style={{
         width: table.getCenterTotalSize(),
-      }}
-    >
+      }}>
       <TableToolbar aria-label={'Table toolbar'}>
         <TableBatchActions
           shouldShowBatchActions={shouldShowBatchActions}
@@ -193,18 +203,33 @@ export const BatchActions = () => {
           onSelectAll={() => {
             table.toggleAllRowsSelected(true);
           }}
-          totalCount={data?.length}
-        >
-          <TableBatchAction tabIndex={shouldShowBatchActions ? 0 : -1} renderIcon={TrashCan} onClick={() => table.resetRowSelection()}>
+          totalCount={data?.length}>
+          <TableBatchAction
+            tabIndex={shouldShowBatchActions ? 0 : -1}
+            renderIcon={TrashCan}
+            onClick={() => table.resetRowSelection()}>
             Delete
           </TableBatchAction>
-          <TableBatchAction hasIconOnly iconDescription="Add" tabIndex={shouldShowBatchActions ? 0 : -1} renderIcon={Add} onClick={() => table.resetRowSelection()}>
+          <TableBatchAction
+            hasIconOnly
+            iconDescription="Add"
+            tabIndex={shouldShowBatchActions ? 0 : -1}
+            renderIcon={Add}
+            onClick={() => table.resetRowSelection()}>
             Delete
           </TableBatchAction>
-          <TableBatchAction hasIconOnly iconDescription="Save" tabIndex={shouldShowBatchActions ? 0 : -1} renderIcon={Save} onClick={() => table.resetRowSelection()}>
+          <TableBatchAction
+            hasIconOnly
+            iconDescription="Save"
+            tabIndex={shouldShowBatchActions ? 0 : -1}
+            renderIcon={Save}
+            onClick={() => table.resetRowSelection()}>
             Save
           </TableBatchAction>
-          <TableBatchAction tabIndex={shouldShowBatchActions ? 0 : -1} renderIcon={Download} onClick={() => table.resetRowSelection()}>
+          <TableBatchAction
+            tabIndex={shouldShowBatchActions ? 0 : -1}
+            renderIcon={Download}
+            onClick={() => table.resetRowSelection()}>
             Download
           </TableBatchAction>
         </TableBatchActions>
@@ -212,7 +237,9 @@ export const BatchActions = () => {
           <TableToolbarSearch
             tabIndex={shouldShowBatchActions ? -1 : 0}
             defaultValue={globalFilter ?? ''}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setGlobalFilter(event.target.value)}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setGlobalFilter(event.target.value)
+            }
             placeholder="Search all columns..."
           />
           <TableToolbarMenu tabIndex={shouldShowBatchActions ? -1 : 0}>
@@ -226,42 +253,36 @@ export const BatchActions = () => {
               Action 3
             </TableToolbarAction>
           </TableToolbarMenu>
-          <Button tabIndex={shouldShowBatchActions ? -1 : 0} onClick={() => {}} kind="primary">
+          <Button
+            tabIndex={shouldShowBatchActions ? -1 : 0}
+            onClick={() => {}}
+            kind="primary">
             Add new
           </Button>
         </TableToolbarContent>
       </TableToolbar>
-      <Table
-        size="lg"
-        useZebraStyles={false}
-        aria-label="sample table"
-      >
+      <Table size="lg" useZebraStyles={false} aria-label="sample table">
         <TableHead>
-          {table.getHeaderGroups().map(headerGroup => (
+          {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
-                <TableHeader
-                  key={header.id}
-                  colSpan={header.colSpan}
-                >
+              {headerGroup.headers.map((header) => (
+                <TableHeader key={header.id} colSpan={header.colSpan}>
                   {header.isPlaceholder
                     ? null
                     : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                 </TableHeader>
               ))}
             </TableRow>
           ))}
         </TableHead>
         <TableBody>
-          {table.getRowModel().rows.map(row => (
+          {table.getRowModel().rows.map((row) => (
             <TableRow key={row.id}>
-              {row.getVisibleCells().map(cell => (
-                <TableCell
-                  key={cell.id}
-                >
+              {row.getVisibleCells().map((cell) => (
+                <TableCell key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
@@ -281,14 +302,14 @@ export const BatchActions = () => {
         pageSizes={[10, 20, 30, 40, 50]}
         itemsPerPageText={'Items per page:'}
         onChange={({ pageSize, page }) => {
-          table.setPageSize(Number(pageSize))
-          table.setPageIndex(page - 1)
+          table.setPageSize(Number(pageSize));
+          table.setPageIndex(page - 1);
         }}
       />
-    <p>
-      {Object.keys(rowSelection).length} of{' '}
+      <p>
+        {Object.keys(rowSelection).length} of{' '}
         {table.getPreFilteredRowModel().rows.length} Total Rows Selected
-    </p>
+      </p>
     </TableContainer>
-  )
-}
+  );
+};

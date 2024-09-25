@@ -1,3 +1,3 @@
-import { FilterFlyout } from "./FilterFlyout";
+import { FilterFlyout } from './FilterFlyout';
 
 export { FilterFlyout };

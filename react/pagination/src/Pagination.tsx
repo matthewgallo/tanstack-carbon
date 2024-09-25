@@ -1,4 +1,4 @@
-import React, { useRef, useState, useLayoutEffect } from 'react'
+import React, { useRef, useState, useLayoutEffect } from 'react';
 import { DataTable, Pagination } from '@carbon/react';
 const {
   Table,
@@ -7,7 +7,7 @@ const {
   TableContainer,
   TableHead,
   TableHeader,
-  TableRow
+  TableRow,
 } = DataTable;
 
 import {
@@ -16,33 +16,33 @@ import {
   getCoreRowModel,
   useReactTable,
   PaginationState,
-  getPaginationRowModel
-} from '@tanstack/react-table'
+  getPaginationRowModel,
+} from '@tanstack/react-table';
 import { makeData } from './makeData';
 import { ExampleLink } from './ExampleLink';
-import { Launch } from '@carbon/react/icons'
-import * as packageJson from '../package.json'
+import { Launch } from '@carbon/react/icons';
+import * as packageJson from '../package.json';
 
 type Resource = {
-  id: string
-  name: string
-  rule: string
-  status: string
-  other: string
-  example: string
-}
+  id: string;
+  name: string;
+  rule: string;
+  status: string;
+  other: string;
+  example: string;
+};
 
-const columnHelper = createColumnHelper<Resource>()
+const columnHelper = createColumnHelper<Resource>();
 
 const columns = [
-  columnHelper.accessor(row => row.name, {
+  columnHelper.accessor((row) => row.name, {
     id: 'name',
-    cell: info => <i>{info.getValue()}</i>,
+    cell: (info) => <i>{info.getValue()}</i>,
     header: () => <span>Name</span>,
   }),
   columnHelper.accessor('rule', {
     header: () => 'Rule',
-    cell: info => info.renderValue(),
+    cell: (info) => info.renderValue(),
   }),
   columnHelper.accessor('status', {
     header: () => <span>Status</span>,
@@ -53,14 +53,14 @@ const columns = [
   columnHelper.accessor('example', {
     header: 'Example',
   }),
-]
+];
 
 export const PaginationExample = () => {
-  const [data] = useState(makeData(200))
+  const [data] = useState(makeData(200));
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
-  })
+  });
 
   const table = useReactTable({
     data,
@@ -72,7 +72,7 @@ export const PaginationExample = () => {
     state: {
       pagination,
     },
-  })
+  });
 
   const tableWrap = useRef<HTMLDivElement>();
 
@@ -88,50 +88,57 @@ export const PaginationExample = () => {
     <TableContainer
       title="Pagination"
       className="basic-table tanstack-example"
-      description={<span className='flex'>
-        <ExampleLink url={`${import.meta.env.VITE_CODE_SANDBOX_URL_ROOT}/${packageJson.name}`} icon={Launch} label="Code sandbox" />
-        <ExampleLink url={`${import.meta.env.VITE_STACK_BLITZ_URL_ROOT}/${packageJson.name}`} icon={Launch} label="StackBlitz" />
-      </span>}
+      description={
+        <span className="flex">
+          <ExampleLink
+            url={`${import.meta.env.VITE_CODE_SANDBOX_URL_ROOT}/${
+              packageJson.name
+            }`}
+            icon={Launch}
+            label="Code sandbox"
+          />
+          <ExampleLink
+            url={`${import.meta.env.VITE_STACK_BLITZ_URL_ROOT}/${
+              packageJson.name
+            }`}
+            icon={Launch}
+            label="StackBlitz"
+          />
+        </span>
+      }
       style={{
         width: table.getCenterTotalSize(),
-      }}
-    >
-      <Table
-        size="lg"
-        useZebraStyles={false}
-        aria-label="sample table"
-      >
+      }}>
+      <Table size="lg" useZebraStyles={false} aria-label="sample table">
         <TableHead>
-          {table.getHeaderGroups().map(headerGroup => (
+          {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
+              {headerGroup.headers.map((header) => (
                 <TableHeader
                   key={header.id}
                   style={{
                     width: header.getSize(),
-                  }}
-                >
+                  }}>
                   {header.isPlaceholder
                     ? null
                     : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                 </TableHeader>
               ))}
             </TableRow>
           ))}
         </TableHead>
         <TableBody>
-          {table.getRowModel().rows.map(row => (
+          {table.getRowModel().rows.map((row) => (
             <TableRow key={row.id}>
-              {row.getVisibleCells().map(cell => (
+              {row.getVisibleCells().map((cell) => (
                 <TableCell
                   key={cell.id}
                   style={{
                     width: cell.column.getSize(),
-                  }}
-                >
+                  }}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
@@ -151,10 +158,10 @@ export const PaginationExample = () => {
         pageSizes={[10, 20, 30, 40, 50]}
         itemsPerPageText={'Items per page:'}
         onChange={({ pageSize, page }) => {
-          table.setPageSize(Number(pageSize))
-          table.setPageIndex(page - 1)
+          table.setPageSize(Number(pageSize));
+          table.setPageIndex(page - 1);
         }}
       />
     </TableContainer>
-  )
-}
+  );
+};

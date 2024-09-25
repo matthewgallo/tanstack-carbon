@@ -22,7 +22,7 @@ export const Item = ({
   wrapperStyle,
   transform,
   transition,
-  className
+  className,
 }) => {
   const draggableClass = `c4p__draggable-item`;
   return (
@@ -47,8 +47,7 @@ export const Item = ({
       {...attributes}
       {...listeners}
       role="option"
-      aria-selected
-    >
+      aria-selected>
       <span className={`${draggableClass}__assistive-text`}>
         {assistiveText}
       </span>

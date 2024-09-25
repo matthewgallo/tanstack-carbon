@@ -57,9 +57,6 @@
   padding-bottom: 2rem;
 }
 
-
-
-
 // Virtual
 .virtual-skeleton-row {
   background-color: $layer;
@@ -78,7 +75,6 @@
 .row-click {
   cursor: pointer;
 }
-
 
 // Sorting
 .descending-sorting-icon {
@@ -103,7 +99,6 @@
   padding-bottom: 2rem;
 }
 
-
 // Nested row
 .row-expander {
   width: 32px;
@@ -118,7 +113,6 @@
   transform: rotate(90deg);
   transition: transform 200ms;
 }
-
 
 // Customize cols
 $drag-class: c4p__draggable-item;
@@ -212,9 +206,10 @@ $horizontal-drag-height: 6rem;
 }
 
 // Editable cells
-[role="gridcell"]:focus, [role="gridcell"] *:focus,
-[role="grid"] [tabindex="0"]:focus {
-  @include utilities.focus-outline('outline'); 
+[role='gridcell']:focus,
+[role='gridcell'] *:focus,
+[role='grid'] [tabindex='0']:focus {
+  @include utilities.focus-outline('outline');
 }
 
 .editable-cell-input .cds--text-input {
@@ -358,7 +353,9 @@ $horizontal-drag-height: 6rem;
   position: relative;
   width: 100%;
   height: var(--table-height);
-  .filter--panel__close-wrapper.cds--popover-container:not(.cds--popover--auto-align) {
+  .filter--panel__close-wrapper.cds--popover-container:not(
+      .cds--popover--auto-align
+    ) {
     position: initial;
   }
   .filter--panel__close-wrapper.cds--popover-caret {

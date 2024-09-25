@@ -1,3 +1,3 @@
-import { PaginationExample } from "./Pagination";
+import { PaginationExample } from './Pagination';
 
 export { PaginationExample };

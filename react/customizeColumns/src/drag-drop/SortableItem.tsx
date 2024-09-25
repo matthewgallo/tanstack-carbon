@@ -19,7 +19,7 @@ export const SortableItem = ({
   useDragOverlay,
   wrapperStyle,
   index,
-  className
+  className,
 }) => {
   const {
     active,
@@ -46,8 +46,7 @@ export const SortableItem = ({
       assistiveText={assistiveText}
       dragOverlay={!useDragOverlay && isDragging}
       wrapperStyle={wrapperStyle?.({ index, isDragging, active, id })}
-      className={className}
-    >
+      className={className}>
       {children}
     </Item>
   );

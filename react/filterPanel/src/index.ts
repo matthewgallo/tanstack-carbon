@@ -1,3 +1,3 @@
-import { FilterPanel } from "./FilterPanel";
+import { FilterPanel } from './FilterPanel';
 
 export { FilterPanel };

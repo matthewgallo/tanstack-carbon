@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 import {
   ColumnDef,
@@ -8,49 +8,42 @@ import {
   SortingFn,
   SortingState,
   useReactTable,
-} from '@tanstack/react-table'
-import { Button, DataTable, TableContainer } from '@carbon/react'
-import { ArrowUp } from '@carbon/react/icons'
-import cx from 'classnames'
+} from '@tanstack/react-table';
+import { Button, DataTable, TableContainer } from '@carbon/react';
+import { ArrowUp } from '@carbon/react/icons';
+import cx from 'classnames';
 
-const {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} = DataTable;
+const { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } =
+  DataTable;
 
-
-import { makeData, Resource } from './makeData'
+import { makeData, Resource } from './makeData';
 import { ExampleLink } from './ExampleLink';
-import { Launch } from '@carbon/react/icons'
-import * as packageJson from '../package.json'
+import { Launch } from '@carbon/react/icons';
+import * as packageJson from '../package.json';
 
 //custom sorting logic for one of our enum columns
 const sortStatusFn: SortingFn<Resource> = (rowA, rowB) => {
-  const statusA = rowA.original.status
-  const statusB = rowB.original.status
-  const statusOrder = ['starting', 'active', 'disabled']
-  return statusOrder.indexOf(statusA) - statusOrder.indexOf(statusB)
-}
+  const statusA = rowA.original.status;
+  const statusB = rowB.original.status;
+  const statusOrder = ['starting', 'active', 'disabled'];
+  return statusOrder.indexOf(statusA) - statusOrder.indexOf(statusB);
+};
 
 export const SortableColumns = () => {
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [sorting, setSorting] = React.useState<SortingState>([]);
 
   const columns = React.useMemo<ColumnDef<Resource>[]>(
     () => [
       {
         accessorKey: 'name',
-        cell: info => info.getValue(),
+        cell: (info) => info.getValue(),
         header: () => <span>Name</span>,
         //this column will sort in ascending order by default since it is a string column
       },
       {
-        accessorFn: row => row.rule,
+        accessorFn: (row) => row.rule,
         id: 'rule',
-        cell: info => info.getValue(),
+        cell: (info) => info.getValue(),
         header: () => <span>Rule</span>,
         sortUndefined: 'last', //force undefined values to the end
         sortDescFirst: false, //first sort order will be ascending (nullable values can mess up auto detection of sort order)
@@ -79,9 +72,9 @@ export const SortableColumns = () => {
       // },
     ],
     []
-  )
+  );
 
-  const [data] = React.useState(() => makeData(1000))
+  const [data] = React.useState(() => makeData(1000));
 
   const table = useReactTable({
     columns,
@@ -103,7 +96,7 @@ export const SortableColumns = () => {
     // enableSortingRemoval: false, //Don't allow - default on/true
     // isMultiSortEvent: (e) => true, //Make all clicks multi-sort - default requires `shift` key
     // maxMultiSortColCount: 3, // only allow 3 columns to be sorted at once - default is Infinity
-  })
+  });
 
   //access sorting state from the table instance
   // console.log(table.getState().sorting)
@@ -111,53 +104,61 @@ export const SortableColumns = () => {
   return (
     <TableContainer
       title="Column sorting"
-      className='tanstack-example'
-      description={<span className='flex'>
-        <ExampleLink url={`${import.meta.env.VITE_CODE_SANDBOX_URL_ROOT}/${packageJson.name}`} icon={Launch} label="Code sandbox" />
-        <ExampleLink url={`${import.meta.env.VITE_STACK_BLITZ_URL_ROOT}/${packageJson.name}`} icon={Launch} label="StackBlitz" />
-      </span>}
-    >
-      <Table className='sortable-example'>
+      className="tanstack-example"
+      description={
+        <span className="flex">
+          <ExampleLink
+            url={`${import.meta.env.VITE_CODE_SANDBOX_URL_ROOT}/${
+              packageJson.name
+            }`}
+            icon={Launch}
+            label="Code sandbox"
+          />
+          <ExampleLink
+            url={`${import.meta.env.VITE_STACK_BLITZ_URL_ROOT}/${
+              packageJson.name
+            }`}
+            icon={Launch}
+            label="StackBlitz"
+          />
+        </span>
+      }>
+      <Table className="sortable-example">
         <TableHead>
-          {table.getHeaderGroups().map(headerGroup => (
+          {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
+              {headerGroup.headers.map((header) => {
                 return (
-                  <TableHeader
-                    key={header.id}
-                    colSpan={header.colSpan}
-                  >
+                  <TableHeader key={header.id} colSpan={header.colSpan}>
                     {header.isPlaceholder ? null : (
                       <Button
-                        kind='ghost'
+                        kind="ghost"
                         className={cx('sortable-button-header', {
                           ['cursor-pointer']: header.column.getCanSort(),
                           ['select-none']: header.column.getCanSort(),
-                        })
-                        }
+                        })}
                         onClick={header.column.getToggleSortingHandler()}
                         title={
                           header.column.getCanSort()
                             ? header.column.getNextSortingOrder() === 'asc'
                               ? 'Sort ascending'
                               : header.column.getNextSortingOrder() === 'desc'
-                                ? 'Sort descending'
-                                : 'Clear sort'
+                              ? 'Sort descending'
+                              : 'Clear sort'
                             : undefined
-                        }
-                      >
+                        }>
                         {flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
                         {{
                           asc: <ArrowUp />,
-                          desc: <ArrowUp className='descending-sorting-icon'/>,
+                          desc: <ArrowUp className="descending-sorting-icon" />,
                         }[header.column.getIsSorted() as string] ?? null}
                       </Button>
                     )}
                   </TableHeader>
-                )
+                );
               })}
             </TableRow>
           ))}
@@ -166,10 +167,10 @@ export const SortableColumns = () => {
           {table
             .getRowModel()
             .rows.slice(0, 10)
-            .map(row => {
+            .map((row) => {
               return (
                 <TableRow key={row.id}>
-                  {row.getVisibleCells().map(cell => {
+                  {row.getVisibleCells().map((cell) => {
                     return (
                       <TableCell key={cell.id}>
                         {flexRender(
@@ -177,13 +178,13 @@ export const SortableColumns = () => {
                           cell.getContext()
                         )}
                       </TableCell>
-                    )
+                    );
                   })}
                 </TableRow>
-              )
+              );
             })}
         </TableBody>
       </Table>
     </TableContainer>
-  )
-}
+  );
+};

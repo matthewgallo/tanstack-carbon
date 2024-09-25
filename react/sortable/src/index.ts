@@ -1,3 +1,3 @@
-import { SortableColumns } from "./SortableColumns";
+import { SortableColumns } from './SortableColumns';
 
 export { SortableColumns };

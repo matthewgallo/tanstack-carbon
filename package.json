@@ -3,13 +3,16 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "nx run-many -t build"
+    "build": "nx run-many -t build",
+    "format": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/{build,es,lib,storybook,ts,umd,dist}/**'"
   },
   "private": true,
   "dependencies": {},
   "devDependencies": {
     "@nx/js": "^19.6.4",
-    "nx": "^19.6.4"
+    "nx": "^19.6.4",
+    "prettier": "^2.8.8",
+    "prettier-config-carbon": "^0.11.0"
   },
   "workspaces": [
     "react/*"

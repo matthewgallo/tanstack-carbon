@@ -1,40 +1,38 @@
-import React, { CSSProperties } from 'react'
+import React, { CSSProperties } from 'react';
 
 import {
   Column,
   flexRender,
   getCoreRowModel,
   useReactTable,
-  createColumnHelper
-} from '@tanstack/react-table'
-import { makeData, Resource } from './makeData'
+  createColumnHelper,
+} from '@tanstack/react-table';
+import { makeData, Resource } from './makeData';
 import { DataTable, IconButton, TableContainer } from '@carbon/react';
 import { TrashCan, Edit } from '@carbon/react/icons';
-const {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} = DataTable;
+const { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } =
+  DataTable;
 import { ExampleLink } from './ExampleLink';
-import { Launch } from '@carbon/react/icons'
-import * as packageJson from '../package.json'
+import { Launch } from '@carbon/react/icons';
+import * as packageJson from '../package.json';
 
 //These are the important styles to make sticky column pinning work!
 //Apply styles like this using your CSS strategy of choice with this kind of logic to head cells, data cells, footer cells, etc.
 //View the index.css file for more needed styles such as border-collapse: separate
 const getCommonPinningStyles = (column: Column<Resource>): CSSProperties => {
-  const isPinned = column.getIsPinned()
+  const isPinned = column.getIsPinned();
   const isLastLeftPinnedColumn =
-    isPinned === 'left' && column.getIsLastColumn('left')
+    isPinned === 'left' && column.getIsLastColumn('left');
   const isFirstRightPinnedColumn =
-    isPinned === 'right' && column.getIsFirstColumn('right')
+    isPinned === 'right' && column.getIsFirstColumn('right');
 
   return {
-    borderRight: isLastLeftPinnedColumn ? '1px solid var(--cds-border-subtle)' : 0,
-    borderLeft: isFirstRightPinnedColumn ? '1px solid var(--cds-border-subtle)' : 0,
+    borderRight: isLastLeftPinnedColumn
+      ? '1px solid var(--cds-border-subtle)'
+      : 0,
+    borderLeft: isFirstRightPinnedColumn
+      ? '1px solid var(--cds-border-subtle)'
+      : 0,
     left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
     right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
     opacity: isPinned ? 0.95 : 1,
@@ -42,27 +40,26 @@ const getCommonPinningStyles = (column: Column<Resource>): CSSProperties => {
     width: column.getSize(),
     zIndex: isPinned ? 1 : 0,
     backgroundColor: 'var(--cds-layer)',
-  }
-}
-
+  };
+};
 
 export const StickyColumns = () => {
   const onDelete = (row: Resource) => {
     console.log(row);
-  }
+  };
   const onEdit = (row: Resource) => {
     console.log(row);
-  }
-  const columnHelper = createColumnHelper<Resource>()
+  };
+  const columnHelper = createColumnHelper<Resource>();
   const defaultCols = [
-    columnHelper.accessor(row => row.name, {
+    columnHelper.accessor((row) => row.name, {
       id: 'name',
-      cell: info => <i>{info.getValue()}</i>,
+      cell: (info) => <i>{info.getValue()}</i>,
       header: () => <span>Name</span>,
     }),
     columnHelper.accessor('rule', {
       header: () => 'Rule',
-      cell: info => info.renderValue(),
+      cell: (info) => info.renderValue(),
     }),
     columnHelper.accessor('status', {
       header: () => <span>Status</span>,
@@ -72,25 +69,35 @@ export const StickyColumns = () => {
     }),
     columnHelper.accessor('example', {
       header: 'Example',
-      id: 'example'
+      id: 'example',
     }),
     {
       header: 'Actions',
       id: 'actions',
       cell: ({ row }) => {
-        return <div className='flex'>
-          <IconButton size='sm' label="Delete" onClick={() => onDelete(row)} kind="ghost">
-            <TrashCan />
-          </IconButton>
-          <IconButton size='sm' label="Delete" onClick={() => onEdit(row)} kind="ghost">
-            <Edit />
-          </IconButton>
-        </div>
-      }
+        return (
+          <div className="flex">
+            <IconButton
+              size="sm"
+              label="Delete"
+              onClick={() => onDelete(row)}
+              kind="ghost">
+              <TrashCan />
+            </IconButton>
+            <IconButton
+              size="sm"
+              label="Delete"
+              onClick={() => onEdit(row)}
+              kind="ghost">
+              <Edit />
+            </IconButton>
+          </div>
+        );
+      },
     },
-  ]
-  const [data] = React.useState(() => makeData(5))
-  const [columns] = React.useState(() => [...defaultCols])
+  ];
+  const [data] = React.useState(() => makeData(5));
+  const [columns] = React.useState(() => [...defaultCols]);
 
   const table = useReactTable({
     data,
@@ -101,71 +108,79 @@ export const StickyColumns = () => {
         left: ['name'],
         right: ['actions'],
       },
-    }
-  })
+    },
+  });
 
   return (
-      <TableContainer
-        title="Sticky columns"
-        className='tanstack-example sticky-example'
-        description={<span className='flex'>
-          <ExampleLink url={`${import.meta.env.VITE_CODE_SANDBOX_URL_ROOT}/${packageJson.name}`} icon={Launch} label="Code sandbox" />
-          <ExampleLink url={`${import.meta.env.VITE_STACK_BLITZ_URL_ROOT}/${packageJson.name}`} icon={Launch} label="StackBlitz" />
-        </span>}
-        style={{
-          width: 500,
-        }}
-      >
-        <Table>
-          <TableHead>
-            {table.getHeaderGroups().map(headerGroup => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => {
-                  const { column } = header
+    <TableContainer
+      title="Sticky columns"
+      className="tanstack-example sticky-example"
+      description={
+        <span className="flex">
+          <ExampleLink
+            url={`${import.meta.env.VITE_CODE_SANDBOX_URL_ROOT}/${
+              packageJson.name
+            }`}
+            icon={Launch}
+            label="Code sandbox"
+          />
+          <ExampleLink
+            url={`${import.meta.env.VITE_STACK_BLITZ_URL_ROOT}/${
+              packageJson.name
+            }`}
+            icon={Launch}
+            label="StackBlitz"
+          />
+        </span>
+      }
+      style={{
+        width: 500,
+      }}>
+      <Table>
+        <TableHead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => {
+                const { column } = header;
 
-                  return (
-                    <TableHeader
-                      key={header.id}
-                      colSpan={header.colSpan}
-                      //IMPORTANT: This is where the magic happens!
-                      style={{ ...getCommonPinningStyles(column) }}
-                    >
-                      <div className="whitespace-nowrap">
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </div>
-                    </TableHeader>
-                  )
-                })}
-              </TableRow>
-            ))}
-          </TableHead>
-          <TableBody>
-            {table.getRowModel().rows.map(row => (
-              <TableRow key={row.id}>
-                {row.getVisibleCells().map(cell => {
-                  const { column } = cell
-                  return (
-                    <TableCell
-                      key={cell.id}
-                      //IMPORTANT: This is where the magic happens!
-                      style={{ ...getCommonPinningStyles(column) }}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  )
-                })}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-  )
-}
+                return (
+                  <TableHeader
+                    key={header.id}
+                    colSpan={header.colSpan}
+                    //IMPORTANT: This is where the magic happens!
+                    style={{ ...getCommonPinningStyles(column) }}>
+                    <div className="whitespace-nowrap">
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </div>
+                  </TableHeader>
+                );
+              })}
+            </TableRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {table.getRowModel().rows.map((row) => (
+            <TableRow key={row.id}>
+              {row.getVisibleCells().map((cell) => {
+                const { column } = cell;
+                return (
+                  <TableCell
+                    key={cell.id}
+                    //IMPORTANT: This is where the magic happens!
+                    style={{ ...getCommonPinningStyles(column) }}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                );
+              })}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+};

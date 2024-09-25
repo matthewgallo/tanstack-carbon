@@ -1,36 +1,35 @@
-import { LitElement, css, html } from 'lit'
-import { customElement } from 'lit/decorators.js'
-import { repeat } from 'lit/directives/repeat.js'
+import { LitElement, css, html } from 'lit';
+import { customElement } from 'lit/decorators.js';
+import { repeat } from 'lit/directives/repeat.js';
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   TableController,
-} from '@tanstack/lit-table'
+} from '@tanstack/lit-table';
 import '@carbon/web-components/es/components/data-table/index.js';
 import { makeData } from './makeData';
 
-
 type Resource = {
-  id: string
-  name: string
-  rule: string
-  status: string
-  other: string
-  example: string
-}
+  id: string;
+  name: string;
+  rule: string;
+  status: string;
+  other: string;
+  example: string;
+};
 
-const columnHelper = createColumnHelper<Resource>()
+const columnHelper = createColumnHelper<Resource>();
 
 const columns = [
-  columnHelper.accessor(row => row.name, {
+  columnHelper.accessor((row) => row.name, {
     id: 'lastName',
-    cell: info => html`<i>${info.getValue()}</i>`,
+    cell: (info) => html`<i>${info.getValue()}</i>`,
     header: () => html`<span>Name</span>`,
   }),
   columnHelper.accessor('rule', {
     header: () => 'Rule',
-    cell: info => info.renderValue(),
+    cell: (info) => info.renderValue(),
   }),
   columnHelper.accessor('status', {
     header: () => html`<span>Status</span>`,
@@ -41,7 +40,7 @@ const columns = [
   columnHelper.accessor('example', {
     header: 'Example',
   }),
-]
+];
 
 const data: Resource[] = makeData(10);
 
@@ -61,55 +60,53 @@ export class ResizableColumns extends LitElement {
       columnResizeMode: 'onChange',
       columnResizeDirection: 'ltr',
       getCoreRowModel: getCoreRowModel(),
-    })
+    });
 
     return html`
       <cds-table>
         <cds-table-head>
           ${repeat(
             table.getHeaderGroups(),
-            headerGroup => headerGroup.id,
-            headerGroup =>
+            (headerGroup) => headerGroup.id,
+            (headerGroup) =>
               html`<cds-table-header-row>
-              ${repeat(
-                headerGroup.headers,
-                header => header.id,
-                header =>
-                  html`
-                  <cds-table-header-cell
-                    class="resize-col"
-                    colspan="${header.colSpan}"
-                    style="width: ${header.getSize()}px"
-                  >
-                    ${flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                    ${header.isPlaceholder
-                      ? null
-                      : html`<div
-                          class="resizer ${table.options
-                            .columnResizeDirection} ${header.column.getIsResizing()
-                            ? 'is-resizing'
-                            : ''}"
-                          @dblclick="${() => header.column.resetSize()}"
-                          @mousedown="${header.getResizeHandler()}"
-                          @touchstart="${header.getResizeHandler()}"
-                        />`}
-                  </cds-table-header-cell>`
-              )}</cds-table-header-row>`
+                ${repeat(
+                  headerGroup.headers,
+                  (header) => header.id,
+                  (header) =>
+                    html` <cds-table-header-cell
+                      class="resize-col"
+                      colspan="${header.colSpan}"
+                      style="width: ${header.getSize()}px">
+                      ${flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                      ${header.isPlaceholder
+                        ? null
+                        : html`<div
+                            class="resizer ${table.options
+                              .columnResizeDirection} ${header.column.getIsResizing()
+                              ? 'is-resizing'
+                              : ''}"
+                            @dblclick="${() => header.column.resetSize()}"
+                            @mousedown="${header.getResizeHandler()}"
+                            @touchstart="${header.getResizeHandler()}" />`}
+                    </cds-table-header-cell>`
+                )}</cds-table-header-row
+              >`
           )}
         </cds-table-head>
         <cds-table-body>
           ${repeat(
             table.getRowModel().rows,
-            row => row.id,
-            row => html`
+            (row) => row.id,
+            (row) => html`
               <cds-table-row>
                 ${repeat(
                   row.getVisibleCells(),
-                  cell => cell.id,
-                  cell =>
+                  (cell) => cell.id,
+                  (cell) =>
                     html` <cds-table-cell>
                       ${flexRender(
                         cell.column.columnDef.cell,
@@ -122,7 +119,7 @@ export class ResizableColumns extends LitElement {
           )}
         </cds-table-body>
       </cds-table>
-    `
+    `;
   }
 
   static styles = css`
@@ -171,11 +168,11 @@ export class ResizableColumns extends LitElement {
         opacity: 1;
       }
     }
-  `
+  `;
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'resizable-columns': ResizableColumns
+    'resizable-columns': ResizableColumns;
   }
 }

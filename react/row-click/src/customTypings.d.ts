@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import "@tanstack/react-table";
+import '@tanstack/react-table';
 
-declare module "@tanstack/table-core" {
+declare module '@tanstack/table-core' {
   interface TableOptions<TData extends RowData>
-    extends PartialKeys<TableOptionsResolved<TData>, "state" | "onStateChange" | "renderFallbackValue"> {
+    extends PartialKeys<
+      TableOptionsResolved<TData>,
+      'state' | 'onStateChange' | 'renderFallbackValue'
+    > {
     filterFns?: FilterFns;
   }
 
@@ -13,6 +16,6 @@ declare module "@tanstack/table-core" {
 
   //allows us to define custom properties for our columns
   interface ColumnMeta<TData, TValue> {
-    filterVariant?: 'text' | 'select' | 'checkbox' | 'number'
+    filterVariant?: 'text' | 'select' | 'checkbox' | 'number';
   }
 }

@@ -106,7 +106,9 @@
   position: relative;
   width: 100%;
   height: var(--table-height);
-  .filter--panel__close-wrapper.cds--popover-container:not(.cds--popover--auto-align) {
+  .filter--panel__close-wrapper.cds--popover-container:not(
+      .cds--popover--auto-align
+    ) {
     position: initial;
   }
   .filter--panel__close-wrapper.cds--popover-caret {

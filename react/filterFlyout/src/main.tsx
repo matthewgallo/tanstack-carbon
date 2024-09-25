@@ -1,5 +1,5 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import {
   CodeSnippet,
   Column,
@@ -7,18 +7,22 @@ import {
   Header,
   HeaderContainer,
   HeaderName,
-} from '@carbon/react'
+} from '@carbon/react';
 
-import { FilterFlyout } from './FilterFlyout'
+import { FilterFlyout } from './FilterFlyout';
 
-import './index.scss'
+import './index.scss';
 
 const renderUIShellHeader = () => (
   <HeaderContainer
     render={() => (
       <Header aria-label="Tanstack Carbon DataTable">
         <HeaderName href="/" prefix="Carbon">
-          DataTable / <CodeSnippet hideCopyButton type='inline'>@tanstack/table</CodeSnippet>explorations
+          DataTable /{' '}
+          <CodeSnippet hideCopyButton type="inline">
+            @tanstack/table
+          </CodeSnippet>
+          explorations
         </HeaderName>
       </Header>
     )}
@@ -28,10 +32,10 @@ const renderUIShellHeader = () => (
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     {renderUIShellHeader()}
-    <Grid className='page-grid'>
+    <Grid className="page-grid">
       <Column sm={4} md={8} lg={16}>
         <FilterFlyout />
       </Column>
     </Grid>
   </StrictMode>
-)
+);

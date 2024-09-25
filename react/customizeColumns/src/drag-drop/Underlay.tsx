@@ -28,8 +28,7 @@ export const Underlay = ({
         [`${draggableClass}__draggable-underlay--grid`]: grid,
       })}
       aria-hidden="true"
-      key={`draggable-underlay`}
-    >
+      key={`draggable-underlay`}>
       {items.map((i) => (
         <div
           className={`${draggableClass}__draggable-underlay-item`}

@@ -14,8 +14,7 @@ export const ListContainer = ({ children, draggableClass, type }) => {
       className={cx(`${draggableClass}__list-container`, {
         [`${draggableClass}__list-container--horizontal`]:
           type === 'horizontal',
-      })}
-    >
+      })}>
       {children}
     </ul>
   );

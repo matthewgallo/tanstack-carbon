@@ -1,3 +1,3 @@
-import { ResizableCols } from "./ResizableCols";
+import { ResizableCols } from './ResizableCols';
 
 export { ResizableCols };

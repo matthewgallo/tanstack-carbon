@@ -20,11 +20,12 @@ export const GridContainer = ({
         `${draggableClass}__list-container`,
         `${draggableClass}__list-container--grid`
       )}
-      style={{
-        '--col-count': columns,
-        '--grid-gap': gridGap,
-      } as React.CSSProperties}
-    >
+      style={
+        {
+          '--col-count': columns,
+          '--grid-gap': gridGap,
+        } as React.CSSProperties
+      }>
       {children}
     </ul>
   );

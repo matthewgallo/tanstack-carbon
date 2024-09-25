@@ -1,3 +1,3 @@
-import { StickyColumns } from "./StickyColumns";
+import { StickyColumns } from './StickyColumns';
 
 export { StickyColumns };

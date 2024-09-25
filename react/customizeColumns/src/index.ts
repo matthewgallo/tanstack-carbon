@@ -1,3 +1,3 @@
-import { CustomizeColumns } from "./CustomizeColumns";
+import { CustomizeColumns } from './CustomizeColumns';
 
 export { CustomizeColumns };

@@ -1,3 +1,3 @@
-import { BatchActions } from "./BatchActions";
+import { BatchActions } from './BatchActions';
 
 export { BatchActions };

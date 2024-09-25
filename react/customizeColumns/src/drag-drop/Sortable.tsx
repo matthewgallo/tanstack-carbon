@@ -123,7 +123,7 @@ export const Sortable = ({
       const overIndex = getIndex(over.id);
       if (activeIndex !== overIndex) {
         setItems((items) => {
-          arrayMove(items, activeIndex, overIndex)
+          arrayMove(items, activeIndex, overIndex);
           onDragEnd(arrayMove(items, activeIndex, overIndex));
         });
       }
@@ -144,8 +144,7 @@ export const Sortable = ({
 
   const sensors = useSensors(pointerSensor, keyboardSensor);
 
-  return (
-    items ?
+  return items ? (
     <DndContext
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
@@ -153,13 +152,9 @@ export const Sortable = ({
       onDragCancel={handleDragCancel}
       sensors={sensors}
       modifiers={modifiers}
-      {...args}
-    >
+      {...args}>
       <SortableContext items={items} strategy={strategy} {...sortableProps}>
-        <Container
-          draggableClass={draggableClass}
-          type={type}
-        >
+        <Container draggableClass={draggableClass} type={type}>
           <Underlay
             draggableClass={draggableClass}
             items={items}
@@ -169,49 +164,55 @@ export const Sortable = ({
             activeId={activeId}
             includeUnderlay={includeUnderlay}
           />
-          {items && items.length && items?.map((i, index: number) => {
-            const originalCol = originalColumns.filter(c => c.id === i)[0];
-            const currentRowChecked = tempVisible.some(e => e.id === originalCol.id);
-          return (
-            <SortableItem
-              id={i}
-              key={`${i}__drag_key`}
-              type={type}
-              useDragOverlay={useDragOverlay}
-              wrapperStyle={wrapperStyle}
-              index={index}
-              className="flex"
-            >
-              <span className='flex'><Draggable /></span>
-              <Checkbox
-                id={i}
-                labelText="Toggle visibility"
-                hideLabel
-                className='visibility-checkbox'
-                onChange={(_, { checked, id }) => {
-                  console.log(checked);
-                  if (!checked) {
-                    const cloneVisible = [...tempVisible];
-                    const newCols = cloneVisible.filter(c => c.id !== id);
-                    setTempVisible(newCols);
-                    onVisibilityChange(newCols);
-                    return;
-                  } else {
-                    const cloneVisible = [...tempVisible];
-                    cloneVisible.push(originalCol);
-                    setTempVisible(cloneVisible);
-                    onVisibilityChange(cloneVisible);
-                  }
-                }}
-                checked={currentRowChecked}
-              />
-              <span className='uppercase'>{i}</span>
-            </SortableItem>
-          )})}
+          {items &&
+            items.length &&
+            items?.map((i, index: number) => {
+              const originalCol = originalColumns.filter((c) => c.id === i)[0];
+              const currentRowChecked = tempVisible.some(
+                (e) => e.id === originalCol.id
+              );
+              return (
+                <SortableItem
+                  id={i}
+                  key={`${i}__drag_key`}
+                  type={type}
+                  useDragOverlay={useDragOverlay}
+                  wrapperStyle={wrapperStyle}
+                  index={index}
+                  className="flex">
+                  <span className="flex">
+                    <Draggable />
+                  </span>
+                  <Checkbox
+                    id={i}
+                    labelText="Toggle visibility"
+                    hideLabel
+                    className="visibility-checkbox"
+                    onChange={(_, { checked, id }) => {
+                      console.log(checked);
+                      if (!checked) {
+                        const cloneVisible = [...tempVisible];
+                        const newCols = cloneVisible.filter((c) => c.id !== id);
+                        setTempVisible(newCols);
+                        onVisibilityChange(newCols);
+                        return;
+                      } else {
+                        const cloneVisible = [...tempVisible];
+                        cloneVisible.push(originalCol);
+                        setTempVisible(cloneVisible);
+                        onVisibilityChange(cloneVisible);
+                      }
+                    }}
+                    checked={currentRowChecked}
+                  />
+                  <span className="uppercase">{i}</span>
+                </SortableItem>
+              );
+            })}
         </Container>
       </SortableContext>
-    </DndContext> : null
-  );
+    </DndContext>
+  ) : null;
 };
 
 Sortable.propTypes = {

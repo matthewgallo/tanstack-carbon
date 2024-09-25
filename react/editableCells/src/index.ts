@@ -1,3 +1,3 @@
-import { EditableCells } from "./EditableCells";
+import { EditableCells } from './EditableCells';
 
 export { EditableCells };

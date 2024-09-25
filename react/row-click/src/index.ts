@@ -1,3 +1,3 @@
-import { RowClick } from "./RowClick";
+import { RowClick } from './RowClick';
 
 export { RowClick };

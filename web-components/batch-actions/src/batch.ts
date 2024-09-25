@@ -1,6 +1,6 @@
-import { LitElement, css, html } from 'lit'
-import { customElement, state } from 'lit/decorators.js'
-import { repeat } from 'lit/directives/repeat.js'
+import { LitElement, css, html } from 'lit';
+import { customElement, state } from 'lit/decorators.js';
+import { repeat } from 'lit/directives/repeat.js';
 import {
   ColumnDef,
   flexRender,
@@ -8,7 +8,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   TableController,
-} from '@tanstack/lit-table'
+} from '@tanstack/lit-table';
 import '@carbon/web-components/es/components/data-table/index.js';
 import '@carbon/web-components/es/components/checkbox/index.js';
 import '@carbon/web-components/es/components/pagination/index.js';
@@ -19,17 +19,19 @@ import Add from '@carbon/web-components/es/icons/add/16';
 import Save from '@carbon/web-components/es/icons/save/16';
 import Download from '@carbon/web-components/es/icons/download/16';
 import { makeData } from './makeData';
-import { CDSPagination, CDSTableToolbarSearch } from '@carbon/web-components/es';
-
+import {
+  CDSPagination,
+  CDSTableToolbarSearch,
+} from '@carbon/web-components/es';
 
 type Resource = {
-  id: string
-  name: string
-  rule: string
-  status: string
-  other: string
-  example: string
-}
+  id: string;
+  name: string;
+  rule: string;
+  status: string;
+  other: string;
+  example: string;
+};
 
 const columns: ColumnDef<Resource, any>[] = [
   {
@@ -37,12 +39,12 @@ const columns: ColumnDef<Resource, any>[] = [
     header: ({ table }) => {
       console.log(table.getIsAllRowsSelected());
       return html`
-      <cds-checkbox
-        ?checked='${table.getIsAllRowsSelected()}'
-        .indeterminate='${table.getIsSomeRowsSelected()}'
-        @cds-checkbox-changed='${table.getToggleAllRowsSelectedHandler()}'
-      ></cds-checkbox>
-    `},
+        <cds-checkbox
+          ?checked="${table.getIsAllRowsSelected()}"
+          .indeterminate="${table.getIsSomeRowsSelected()}"
+          @cds-checkbox-changed="${table.getToggleAllRowsSelectedHandler()}"></cds-checkbox>
+      `;
+    },
     cell: ({ row }) => html`
       <cds-checkbox
         @cds-checkbox-changed='${row.getToggleSelectedHandler()}'
@@ -54,12 +56,12 @@ const columns: ColumnDef<Resource, any>[] = [
   },
   {
     accessorKey: 'name',
-    cell: info => info.getValue(),
+    cell: (info) => info.getValue(),
   },
   {
-    accessorFn: row => row.rule,
+    accessorFn: (row) => row.rule,
     id: 'rule',
-    cell: info => info.getValue(),
+    cell: (info) => info.getValue(),
     header: () => html`<span>Rule</span>`,
   },
   {
@@ -74,7 +76,7 @@ const columns: ColumnDef<Resource, any>[] = [
     accessorKey: 'example',
     header: 'Example',
   },
-]
+];
 
 const data: Resource[] = makeData(100);
 
@@ -88,7 +90,7 @@ export class MyBatchTable extends LitElement {
   private tableController = new TableController<Resource>(this);
 
   @state()
-  private _rowSelection: Record<string, boolean> = {}
+  private _rowSelection: Record<string, boolean> = {};
 
   @state()
   private _globalFilter = '';
@@ -104,18 +106,18 @@ export class MyBatchTable extends LitElement {
       },
       enableRowSelection: true,
       enableGlobalFilter: true,
-      onRowSelectionChange: updaterOrValue => {
+      onRowSelectionChange: (updaterOrValue) => {
         if (typeof updaterOrValue === 'function') {
-          this._rowSelection = updaterOrValue(this._rowSelection)
+          this._rowSelection = updaterOrValue(this._rowSelection);
         } else {
-          this._rowSelection = updaterOrValue
+          this._rowSelection = updaterOrValue;
         }
       },
       getCoreRowModel: getCoreRowModel(),
       getFilteredRowModel: getFilteredRowModel(),
       getPaginationRowModel: getPaginationRowModel(),
       debugTable: true,
-    })
+    });
 
     console.log(table.getRowModel().rowsById);
 
@@ -127,28 +129,31 @@ export class MyBatchTable extends LitElement {
       detail: {
         pageSize: number;
         page: number;
-      }
+      };
     }
     interface toolbarSearchDetail {
       detail: {
         value: string;
-      }
+      };
     }
     interface searchFull extends CDSTableToolbarSearch, toolbarSearchDetail {}
     interface paginationFull extends CDSPagination, paginationDetail {}
 
     return html`
       <cds-table>
-        <cds-table-header-title slot="title">Batch actions</cds-table-header-title>
+        <cds-table-header-title slot="title"
+          >Batch actions</cds-table-header-title
+        >
         <cds-table-header-description slot="description"
-        >With toolbar</cds-table-header-description>
+          >With toolbar</cds-table-header-description
+        >
 
         <cds-table-toolbar slot="toolbar">
           <cds-table-batch-actions
             ?active=${table.getIsSomeRowsSelected()}
             selected-rows-count=${table.getSelectedRowModel().rows.length}
-            @cds-table-batch-actions-cancel-clicked=${() => table.toggleAllRowsSelected(false)}
-          >
+            @cds-table-batch-actions-cancel-clicked=${() =>
+              table.toggleAllRowsSelected(false)}>
             <cds-button>Delete ${TrashCan({ slot: 'icon' })}</cds-button>
             <cds-button tooltip-position="bottom" tooltip-text="Add"
               >${Add({ slot: 'icon' })}</cds-button
@@ -163,8 +168,9 @@ export class MyBatchTable extends LitElement {
           <cds-table-toolbar-content>
             <cds-table-toolbar-search
               placeholder="Filter table"
-              @cds-search-input=${(e: searchFull) => this._globalFilter = e.detail.value}
-            ></cds-table-toolbar-search>
+              @cds-search-input=${(e: searchFull) =>
+                (this._globalFilter =
+                  e.detail.value)}></cds-table-toolbar-search>
             <cds-overflow-menu toolbar-action>
               ${Settings({
                 slot: 'icon',
@@ -188,34 +194,35 @@ export class MyBatchTable extends LitElement {
         <cds-table-head>
           ${repeat(
             table.getHeaderGroups(),
-            headerGroup => headerGroup.id,
-            headerGroup =>
+            (headerGroup) => headerGroup.id,
+            (headerGroup) =>
               html`<cds-table-header-row>
-              ${repeat(
-                headerGroup.headers,
-                header => header.id,
-                header =>
-                  html` <cds-table-header-cell>
-                    ${header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </cds-table-header-cell>`
-              )}</cds-table-header-row>`
+                ${repeat(
+                  headerGroup.headers,
+                  (header) => header.id,
+                  (header) =>
+                    html` <cds-table-header-cell>
+                      ${header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </cds-table-header-cell>`
+                )}</cds-table-header-row
+              >`
           )}
         </cds-table-head>
         <cds-table-body>
           ${repeat(
             table.getRowModel().rows,
-            row => row.id,
-            row => html`
+            (row) => row.id,
+            (row) => html`
               <cds-table-row>
                 ${repeat(
                   row.getVisibleCells(),
-                  cell => cell.id,
-                  cell =>
+                  (cell) => cell.id,
+                  (cell) =>
                     html` <cds-table-cell>
                       ${flexRender(
                         cell.column.columnDef.cell,
@@ -233,17 +240,16 @@ export class MyBatchTable extends LitElement {
         total-items="${table.getRowCount()}"
         @cds-pagination-changed-current="${(event: paginationFull) => {
           const { pageSize, page } = event.detail;
-          table.setPageSize(Number(pageSize))
-          table.setPageIndex(page - 1)
-        }}"
-      >
+          table.setPageSize(Number(pageSize));
+          table.setPageIndex(page - 1);
+        }}">
         <cds-select-item value="10">10</cds-select-item>
         <cds-select-item value="20">20</cds-select-item>
         <cds-select-item value="30">30</cds-select-item>
         <cds-select-item value="40">40</cds-select-item>
         <cds-select-item value="50">50</cds-select-item>
       </cds-pagination>
-    `
+    `;
   }
 
   static styles = css`
@@ -262,11 +268,11 @@ export class MyBatchTable extends LitElement {
       pointer-events: all;
       transform: translate3d(0, 0, 0);
     }
-  `
+  `;
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'batch-tanstack-table': MyBatchTable
+    'batch-tanstack-table': MyBatchTable;
   }
 }

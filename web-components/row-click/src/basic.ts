@@ -1,37 +1,37 @@
-import { LitElement, html, css } from 'lit'
-import { customElement, state } from 'lit/decorators.js'
-import { repeat } from 'lit/directives/repeat.js'
+import { LitElement, html, css } from 'lit';
+import { customElement, state } from 'lit/decorators.js';
+import { repeat } from 'lit/directives/repeat.js';
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   RowData,
   TableController,
-} from '@tanstack/lit-table'
+} from '@tanstack/lit-table';
 import '@carbon/web-components/es/components/data-table/index.js';
 import '@carbon/web-components/es/components/side-panel/index.js';
 import { makeData } from './makeData';
 
 type Resource = {
-  id: string
-  name: string
-  rule: string
-  status: string
-  other: string
-  example: string
-}
+  id: string;
+  name: string;
+  rule: string;
+  status: string;
+  other: string;
+  example: string;
+};
 
-const columnHelper = createColumnHelper<Resource>()
+const columnHelper = createColumnHelper<Resource>();
 
 const columns = [
-  columnHelper.accessor(row => row.name, {
+  columnHelper.accessor((row) => row.name, {
     id: 'lastName',
-    cell: info => html`<i>${info.getValue()}</i>`,
+    cell: (info) => html`<i>${info.getValue()}</i>`,
     header: () => html`<span>Name</span>`,
   }),
   columnHelper.accessor('rule', {
     header: () => 'Rule',
-    cell: info => info.renderValue(),
+    cell: (info) => info.renderValue(),
   }),
   columnHelper.accessor('status', {
     header: () => html`<span>Status</span>`,
@@ -42,7 +42,7 @@ const columns = [
   columnHelper.accessor('example', {
     header: 'Example',
   }),
-]
+];
 
 const data: Resource[] = makeData(10);
 
@@ -70,49 +70,48 @@ export class MyBasicTable extends LitElement {
     this._panelOpen = !this._panelOpen;
   }
 
-  
-  
   render() {
-    console.log(this._panelRowData)
+    console.log(this._panelRowData);
     const table = this.tableController.table({
       columns,
       data,
       getCoreRowModel: getCoreRowModel(),
-    })
+    });
 
     return html`
       <cds-table>
         <cds-table-head>
           ${repeat(
             table.getHeaderGroups(),
-            headerGroup => headerGroup.id,
-            headerGroup =>
+            (headerGroup) => headerGroup.id,
+            (headerGroup) =>
               html`<cds-table-header-row>
-              ${repeat(
-                headerGroup.headers,
-                header => header.id,
-                header =>
-                  html` <cds-table-header-cell>
-                    ${header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </cds-table-header-cell>`
-              )}</cds-table-header-row>`
+                ${repeat(
+                  headerGroup.headers,
+                  (header) => header.id,
+                  (header) =>
+                    html` <cds-table-header-cell>
+                      ${header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </cds-table-header-cell>`
+                )}</cds-table-header-row
+              >`
           )}
         </cds-table-head>
         <cds-table-body>
           ${repeat(
             table.getRowModel().rows,
-            row => row.id,
-            row => html`
+            (row) => row.id,
+            (row) => html`
               <cds-table-row @click=${() => this._handlePanelState(row)}>
                 ${repeat(
                   row.getVisibleCells(),
-                  cell => cell.id,
-                  cell =>
+                  (cell) => cell.id,
+                  (cell) =>
                     html` <cds-table-cell>
                       ${flexRender(
                         cell.column.columnDef.cell,
@@ -126,11 +125,14 @@ export class MyBasicTable extends LitElement {
         </cds-table-body>
       </cds-table>
       <cds-side-panel
-        title=${this._panelOpen ? (this._panelRowData as any).original.name : ''}
+        title=${this._panelOpen
+          ? (this._panelRowData as any).original.name
+          : ''}
         ?open=${this._panelOpen}
-        @cds-side-panel-closed=${() => this._panelOpen = false}
-      >children content</cds-side-panel>
-    `
+        @cds-side-panel-closed=${() => (this._panelOpen = false)}
+        >children content</cds-side-panel
+      >
+    `;
   }
 
   static styles = css`
@@ -141,11 +143,11 @@ export class MyBasicTable extends LitElement {
       display: flex;
       place-items: center;
     }
-  `
+  `;
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'basic-tanstack-table': MyBasicTable
+    'basic-tanstack-table': MyBasicTable;
   }
 }
