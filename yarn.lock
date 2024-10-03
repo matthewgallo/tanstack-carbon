@@ -1075,6 +1075,13 @@
   dependencies:
     "@ibm/telemetry-js" "^1.5.0"
 
+"@carbon/ibm-products-styles@^2.46.0":
+  version "2.46.0"
+  resolved "https://registry.yarnpkg.com/@carbon/ibm-products-styles/-/ibm-products-styles-2.46.0.tgz#5efe56c2261531bee40e42b3785b5d886b2633fc"
+  integrity sha512-6l0ENn09UbEjjw/z+VzB55PLB+/sCa26EpQ32yMaBYwfrENqoTPVjo20e3gyPAAKD3qrnY5Ol8eZ+e9rGbCQbQ==
+  dependencies:
+    "@ibm/telemetry-js" "^1.5.0"
+
 "@carbon/ibm-products@^2.47.0":
   version "2.48.0"
   resolved "https://registry.yarnpkg.com/@carbon/ibm-products/-/ibm-products-2.48.0.tgz#c7a454cbecb32d913c70bb8308db65a41b9988ec"
@@ -1083,6 +1090,27 @@
     "@babel/runtime" "^7.23.9"
     "@carbon/feature-flags" "^0.20.0"
     "@carbon/ibm-products-styles" "^2.44.0"
+    "@carbon/telemetry" "^0.1.0"
+    "@dnd-kit/core" "^6.0.8"
+    "@dnd-kit/modifiers" "^7.0.0"
+    "@dnd-kit/sortable" "^8.0.0"
+    "@dnd-kit/utilities" "^3.2.2"
+    "@ibm/telemetry-js" "^1.5.0"
+    framer-motion "^6.5.1 < 7"
+    immutability-helper "^3.1.1"
+    lodash "^4.17.21"
+    lottie-web "^5.12.2"
+    react-table "^7.8.0"
+    react-window "^1.8.10"
+
+"@carbon/ibm-products@^2.50.0":
+  version "2.50.0"
+  resolved "https://registry.yarnpkg.com/@carbon/ibm-products/-/ibm-products-2.50.0.tgz#dcbe7dd43119be297ee84f20135db7b8b78a6fae"
+  integrity sha512-iv3UuUD1tMcVC5y/b7/9wmiGuMZhwnNS0DkoYr4eqONnFgyV7VVQ8V2luR5OiMRztRcbGqyp5NK8nXPlI1H8oA==
+  dependencies:
+    "@babel/runtime" "^7.23.9"
+    "@carbon/feature-flags" "^0.22.0"
+    "@carbon/ibm-products-styles" "^2.46.0"
     "@carbon/telemetry" "^0.1.0"
     "@dnd-kit/core" "^6.0.8"
     "@dnd-kit/modifiers" "^7.0.0"
