@@ -24,7 +24,7 @@
   top: 0;
   height: 100%;
   width: 5px;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgb(0 0 0 / 50%);
   cursor: col-resize;
   user-select: none;
   touch-action: none;
@@ -85,14 +85,12 @@
 .sortable-button-header {
   color: $text-primary;
   width: 100%;
-  padding-inline-end: 1rem;
-  padding-inline-start: 1rem;
+  padding-inline: 1rem;
   max-inline-size: none;
 }
 
 .sortable-example.cds--data-table th {
-  padding-inline-end: 0;
-  padding-inline-start: 0;
+  padding-inline: 0;
 }
 
 .sortable-example {
@@ -165,7 +163,6 @@ $horizontal-drag-height: 6rem;
   width: 100%;
   height: $spacing-09;
   border: 2px dashed $focus;
-  /* stylelint-disable-next-line carbon/theme-token-use */
   background-color: colors.$blue-10;
 }
 
@@ -240,6 +237,7 @@ $horizontal-drag-height: 6rem;
 
 .filter-checkbox-group-label {
   @include type.type-style('label-01');
+
   color: $text-secondary;
   text-transform: capitalize;
   margin-bottom: 0.5rem;
@@ -269,59 +267,9 @@ $horizontal-drag-height: 6rem;
   margin-top: 1rem;
 }
 
-// Filter panel
-// Flyout
-.flyout--container {
-  padding: 1rem;
-}
-
-.flyout--container .flyout--container__filters {
-  display: grid;
-  grid-template-columns: auto;
-  gap: 1rem;
-}
-
-.flyout--label {
-  @include type.type-style('body-compact-01');
-  @include font-family.font-weight('semibold');
-
-  padding-bottom: 1rem;
-}
-
-.filter-flyout-example .cds--popover-content {
-  max-inline-size: 642px;
-}
-
-.filter-checkbox-group-label {
-  @include type.type-style('label-01');
-  color: $text-secondary;
-  text-transform: capitalize;
-  margin-bottom: 0.5rem;
-}
-
-.filter-flyout-button-set.cds--btn-set .cds--btn {
-  max-width: none;
-  width: 50%;
-}
-
-.tag-overflow-flyout-example {
-  height: 48px;
-  padding-left: 0.5rem;
-}
-
-.filter--summary {
-  display: flex;
-  align-items: center;
-}
-
-.flyout-dropdown-selected-item {
-  text-transform: capitalize;
-}
-
 .panel--container {
   min-height: var(--table-height);
   min-width: 320px;
-  // border: 2px solid red;
   border-right: 1px solid $border-subtle;
   border-top: 1px solid $border-subtle;
   position: absolute;
@@ -353,11 +301,13 @@ $horizontal-drag-height: 6rem;
   position: relative;
   width: 100%;
   height: var(--table-height);
+
   .filter--panel__close-wrapper.cds--popover-container:not(
       .cds--popover--auto-align
     ) {
     position: initial;
   }
+
   .filter--panel__close-wrapper.cds--popover-caret {
     visibility: hidden;
   }
@@ -377,6 +327,7 @@ $horizontal-drag-height: 6rem;
   position: sticky;
   bottom: 0;
   width: 320px;
+
   button.cds--btn {
     min-width: 50%;
     max-inline-size: 50%;

@@ -32,14 +32,12 @@
 .sortable-button-header {
   color: $text-primary;
   width: 100%;
-  padding-inline-end: 1rem;
-  padding-inline-start: 1rem;
+  padding-inline: 1rem;
   max-inline-size: none;
 }
 
 .sortable-example.cds--data-table th {
-  padding-inline-end: 0;
-  padding-inline-start: 0;
+  padding-inline: 0;
 }
 
 .sortable-example {

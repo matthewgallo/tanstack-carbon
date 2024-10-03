@@ -47,6 +47,7 @@
 
 .filter-checkbox-group-label {
   @include type.type-style('label-01');
+
   color: $text-secondary;
   text-transform: capitalize;
   margin-bottom: 0.5rem;

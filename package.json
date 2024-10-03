@@ -23,8 +23,9 @@
     "prettier": "^2.8.8",
     "prettier-config-carbon": "^0.11.0",
     "rimraf": "^5.0.0",
-    "stylelint": "^15.0.0",
-    "stylelint-config-carbon": "^1.18.0"
+    "stylelint": "^16.9.0",
+    "stylelint-config-carbon": "^1.19.0-rc.0",
+    "stylelint-config-standard-scss": "^13.1.0"
   },
   "commitlint": {
     "extends": [
@@ -79,15 +80,19 @@
   },
   "stylelint": {
     "extends": [
-      "stylelint-config-carbon"
+      "stylelint-config-standard-scss"
     ],
+    "rules": {
+      "selector-class-pattern": null
+    },
     "overrides": [
       {
         "files": [
           "src/components/**/*.scss"
         ],
         "rules": {
-          "max-nesting-depth": null
+          "max-nesting-depth": null,
+          "selector-class-pattern": null
         }
       }
     ]

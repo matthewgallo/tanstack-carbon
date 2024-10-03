@@ -1,5 +1,8 @@
 import React, { useLayoutEffect, useRef } from 'react';
-import { DataTable } from '@carbon/react';
+import { CodeSnippet, DataTable } from '@carbon/react';
+import { NoDataEmptyState } from '@carbon/ibm-products';
+import cx from 'classnames';
+
 const {
   Table,
   TableBody,
@@ -66,6 +69,7 @@ export const GlobalFilter = () => {
     }),
     columnHelper.accessor('example', {
       header: 'Example',
+      enableGlobalFilter: false,
     }),
   ];
 
@@ -101,6 +105,8 @@ export const GlobalFilter = () => {
     }
   }, [table]);
 
+  console.log(table.getFilteredRowModel().rows.length);
+
   return (
     <div ref={tableWrap} className="tanstack-example">
       <TableContainer
@@ -122,6 +128,8 @@ export const GlobalFilter = () => {
               icon={Launch}
               label="StackBlitz"
             />
+            excludes <CodeSnippet type="inline">Example</CodeSnippet> column
+            from global filtering
           </span>
         }
         style={{
@@ -135,7 +143,14 @@ export const GlobalFilter = () => {
           placeholder="Search all columns..."
           persistent
         />
-        <Table size="lg" useZebraStyles={false} aria-label="sample table">
+        <Table
+          size="lg"
+          useZebraStyles={false}
+          aria-label="sample table"
+          className={cx({
+            ['empty-table-wrapper']:
+              table.getFilteredRowModel().rows.length === 0,
+          })}>
           <TableHead>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -156,7 +171,23 @@ export const GlobalFilter = () => {
               </TableRow>
             ))}
           </TableHead>
-          <TableBody>
+          <TableBody
+            className={cx({
+              ['empty-table-body']:
+                table.getFilteredRowModel().rows.length === 0,
+            })}>
+            {table.getFilteredRowModel().rows.length === 0 && (
+              <TableRow>
+                <TableCell>
+                  <NoDataEmptyState
+                    title="No results found"
+                    subtitle="Try adjusting your search or filter options to find what you're looking for."
+                    illustrationDescription="Test alt text"
+                    className="empty-table"
+                  />
+                </TableCell>
+              </TableRow>
+            )}
             {table.getRowModel().rows.map((row) => (
               <TableRow key={row.id}>
                 {row.getVisibleCells().map((cell) => (

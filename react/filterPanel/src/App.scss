@@ -47,6 +47,7 @@
 
 .filter-checkbox-group-label {
   @include type.type-style('label-01');
+
   color: $text-secondary;
   text-transform: capitalize;
   margin-bottom: 0.5rem;
@@ -74,7 +75,6 @@
 .panel--container {
   min-height: var(--table-height);
   min-width: 320px;
-  // border: 2px solid red;
   border-right: 1px solid $border-subtle;
   border-top: 1px solid $border-subtle;
   position: absolute;
@@ -106,11 +106,13 @@
   position: relative;
   width: 100%;
   height: var(--table-height);
+
   .filter--panel__close-wrapper.cds--popover-container:not(
       .cds--popover--auto-align
     ) {
     position: initial;
   }
+
   .filter--panel__close-wrapper.cds--popover-caret {
     visibility: hidden;
   }
@@ -130,6 +132,7 @@
   position: sticky;
   bottom: 0;
   width: 320px;
+
   button.cds--btn {
     min-width: 50%;
     max-inline-size: 50%;
