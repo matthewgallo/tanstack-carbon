@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const ExampleLink = ({ icon, label, url }) => {
   const Icon = icon;
   return (
